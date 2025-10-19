@@ -1054,7 +1054,176 @@ export const tutorials: Song[] = [
     ],
   },
 
-]
+
+  // ========================================
+  // 🎓 TUTORIAL 1: DO–RE–MI (Notes Introduction)
+  // ========================================
+  {
+    id: 'tutorial-do-re-mi',
+    title: '🎶 Do-Re-Mi (Learn the Notes)',
+    artist: 'iKeys Learning',
+    tempo: 70,
+    duration: 40,
+    difficulty: 'beginner',
+    chords: [
+      // C Major Scale ascending
+      { time: 0, duration: 2, chordName: 'C', keys: ['C4'], hand: 'right', color: chordColors['C'], fingers: [1] },
+      { time: 2, duration: 2, chordName: 'D', keys: ['D4'], hand: 'right', color: chordColors['D'], fingers: [2] },
+      { time: 4, duration: 2, chordName: 'E', keys: ['E4'], hand: 'right', color: chordColors['Em'], fingers: [3] },
+      { time: 6, duration: 2, chordName: 'F', keys: ['F4'], hand: 'right', color: chordColors['F'], fingers: [4] },
+      { time: 8, duration: 2, chordName: 'G', keys: ['G4'], hand: 'right', color: chordColors['G'], fingers: [5] },
+      { time: 10, duration: 2, chordName: 'A', keys: ['A4'], hand: 'right', color: chordColors['Am'], fingers: [1] },
+      { time: 12, duration: 2, chordName: 'B', keys: ['B4'], hand: 'right', color: chordColors['G7'], fingers: [2] },
+      { time: 14, duration: 2, chordName: 'C', keys: ['C5'], hand: 'right', color: chordColors['C'], fingers: [3] },
+
+      // Descending
+      { time: 16, duration: 2, chordName: 'B', keys: ['B4'], hand: 'right', color: chordColors['G7'] },
+      { time: 18, duration: 2, chordName: 'A', keys: ['A4'], hand: 'right', color: chordColors['Am'] },
+      { time: 20, duration: 2, chordName: 'G', keys: ['G4'], hand: 'right', color: chordColors['G'] },
+      { time: 22, duration: 2, chordName: 'F', keys: ['F4'], hand: 'right', color: chordColors['F'] },
+      { time: 24, duration: 2, chordName: 'E', keys: ['E4'], hand: 'right', color: chordColors['Em'] },
+      { time: 26, duration: 2, chordName: 'D', keys: ['D4'], hand: 'right', color: chordColors['D'] },
+      { time: 28, duration: 2, chordName: 'C', keys: ['C4'], hand: 'right', color: chordColors['C'] },
+    ],
+    sections: [{ name: 'C Major Scale', startTime: 0, endTime: 30 }],
+  },
+
+  // ========================================
+  // 🎓 TUTORIAL 2: MAJOR SCALE PRACTICE (C MAJOR)
+  // ========================================
+  {
+    id: 'tutorial-c-scale',
+    title: '🎵 C Major Scale Practice (Both Hands)',
+    artist: 'iKeys Learning',
+    tempo: 72,
+    duration: 40,
+    difficulty: 'beginner',
+    chords: [
+      // Right hand ascending
+      { time: 0, duration: 1, chordName: 'C', keys: ['C4'], hand: 'right', color: chordColors['C'], fingers: [1] },
+      { time: 1, duration: 1, chordName: 'D', keys: ['D4'], hand: 'right', color: chordColors['D'], fingers: [2] },
+      { time: 2, duration: 1, chordName: 'E', keys: ['E4'], hand: 'right', color: chordColors['Em'], fingers: [3] },
+      { time: 3, duration: 1, chordName: 'F', keys: ['F4'], hand: 'right', color: chordColors['F'], fingers: [1] },
+      { time: 4, duration: 1, chordName: 'G', keys: ['G4'], hand: 'right', color: chordColors['G'], fingers: [2] },
+      { time: 5, duration: 1, chordName: 'A', keys: ['A4'], hand: 'right', color: chordColors['Am'], fingers: [3] },
+      { time: 6, duration: 1, chordName: 'B', keys: ['B4'], hand: 'right', color: chordColors['G7'], fingers: [4] },
+      { time: 7, duration: 1, chordName: 'C', keys: ['C5'], hand: 'right', color: chordColors['C'], fingers: [5] },
+
+      // Left hand descending (bass)
+      { time: 9, duration: 1, chordName: 'C', keys: ['C3'], hand: 'left', color: chordColors['C'], fingers: [5] },
+      { time: 10, duration: 1, chordName: 'D', keys: ['D3'], hand: 'left', color: chordColors['D'], fingers: [4] },
+      { time: 11, duration: 1, chordName: 'E', keys: ['E3'], hand: 'left', color: chordColors['Em'], fingers: [3] },
+      { time: 12, duration: 1, chordName: 'F', keys: ['F3'], hand: 'left', color: chordColors['F'], fingers: [2] },
+      { time: 13, duration: 1, chordName: 'G', keys: ['G3'], hand: 'left', color: chordColors['G'], fingers: [1] },
+    ],
+    sections: [
+      { name: 'Right Hand Scale', startTime: 0, endTime: 8 },
+      { name: 'Left Hand Scale', startTime: 9, endTime: 14 },
+    ],
+  },
+
+  // ========================================
+  // 🎓 TUTORIAL 3: BASIC CHORDS (C, G, F)
+  // ========================================
+  {
+    id: 'tutorial-basic-chords',
+    title: '🎓 Basic Chords (C, G, F)',
+    artist: 'iKeys Learning',
+    tempo: 70,
+    duration: 60,
+    difficulty: 'beginner',
+    chords: [
+      // C Major
+      { time: 0, duration: 3, chordName: 'C', keys: ['C4', 'E4', 'G4'], hand: 'right', color: chordColors['C'], fingers: [1, 3, 5] },
+      { time: 3, duration: 3, chordName: 'C', keys: ['C4', 'E4', 'G4'], hand: 'right', color: chordColors['C'], fingers: [1, 3, 5] },
+
+      // G Major
+      { time: 12, duration: 3, chordName: 'G', keys: ['G4', 'B4', 'D5'], hand: 'right', color: chordColors['G'], fingers: [1, 3, 5] },
+      { time: 15, duration: 3, chordName: 'G', keys: ['G4', 'B4', 'D5'], hand: 'right', color: chordColors['G'], fingers: [1, 3, 5] },
+
+      // F Major
+      { time: 24, duration: 3, chordName: 'F', keys: ['F4', 'A4', 'C5'], hand: 'right', color: chordColors['F'], fingers: [1, 3, 5] },
+      { time: 27, duration: 3, chordName: 'F', keys: ['F4', 'A4', 'C5'], hand: 'right', color: chordColors['F'], fingers: [1, 3, 5] },
+
+      // Progression
+      { time: 36, duration: 4, chordName: 'C', keys: ['C4', 'E4', 'G4'], hand: 'right', color: chordColors['C'] },
+      { time: 40, duration: 4, chordName: 'G', keys: ['G4', 'B4', 'D5'], hand: 'right', color: chordColors['G'] },
+      { time: 44, duration: 4, chordName: 'F', keys: ['F4', 'A4', 'C5'], hand: 'right', color: chordColors['F'] },
+      { time: 48, duration: 4, chordName: 'C', keys: ['C4', 'E4', 'G4'], hand: 'right', color: chordColors['C'] },
+    ],
+    sections: [
+      { name: 'C Major', startTime: 0, endTime: 12 },
+      { name: 'G Major', startTime: 12, endTime: 24 },
+      { name: 'F Major', startTime: 24, endTime: 36 },
+      { name: 'Progression', startTime: 36, endTime: 60 },
+    ],
+  },
+
+  // ========================================
+  // 🎓 TUTORIAL 4: DO–RE–MI MELODY PLAY
+  // ========================================
+  {
+    id: 'tutorial-do-re-mi-melody',
+    title: '🎶 Play “Do-Re-Mi” (Melody Practice)',
+    artist: 'iKeys Learning',
+    tempo: 75,
+    duration: 40,
+    difficulty: 'intermediate',
+    chords: [
+      { time: 0, duration: 1, chordName: 'C', keys: ['C4'], hand: 'right', color: chordColors['C'] },
+      { time: 1, duration: 1, chordName: 'D', keys: ['D4'], hand: 'right', color: chordColors['D'] },
+      { time: 2, duration: 1, chordName: 'E', keys: ['E4'], hand: 'right', color: chordColors['Em'] },
+      { time: 3, duration: 1, chordName: 'C', keys: ['C4'], hand: 'right', color: chordColors['C'] },
+      { time: 4, duration: 1, chordName: 'E', keys: ['E4'], hand: 'right', color: chordColors['Em'] },
+      { time: 5, duration: 1, chordName: 'F', keys: ['F4'], hand: 'right', color: chordColors['F'] },
+      { time: 6, duration: 1, chordName: 'G', keys: ['G4'], hand: 'right', color: chordColors['G'] },
+      { time: 7, duration: 1, chordName: 'C', keys: ['C5'], hand: 'right', color: chordColors['C'] },
+    ],
+    sections: [{ name: 'Main Melody', startTime: 0, endTime: 8 }],
+  },
+
+  // ========================================
+  // 🎓 TUTORIAL 5: CHORD PROGRESSION & LEFT HAND (Advanced)
+  // ========================================
+  {
+    id: 'tutorial-advanced-chords',
+    title: '🎵 Two-Hand Chord Progressions',
+    artist: 'iKeys Learning',
+    tempo: 80,
+    duration: 60,
+    difficulty: 'advanced',
+    chords: [
+      // C Major Progression – Left + Right
+      { time: 0, duration: 3, chordName: 'C', keys: ['C3', 'G3'], hand: 'left', color: chordColors['C'] },
+      { time: 0, duration: 3, chordName: 'C', keys: ['C4', 'E4', 'G4'], hand: 'right', color: chordColors['C'] },
+
+      { time: 6, duration: 3, chordName: 'Am', keys: ['A3', 'E3'], hand: 'left', color: chordColors['Am'] },
+      { time: 6, duration: 3, chordName: 'Am', keys: ['A4', 'C5', 'E5'], hand: 'right', color: chordColors['Am'] },
+
+      { time: 12, duration: 3, chordName: 'F', keys: ['F3', 'C4'], hand: 'left', color: chordColors['F'] },
+      { time: 12, duration: 3, chordName: 'F', keys: ['F4', 'A4', 'C5'], hand: 'right', color: chordColors['F'] },
+
+      { time: 18, duration: 3, chordName: 'G', keys: ['G3', 'D4'], hand: 'left', color: chordColors['G'] },
+      { time: 18, duration: 3, chordName: 'G', keys: ['G4', 'B4', 'D5'], hand: 'right', color: chordColors['G'] },
+
+      // Progression Loop
+      { time: 24, duration: 4, chordName: 'C', keys: ['C3', 'G3'], hand: 'left', color: chordColors['C'] },
+      { time: 24, duration: 4, chordName: 'C', keys: ['C4', 'E4', 'G4'], hand: 'right', color: chordColors['C'] },
+      { time: 28, duration: 4, chordName: 'Am', keys: ['A3', 'E3'], hand: 'left', color: chordColors['Am'] },
+      { time: 28, duration: 4, chordName: 'Am', keys: ['A4', 'C5', 'E5'], hand: 'right', color: chordColors['Am'] },
+      { time: 32, duration: 4, chordName: 'F', keys: ['F3', 'C4'], hand: 'left', color: chordColors['F'] },
+      { time: 32, duration: 4, chordName: 'F', keys: ['F4', 'A4', 'C5'], hand: 'right', color: chordColors['F'] },
+      { time: 36, duration: 4, chordName: 'G', keys: ['G3', 'D4'], hand: 'left', color: chordColors['G'] },
+      { time: 36, duration: 4, chordName: 'G', keys: ['G4', 'B4', 'D5'], hand: 'right', color: chordColors['G'] },
+    ],
+    sections: [
+      { name: 'Two-Hand Coordination', startTime: 0, endTime: 20 },
+      { name: 'Chord Progression', startTime: 20, endTime: 40 },
+      { name: 'Full Practice', startTime: 40, endTime: 60 },
+    ],
+  },
+];
+
 
 // ========================================
 // 🎵 SONGS - Romantic & Jazz
