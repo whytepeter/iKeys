@@ -6,6 +6,7 @@ import type { RecordedNote } from '../utils/recordingEngine';
 export interface RecordingDocument {
     $id: string;
     userId: string;
+    userName: string;
     title: string;
     notes: RecordedNote[];
     duration: number;
@@ -18,6 +19,7 @@ class RecordingsService {
     // Create a new recording
     async createRecording(
         userId: string,
+        userName: string,
         title: string,
         notes: RecordedNote[],
         duration: number
@@ -29,6 +31,7 @@ class RecordingsService {
                 ID.unique(),
                 {
                     userId,
+                    userName,
                     title,
                     notes: JSON.stringify(notes),
                     duration,
@@ -140,6 +143,7 @@ class RecordingsService {
         return {
             $id: doc.$id,
             userId: doc.userId,
+            userName: doc.userName && doc.userName !== 'undefined' ? doc.userName : 'Anonymous',
             title: doc.title,
             notes: typeof doc.notes === 'string' ? JSON.parse(doc.notes) : doc.notes,
             duration: doc.duration,

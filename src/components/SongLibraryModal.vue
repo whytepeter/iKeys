@@ -58,13 +58,33 @@
       v-if="activeTab === 'songs'"
       class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
     >
+      <!-- Loading State -->
       <div
-        v-if="filteredSongs.length === 0"
+        v-if="
+          recordingsStore.isLoadingPublishedSongs && filteredSongs.length === 0
+        "
+        class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
+      >
+        <div class="loading-spinner mb-4"></div>
+        <h3 class="text-xl text-zinc-200 mb-2">Loading Songs...</h3>
+        <p class="text-zinc-400 max-w-md">
+          Please wait while we fetch the latest songs
+        </p>
+      </div>
+      <!-- Empty State -->
+      <div
+        v-else-if="filteredSongs.length === 0"
         class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
       >
         <div class="text-6xl mb-4 opacity-50">🎵</div>
         <h3 class="text-2xl text-zinc-200 mb-2">No Songs Found</h3>
-        <p class="text-zinc-400 max-w-md">Try adjusting your search query</p>
+        <p class="text-zinc-400 max-w-md">
+          {{
+            searchQuery
+              ? "Try adjusting your search query"
+              : "No published songs available yet. Be the first to share!"
+          }}
+        </p>
       </div>
       <div
         v-for="item in filteredSongs"
@@ -100,9 +120,7 @@
             {{ item.title }}
           </h3>
           <p class="text-sm m-0 text-white/70">
-            {{
-              isRegularSong(item) ? item.artist : formatDate(item.$createdAt)
-            }}
+            {{ isRegularSong(item) ? item.artist : `by ${item.userName}` }}
           </p>
           <div class="flex flex-wrap gap-2 mt-2">
             <!-- Regular Song Details -->
@@ -142,11 +160,6 @@
               >
                 🎵 {{ item.notes.length }} notes
               </span>
-              <span
-                class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-500/20 text-green-500 border border-green-500/30"
-              >
-                👤 User Recording
-              </span>
             </template>
           </div>
         </div>
@@ -183,6 +196,21 @@
           Sign In
         </button>
       </div>
+      <!-- Loading State -->
+      <div
+        v-else-if="
+          recordingsStore.isLoadingMyRecordings &&
+          filteredMyRecordings.length === 0
+        "
+        class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
+      >
+        <div class="loading-spinner mb-4"></div>
+        <h3 class="text-xl text-zinc-200 mb-2">Loading Your Recordings...</h3>
+        <p class="text-zinc-400 max-w-md">
+          Please wait while we fetch your songs
+        </p>
+      </div>
+      <!-- Empty State -->
       <div
         v-else-if="filteredMyRecordings.length === 0"
         class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
@@ -190,7 +218,11 @@
         <div class="text-6xl mb-4 opacity-50">🎙️</div>
         <h3 class="text-2xl text-zinc-200 mb-2">No Recordings Yet</h3>
         <p class="text-zinc-400 max-w-md">
-          Press the record button to start capturing your piano performances!
+          {{
+            searchQuery
+              ? "No recordings match your search"
+              : "Press the record button to start capturing your piano performances!"
+          }}
         </p>
       </div>
       <div
@@ -219,10 +251,36 @@
           </svg>
           <button
             @click.stop="confirmDelete(recording)"
-            class="p-2 rounded-lg border border-red-500/30 bg-red-500/10 cursor-pointer text-lg transition-all duration-200 hover:bg-red-500/25 hover:border-red-500 hover:scale-110"
+            :disabled="deletingRecordingId === recording.$id"
+            :class="[
+              'p-2 rounded-lg border text-lg transition-all duration-200',
+              deletingRecordingId === recording.$id
+                ? 'border-red-500/20 bg-red-500/5 cursor-not-allowed opacity-50'
+                : 'border-red-500/30 bg-red-500/10 cursor-pointer hover:bg-red-500/25 hover:border-red-500 hover:scale-110',
+            ]"
             title="Delete"
           >
-            🗑️
+            <span
+              v-if="deletingRecordingId === recording.$id"
+              class="inline-block"
+            >
+              <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </span>
+            <span v-else>🗑️</span>
           </button>
         </div>
         <div
@@ -462,32 +520,33 @@ const isAuthenticated = computed(() => userStore.isLoggedIn);
 const editingRecordingId = ref<string | null>(null);
 const editingTitle = ref("");
 
-// Separate songs and tutorials
-const regularSongs = computed(() =>
-  props.songs.filter((song) => !song.title.includes("🎓"))
-);
+// Deleting state
+const deletingRecordingId = ref<string | null>(null);
 
+// Separate tutorials from songs
 const tutorialSongs = computed(() =>
-  props.songs.filter((song) => song.title.includes("🎓"))
+  props.songs.filter((song: Song) => song.title.includes("🎓"))
 );
 
-// Combine regular songs with published recordings
+// Only show published recordings from database (no predefined songs)
 const allSongsWithRecordings = computed(() => {
-  return [...regularSongs.value, ...recordingsStore.publishedSongs];
+  return recordingsStore.publishedSongs;
 });
 
 // Filtered lists based on search
 const filteredSongs = computed(() => {
   if (!searchQuery.value) return allSongsWithRecordings.value;
   const query = searchQuery.value.toLowerCase();
-  return allSongsWithRecordings.value.filter((song) => {
-    const title = "title" in song ? song.title : "";
-    const artist = "artist" in song ? song.artist : "";
-    return (
-      title.toLowerCase().includes(query) ||
-      artist.toLowerCase().includes(query)
-    );
-  });
+  return allSongsWithRecordings.value.filter(
+    (song: Song | RecordingDocument) => {
+      const title = "title" in song ? song.title : "";
+      const artist = "artist" in song ? song.artist : "";
+      return (
+        title.toLowerCase().includes(query) ||
+        artist.toLowerCase().includes(query)
+      );
+    }
+  );
 });
 
 const filteredMyRecordings = computed(() => {
@@ -502,7 +561,7 @@ const filteredTutorials = computed(() => {
   if (!searchQuery.value) return tutorialSongs.value;
   const query = searchQuery.value.toLowerCase();
   return tutorialSongs.value.filter(
-    (song) =>
+    (song: Song) =>
       song.title.toLowerCase().includes(query) ||
       song.artist.toLowerCase().includes(query)
   );
@@ -639,12 +698,16 @@ const confirmDelete = (recording: RecordingDocument) => {
 const handleDeleteConfirm = async () => {
   if (!recordingToDelete.value) return;
 
+  deletingRecordingId.value = recordingToDelete.value.id;
+
   try {
     await recordingsStore.deleteRecording(recordingToDelete.value.id);
     toast.success("Recording deleted successfully!");
     recordingToDelete.value = null;
   } catch (error) {
     toast.error("Failed to delete recording");
+  } finally {
+    deletingRecordingId.value = null;
   }
 };
 
@@ -678,7 +741,7 @@ onMounted(() => {
 });
 
 // Watch for tab changes and reload data when needed
-watch(activeTab, (newTab) => {
+watch(activeTab, (newTab: "songs" | "my-songs" | "tutorials") => {
   if (newTab === "songs") {
     loadPublishedSongs();
   } else if (newTab === "my-songs" && isAuthenticated.value) {
@@ -696,7 +759,7 @@ watch(searchQuery, () => {
 // Reload recordings when user logs in
 watch(
   () => userStore.isLoggedIn,
-  (loggedIn) => {
+  (loggedIn: boolean) => {
     if (loggedIn) {
       loadMyRecordings();
     } else {
@@ -726,5 +789,21 @@ defineExpose({
 
 .animate-pulse-slow {
   animation: pulse-slow 2s ease-in-out infinite;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(217, 119, 87, 0.2);
+  border-top-color: #d97757;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

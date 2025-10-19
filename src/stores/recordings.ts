@@ -152,5 +152,9 @@ export const useRecordingsStore = defineStore('recordings', () => {
     clearAll,
     isPublishing,
   }
-})
+},
+  {
+    persist: true,
+  }
+)
 

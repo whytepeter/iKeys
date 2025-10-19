@@ -325,7 +325,9 @@ const showSongLibrary = ref(false);
 const showChordDictionary = ref(false);
 
 // Template refs
-const songLibraryModalRef = ref<{ refreshRecordings: () => Promise<void> } | null>(null);
+const songLibraryModalRef = ref<{
+  refreshRecordings: () => Promise<void>;
+} | null>(null);
 
 // Recording modals
 const showRecordingTitleInput = ref(false);
@@ -920,11 +922,12 @@ const handleRecordingTitleConfirm = async (title: string) => {
       // Save to Appwrite if user is logged in
       const savedRecording = await recordingsService.createRecording(
         userStore.profile.id,
+        userStore.profile.name,
         title,
         pendingRecordingNotes.value,
         calculatedDuration
       );
-      
+
       // Add to store
       recordingsStore.addRecording(savedRecording);
       console.log("✅ Recording saved to Appwrite and added to store");
