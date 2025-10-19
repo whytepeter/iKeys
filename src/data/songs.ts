@@ -1341,170 +1341,621 @@ export const songs: Song[] = [
       },
     ],
   },
-
-  // ========================================
-  // 🎵 ROMANTIC SONG 3: FOREVER YOURS
-  // ========================================
+  // 2) "Heartbeat Echoes" — tender pop-love in G major (uplifting, flowing)
   {
-    id: 'forever-yours',
-    title: '🎵 Forever Yours',
-    artist: 'iKeys Original',
-    tempo: 100,
-    duration: 76,
-    difficulty: 'intermediate',
-    chords: [
-      // Intro (0-8s) - G - D - Em - C
-      { time: 0, duration: 4, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 4, duration: 4, chordName: 'D', keys: ['D3', 'D4', 'F#4', 'A4'], hand: 'both', color: chordColors['D'], fingers: [1, 1, 3, 5] },
-
-      // Verse 1 (8-24s)
-      { time: 8, duration: 4, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 12, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 16, duration: 4, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 20, duration: 4, chordName: 'D', keys: ['D3', 'D4', 'F#4', 'A4'], hand: 'both', color: chordColors['D'], fingers: [1, 1, 3, 5] },
-
-      // Pre-Chorus (24-32s)
-      { time: 24, duration: 2, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 26, duration: 2, chordName: 'D', keys: ['D3', 'D4', 'F#4', 'A4'], hand: 'both', color: chordColors['D'], fingers: [1, 1, 3, 5] },
-      { time: 28, duration: 2, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 30, duration: 2, chordName: 'D', keys: ['D3', 'D4', 'F#4', 'A4'], hand: 'both', color: chordColors['D'], fingers: [1, 1, 3, 5] },
-
-      // Chorus (32-48s)
-      { time: 32, duration: 4, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 36, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 40, duration: 4, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 44, duration: 4, chordName: 'D', keys: ['D3', 'D4', 'F#4', 'A4'], hand: 'both', color: chordColors['D'], fingers: [1, 1, 3, 5] },
-
-      // Verse 2 (48-60s)
-      { time: 48, duration: 4, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 52, duration: 4, chordName: 'D', keys: ['D3', 'D4', 'F#4', 'A4'], hand: 'both', color: chordColors['D'], fingers: [1, 1, 3, 5] },
-      { time: 56, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-
-      // Final Chorus (60-76s)
-      { time: 60, duration: 4, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 64, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 68, duration: 4, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 72, duration: 4, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-    ],
+    id: "heartbeat-echoes",
+    title: "Heartbeat Echoes",
+    artist: "Original",
+    tempo: 84,
+    duration: 62,
+    difficulty: "intermediate",
     sections: [
-      { name: 'Intro', startTime: 0, endTime: 8 },
-      { name: 'Verse 1', startTime: 8, endTime: 24 },
-      { name: 'Pre-Chorus', startTime: 24, endTime: 32 },
-      { name: 'Chorus', startTime: 32, endTime: 48 },
-      { name: 'Verse 2', startTime: 48, endTime: 60 },
-      { name: 'Final Chorus', startTime: 60, endTime: 76 },
+      { name: "Intro", startTime: 0, endTime: 4 },
+      { name: "Verse 1", startTime: 4, endTime: 20 },
+      { name: "Verse 2", startTime: 20, endTime: 36 },
+      { name: "Chorus", startTime: 36, endTime: 52 },
+      { name: "Outro", startTime: 52, endTime: 62 },
+    ],
+    chords: [
+      // INTRO (G → D → Em → C)
+      {
+        time: 0,
+        duration: 1,
+        chordName: "G",
+        keys: ["G2", "D3", "G3", "B3"],
+        hand: "left",
+        color: "#50C878",
+        noteOffsets: [0, 0.25, 0.5, 0.75],
+      },
+      { time: 0, duration: 1, chordName: "G", keys: ["G4", "B4", "D5"], hand: "right", color: "#50C878" },
+
+      {
+        time: 1,
+        duration: 1,
+        chordName: "D",
+        keys: ["D2", "A2", "D3", "F#3"],
+        hand: "left",
+        color: "#3498DB",
+        noteOffsets: [0, 0.25, 0.5, 0.75],
+      },
+      { time: 1, duration: 1, chordName: "D", keys: ["F#4", "A4", "D5"], hand: "right", color: "#3498DB" },
+
+      {
+        time: 2,
+        duration: 1,
+        chordName: "Em",
+        keys: ["E2", "B2", "E3"],
+        hand: "left",
+        color: "#9B59B6",
+      },
+      { time: 2, duration: 1, chordName: "Em", keys: ["G4", "B4", "E5"], hand: "right", color: "#9B59B6" },
+
+      {
+        time: 3,
+        duration: 1,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3"],
+        hand: "left",
+        color: "#4A90E2",
+        noteOffsets: [0, 0.25, 0.5, 0.75],
+      },
+      { time: 3, duration: 1, chordName: "C", keys: ["E4", "G4", "C5"], hand: "right", color: "#4A90E2" },
+
+      // VERSE 1 (G → D → Em → C, with melody tones)
+      {
+        time: 4,
+        duration: 4,
+        chordName: "G",
+        keys: ["G2", "D3", "G3", "B3"],
+        hand: "left",
+        color: "#50C878",
+        noteOffsets: [0, 1, 2, 3],
+      },
+      { time: 4, duration: 0.5, chordName: "G", keys: ["B4", "D5"], hand: "right", color: "#50C878", noteOffsets: [0, 0.2] },
+      { time: 4.6, duration: 0.9, chordName: "G", keys: ["G4"], hand: "right", color: "#50C878" },
+
+      {
+        time: 8,
+        duration: 4,
+        chordName: "D",
+        keys: ["D2", "A2", "D3", "F#3"],
+        hand: "left",
+        color: "#3498DB",
+        noteOffsets: [0, 1, 2, 3],
+      },
+      { time: 8, duration: 0.5, chordName: "D", keys: ["A4", "D5"], hand: "right", color: "#3498DB", noteOffsets: [0, 0.2] },
+      { time: 8.6, duration: 0.9, chordName: "D", keys: ["F#4"], hand: "right", color: "#3498DB" },
+
+      {
+        time: 12,
+        duration: 4,
+        chordName: "Em",
+        keys: ["E2", "B2", "E3"],
+        hand: "left",
+        color: "#9B59B6",
+        noteOffsets: [0, 1.2, 2.4],
+      },
+      { time: 12, duration: 1.2, chordName: "Em", keys: ["G4"], hand: "right", color: "#9B59B6" },
+      { time: 13.4, duration: 0.6, chordName: "Em", keys: ["B4", "E5"], hand: "right", color: "#9B59B6", noteOffsets: [0, 0.2] },
+      { time: 14.2, duration: 1.8, chordName: "Em", keys: ["G4"], hand: "right", color: "#9B59B6" },
+
+      {
+        time: 16,
+        duration: 4,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3"],
+        hand: "left",
+        color: "#4A90E2",
+        noteOffsets: [0, 1, 2, 3],
+      },
+      { time: 16, duration: 0.6, chordName: "C", keys: ["E4", "G4", "C5"], hand: "right", color: "#4A90E2", noteOffsets: [0, 0.18, 0.36] },
+      { time: 16.8, duration: 1.2, chordName: "C", keys: ["D5"], hand: "right", color: "#4A90E2" },
+
+      // VERSE 2 (same harmony, slightly lifted melody)
+      {
+        time: 20,
+        duration: 4,
+        chordName: "G",
+        keys: ["G2", "D3", "G3", "B3"],
+        hand: "left",
+        color: "#50C878",
+      },
+      { time: 20, duration: 0.5, chordName: "G", keys: ["D5", "G5"], hand: "right", color: "#50C878", noteOffsets: [0, 0.2] },
+      { time: 20.7, duration: 1.1, chordName: "G", keys: ["B4"], hand: "right", color: "#50C878" },
+
+      {
+        time: 24,
+        duration: 4,
+        chordName: "D",
+        keys: ["D2", "A2", "D3", "F#3"],
+        hand: "left",
+        color: "#3498DB",
+      },
+      { time: 24, duration: 0.6, chordName: "D", keys: ["F#4", "A4", "D5"], hand: "right", color: "#3498DB", noteOffsets: [0, 0.18, 0.36] },
+      { time: 24.9, duration: 1.1, chordName: "D", keys: ["E5"], hand: "right", color: "#3498DB" },
+
+      {
+        time: 28,
+        duration: 4,
+        chordName: "Em",
+        keys: ["E2", "B2", "E3"],
+        hand: "left",
+        color: "#9B59B6",
+      },
+      { time: 28, duration: 0.5, chordName: "Em", keys: ["B4", "E5"], hand: "right", color: "#9B59B6", noteOffsets: [0, 0.2] },
+      { time: 28.7, duration: 1.3, chordName: "Em", keys: ["G5"], hand: "right", color: "#9B59B6" },
+
+      {
+        time: 32,
+        duration: 4,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3"],
+        hand: "left",
+        color: "#4A90E2",
+      },
+      { time: 32, duration: 0.6, chordName: "C", keys: ["E4", "G4", "C5"], hand: "right", color: "#4A90E2", noteOffsets: [0, 0.18, 0.36] },
+      { time: 32.8, duration: 1.2, chordName: "C", keys: ["G5"], hand: "right", color: "#4A90E2" },
+
+      // CHORUS (G → D → Em → C) ×2 with lift ending on D → G cadence
+      // Pass 1
+      {
+        time: 36,
+        duration: 4,
+        chordName: "G",
+        keys: ["G2", "D3", "G3", "B3"],
+        hand: "left",
+        color: "#50C878",
+        noteOffsets: [0, 1, 2, 3],
+      },
+      { time: 36, duration: 0.5, chordName: "G", keys: ["B4", "D5", "G5"], hand: "right", color: "#50C878", noteOffsets: [0, 0.15, 0.3] },
+
+      {
+        time: 40,
+        duration: 4,
+        chordName: "D",
+        keys: ["D2", "A2", "D3", "F#3"],
+        hand: "left",
+        color: "#3498DB",
+        noteOffsets: [0, 1, 2, 3],
+      },
+      { time: 40, duration: 0.5, chordName: "D", keys: ["A4", "D5", "F#5"], hand: "right", color: "#3498DB", noteOffsets: [0, 0.15, 0.3] },
+
+      {
+        time: 44,
+        duration: 4,
+        chordName: "Em",
+        keys: ["E2", "B2", "E3"],
+        hand: "left",
+        color: "#9B59B6",
+        noteOffsets: [0, 1.3, 2.6],
+      },
+      { time: 44, duration: 1.2, chordName: "Em", keys: ["G5"], hand: "right", color: "#9B59B6" },
+      { time: 45.4, duration: 1.0, chordName: "Em", keys: ["B4", "E5"], hand: "right", color: "#9B59B6", noteOffsets: [0, 0.15] },
+
+      // Pass 2 (tag into cadence)
+      {
+        time: 48,
+        duration: 2,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3"],
+        hand: "left",
+        color: "#4A90E2",
+      },
+      { time: 48, duration: 2, chordName: "C", keys: ["E4", "G4", "C5"], hand: "right", color: "#4A90E2" },
+
+      {
+        time: 50,
+        duration: 1,
+        chordName: "D",
+        keys: ["D2", "A2", "D3", "F#3"],
+        hand: "left",
+        color: "#3498DB",
+      },
+      { time: 50, duration: 1, chordName: "D", keys: ["F#4", "A4", "D5"], hand: "right", color: "#3498DB" },
+
+      {
+        time: 51,
+        duration: 1,
+        chordName: "G",
+        keys: ["G2", "D3", "G3", "B3"],
+        hand: "left",
+        color: "#50C878",
+      },
+      { time: 51, duration: 1, chordName: "G", keys: ["B4", "D5", "G5"], hand: "right", color: "#50C878" },
+
+      // OUTRO (gentle: Em → C → G)
+      {
+        time: 52,
+        duration: 4,
+        chordName: "Em",
+        keys: ["E2", "B2", "E3"],
+        hand: "left",
+        color: "#9B59B6",
+      },
+      { time: 52, duration: 4, chordName: "Em", keys: ["G4", "B4", "E5"], hand: "right", color: "#9B59B6" },
+
+      {
+        time: 56,
+        duration: 3,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3"],
+        hand: "left",
+        color: "#4A90E2",
+      },
+      { time: 56, duration: 3, chordName: "C", keys: ["E4", "G4", "C5"], hand: "right", color: "#4A90E2" },
+
+      {
+        time: 59,
+        duration: 3,
+        chordName: "G",
+        keys: ["G2", "D3", "G3", "B3", "D4", "G4"],
+        hand: "both",
+        color: "#50C878",
+        noteOffsets: [0, 0.08, 0.16, 0.24, 0.32, 0.4],
+      },
     ],
   },
 
-
-  // ========================================
-  // 🎷 JAZZ SONG 3: BLUES IN C
-  // ========================================
+  // 1) "Moonlit Letters" — warm ballad in C major (romantic, gentle arpeggios)
   {
-    id: 'blues-in-c',
-    title: '🎷 Blues in C',
-    artist: 'iKeys Jazz',
-    tempo: 100,
-    duration: 72,
-    difficulty: 'intermediate',
-    chords: [
-      // Blues Chorus 1 (0-24s) - Classic 12-bar blues
-      { time: 0, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 4, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 8, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 12, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-
-      { time: 16, duration: 4, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 20, duration: 4, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-
-      // Blues Chorus 1 continued (24-48s)
-      { time: 24, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 28, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-
-      { time: 32, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 34, duration: 2, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 36, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 40, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 42, duration: 2, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-
-      // Blues Chorus 2 (48-72s)
-      { time: 48, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 52, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 56, duration: 4, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 60, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 64, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 66, duration: 2, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 68, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4', 'C5'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 2, 3, 5] },
-    ],
+    id: "moonlit-letters",
+    title: "Moonlit Letters",
+    artist: "Original",
+    tempo: 76,
+    duration: 58,
+    difficulty: "intermediate",
     sections: [
-      { name: 'Chorus 1 (Bars 1-4)', startTime: 0, endTime: 16 },
-      { name: 'Chorus 1 (Bars 5-8)', startTime: 16, endTime: 32 },
-      { name: 'Chorus 1 (Bars 9-12)', startTime: 32, endTime: 48 },
-      { name: 'Chorus 2', startTime: 48, endTime: 72 },
+      { name: "Intro", startTime: 0, endTime: 6 },
+      { name: "Verse 1", startTime: 6, endTime: 22 },
+      { name: "Pre-Chorus", startTime: 22, endTime: 30 },
+      { name: "Chorus", startTime: 30, endTime: 46 },
+      { name: "Outro", startTime: 46, endTime: 58 },
     ],
-  },
-
-  // ========================================
-  // 🎷 JAZZ SONG 4: BEBOP EXPRESS
-  // ========================================
-  {
-    id: 'bebop-express',
-    title: '🎷 Bebop Express',
-    artist: 'iKeys Jazz',
-    tempo: 140,
-    duration: 56,
-    difficulty: 'advanced',
     chords: [
-      // Intro (0-8s) - Fast changes
-      { time: 0, duration: 1, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 1, duration: 1, chordName: 'Dm', keys: ['D3', 'D4', 'F4', 'A4'], hand: 'both', color: chordColors['Dm'], fingers: [1, 1, 2, 4] },
-      { time: 2, duration: 1, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 3, duration: 1, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 4, duration: 1, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 5, duration: 1, chordName: 'Am', keys: ['A3', 'A4', 'C5', 'E5'], hand: 'both', color: chordColors['Am'], fingers: [5, 1, 2, 4] },
-      { time: 6, duration: 1, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 7, duration: 1, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
+      // INTRO (rolled chords, both hands)
+      {
+        time: 0,
+        duration: 2,
+        chordName: "C",
+        keys: ["C3", "E3", "G3", "C4", "E4", "G4"],
+        hand: "both",
+        color: "#4A90E2",
+        fingers: [5, 3, 1, 1, 3, 5],
+        noteOffsets: [0, 0.06, 0.12, 0.18, 0.24, 0.3],
+      },
+      {
+        time: 2,
+        duration: 2,
+        chordName: "Am7",
+        keys: ["A2", "E3", "G3", "C4", "E4", "G4"],
+        hand: "both",
+        color: "#E67E22",
+        noteOffsets: [0, 0.05, 0.1, 0.15, 0.2, 0.25],
+      },
+      {
+        time: 4,
+        duration: 2,
+        chordName: "Fmaj7",
+        keys: ["F2", "C3", "E3", "A3", "C4", "E4"],
+        hand: "both",
+        color: "#C0392B",
+        noteOffsets: [0, 0.05, 0.1, 0.16, 0.21, 0.27],
+      },
 
-      // A Section (8-24s) - Fast ii-V-I
-      { time: 8, duration: 2, chordName: 'Dm', keys: ['D3', 'D4', 'F4', 'A4'], hand: 'both', color: chordColors['Dm'], fingers: [1, 1, 2, 4] },
-      { time: 10, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 12, duration: 2, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 14, duration: 2, chordName: 'Am', keys: ['A3', 'A4', 'C5', 'E5'], hand: 'both', color: chordColors['Am'], fingers: [5, 1, 2, 4] },
+      // VERSE 1 — melody (right) + broken left hand
+      // Bar 1 (C)
+      {
+        time: 6,
+        duration: 2,
+        chordName: "C",
+        keys: ["C3", "G3", "C4"],
+        hand: "left",
+        color: "#4A90E2",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      {
+        time: 6,
+        duration: 0.5,
+        chordName: "C",
+        keys: ["E4", "G4", "C5"],
+        hand: "right",
+        color: "#4A90E2",
+        noteOffsets: [0, 0.12, 0.24],
+        noteDurations: [0.4, 0.4, 0.8],
+      },
+      {
+        time: 6.8,
+        duration: 1.2,
+        chordName: "C",
+        keys: ["E5"],
+        hand: "right",
+        color: "#4A90E2",
+      },
 
-      { time: 16, duration: 2, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 18, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 20, duration: 2, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 22, duration: 2, chordName: 'Am', keys: ['A3', 'A4', 'C5', 'E5'], hand: 'both', color: chordColors['Am'], fingers: [5, 1, 2, 4] },
+      // Bar 2 (Am)
+      {
+        time: 8,
+        duration: 2,
+        chordName: "Am",
+        keys: ["A2", "E3", "A3"],
+        hand: "left",
+        color: "#F5A623",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      {
+        time: 8,
+        duration: 0.5,
+        chordName: "Am",
+        keys: ["C5", "E5"],
+        hand: "right",
+        color: "#F5A623",
+        noteOffsets: [0, 0.15],
+        noteDurations: [0.45, 0.9],
+      },
+      {
+        time: 8.9,
+        duration: 1.1,
+        chordName: "Am",
+        keys: ["G4"],
+        hand: "right",
+        color: "#F5A623",
+      },
 
-      // B Section (24-40s)
-      { time: 24, duration: 2, chordName: 'Dm', keys: ['D3', 'D4', 'F4', 'A4'], hand: 'both', color: chordColors['Dm'], fingers: [1, 1, 2, 4] },
-      { time: 26, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
-      { time: 28, duration: 2, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 30, duration: 2, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
+      // Bar 3 (F)
+      {
+        time: 10,
+        duration: 2,
+        chordName: "F",
+        keys: ["F2", "C3", "F3"],
+        hand: "left",
+        color: "#D97757",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      {
+        time: 10,
+        duration: 0.6,
+        chordName: "F",
+        keys: ["A4", "C5", "F5"],
+        hand: "right",
+        color: "#D97757",
+        noteOffsets: [0, 0.12, 0.24],
+      },
+      {
+        time: 10.9,
+        duration: 1.1,
+        chordName: "F",
+        keys: ["E5"],
+        hand: "right",
+        color: "#D97757",
+      },
 
-      { time: 32, duration: 2, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 34, duration: 2, chordName: 'Am', keys: ['A3', 'A4', 'C5', 'E5'], hand: 'both', color: chordColors['Am'], fingers: [5, 1, 2, 4] },
-      { time: 36, duration: 2, chordName: 'Dm', keys: ['D3', 'D4', 'F4', 'A4'], hand: 'both', color: chordColors['Dm'], fingers: [1, 1, 2, 4] },
-      { time: 38, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
+      // Bar 4 (G → G7 lead-in)
+      {
+        time: 12,
+        duration: 2,
+        chordName: "G",
+        keys: ["G2", "D3", "G3"],
+        hand: "left",
+        color: "#50C878",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      {
+        time: 12,
+        duration: 0.5,
+        chordName: "G7",
+        keys: ["B4", "D5", "F5"],
+        hand: "right",
+        color: "#16A085",
+        noteOffsets: [0, 0.12, 0.24],
+      },
+      {
+        time: 12.8,
+        duration: 1.2,
+        chordName: "G7",
+        keys: ["G5"],
+        hand: "right",
+        color: "#16A085",
+      },
 
-      // Final Section (40-56s) - Fast ending
-      { time: 40, duration: 2, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 42, duration: 2, chordName: 'Am', keys: ['A3', 'A4', 'C5', 'E5'], hand: 'both', color: chordColors['Am'], fingers: [5, 1, 2, 4] },
-      { time: 44, duration: 2, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 46, duration: 2, chordName: 'G', keys: ['G3', 'G4', 'B4', 'D5'], hand: 'both', color: chordColors['G'], fingers: [5, 1, 3, 5] },
+      // VERSE 1 repeat phrase (C → Am → F → G)
+      {
+        time: 14,
+        duration: 2,
+        chordName: "C",
+        keys: ["C3", "G3", "C4"],
+        hand: "left",
+        color: "#4A90E2",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      { time: 14, duration: 1.2, chordName: "C", keys: ["E5"], hand: "right", color: "#4A90E2" },
+      {
+        time: 16,
+        duration: 2,
+        chordName: "Am",
+        keys: ["A2", "E3", "A3"],
+        hand: "left",
+        color: "#F5A623",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      { time: 16, duration: 1.2, chordName: "Am", keys: ["C5", "B4"], hand: "right", color: "#F5A623", noteOffsets: [0, 0.6] },
+      {
+        time: 18,
+        duration: 2,
+        chordName: "F",
+        keys: ["F2", "C3", "F3"],
+        hand: "left",
+        color: "#D97757",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      { time: 18, duration: 1.2, chordName: "F", keys: ["A4", "C5"], hand: "right", color: "#D97757", noteOffsets: [0, 0.6] },
+      {
+        time: 20,
+        duration: 2,
+        chordName: "G",
+        keys: ["G2", "D3", "G3"],
+        hand: "left",
+        color: "#50C878",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      { time: 20, duration: 1.2, chordName: "G7", keys: ["F5", "D5", "B4"], hand: "right", color: "#16A085", noteOffsets: [0, 0.25, 0.5] },
 
-      { time: 48, duration: 1, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 3, 5] },
-      { time: 49, duration: 1, chordName: 'Dm', keys: ['D3', 'D4', 'F4', 'A4'], hand: 'both', color: chordColors['Dm'], fingers: [1, 1, 2, 4] },
-      { time: 50, duration: 1, chordName: 'Em', keys: ['E3', 'E4', 'G4', 'B4'], hand: 'both', color: chordColors['Em'], fingers: [1, 1, 2, 4] },
-      { time: 51, duration: 1, chordName: 'F', keys: ['F3', 'F4', 'A4', 'C5'], hand: 'both', color: chordColors['F'], fingers: [1, 1, 3, 5] },
-      { time: 52, duration: 4, chordName: 'C', keys: ['C3', 'C4', 'E4', 'G4', 'C5'], hand: 'both', color: chordColors['C'], fingers: [1, 1, 2, 3, 5] },
+      // PRE-CHORUS (Em → F → C → G)
+      {
+        time: 22,
+        duration: 2,
+        chordName: "Em",
+        keys: ["E2", "B2", "E3"],
+        hand: "left",
+        color: "#9B59B6",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      { time: 22, duration: 2, chordName: "Em", keys: ["G4", "B4", "E5"], hand: "right", color: "#9B59B6", noteOffsets: [0, 0.15, 0.3] },
+
+      {
+        time: 24,
+        duration: 2,
+        chordName: "F",
+        keys: ["F2", "C3", "F3"],
+        hand: "left",
+        color: "#D97757",
+        noteOffsets: [0, 0.5, 1.0],
+      },
+      { time: 24, duration: 2, chordName: "Fmaj7", keys: ["A4", "C5", "E5"], hand: "right", color: "#C0392B", noteOffsets: [0, 0.15, 0.3] },
+
+      {
+        time: 26,
+        duration: 2,
+        chordName: "C",
+        keys: ["C3", "G3", "C4"],
+        hand: "left",
+        color: "#4A90E2",
+      },
+      { time: 26, duration: 2, chordName: "C", keys: ["E4", "G4", "C5"], hand: "right", color: "#4A90E2" },
+
+      {
+        time: 28,
+        duration: 2,
+        chordName: "G",
+        keys: ["G2", "D3", "G3"],
+        hand: "left",
+        color: "#50C878",
+      },
+      { time: 28, duration: 2, chordName: "G7", keys: ["B4", "D5", "F5"], hand: "right", color: "#16A085" },
+
+      // CHORUS (C → Am7 → Fmaj7 → G7 | C → Am → F → G7 → C)
+      {
+        time: 30,
+        duration: 2,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3", "G3"],
+        hand: "left",
+        color: "#4A90E2",
+        noteOffsets: [0, 0.3, 0.6, 1.0, 1.3],
+      },
+      { time: 30, duration: 2, chordName: "C", keys: ["E4", "G4", "C5", "E5"], hand: "right", color: "#4A90E2" },
+
+      {
+        time: 32,
+        duration: 2,
+        chordName: "Am7",
+        keys: ["A2", "E3", "G3", "C4"],
+        hand: "left",
+        color: "#E67E22",
+        noteOffsets: [0, 0.4, 0.8, 1.2],
+      },
+      { time: 32, duration: 2, chordName: "Am7", keys: ["G4", "C5", "E5"], hand: "right", color: "#E67E22" },
+
+      {
+        time: 34,
+        duration: 2,
+        chordName: "Fmaj7",
+        keys: ["F2", "C3", "E3", "A3"],
+        hand: "left",
+        color: "#C0392B",
+        noteOffsets: [0, 0.4, 0.8, 1.2],
+      },
+      { time: 34, duration: 2, chordName: "Fmaj7", keys: ["A4", "C5", "E5"], hand: "right", color: "#C0392B" },
+
+      {
+        time: 36,
+        duration: 2,
+        chordName: "G7",
+        keys: ["G2", "D3", "F3", "B3"],
+        hand: "left",
+        color: "#16A085",
+        noteOffsets: [0, 0.4, 0.8, 1.2],
+      },
+      { time: 36, duration: 2, chordName: "G7", keys: ["B4", "D5", "F5"], hand: "right", color: "#16A085" },
+
+      {
+        time: 38,
+        duration: 2,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3", "G3"],
+        hand: "left",
+        color: "#4A90E2",
+      },
+      { time: 38, duration: 2, chordName: "C", keys: ["E4", "G4", "C5"], hand: "right", color: "#4A90E2" },
+
+      {
+        time: 40,
+        duration: 2,
+        chordName: "Am",
+        keys: ["A2", "E3", "A3"],
+        hand: "left",
+        color: "#F5A623",
+      },
+      { time: 40, duration: 2, chordName: "Am", keys: ["C5", "E5"], hand: "right", color: "#F5A623" },
+
+      {
+        time: 42,
+        duration: 2,
+        chordName: "F",
+        keys: ["F2", "C3", "F3"],
+        hand: "left",
+        color: "#D97757",
+      },
+      { time: 42, duration: 2, chordName: "F", keys: ["A4", "C5", "F5"], hand: "right", color: "#D97757" },
+
+      {
+        time: 44,
+        duration: 2,
+        chordName: "G7",
+        keys: ["G2", "D3", "F3", "B3"],
+        hand: "left",
+        color: "#16A085",
+      },
+      { time: 44, duration: 2, chordName: "G7", keys: ["B4", "D5", "F5"], hand: "right", color: "#16A085" },
+
+      // OUTRO (cadence: C → Fmaj7 → C, gentle roll)
+      {
+        time: 46,
+        duration: 4,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3", "G3", "C4"],
+        hand: "both",
+        color: "#4A90E2",
+        noteOffsets: [0, 0.08, 0.16, 0.24, 0.32, 0.4],
+      },
+      {
+        time: 50,
+        duration: 4,
+        chordName: "Fmaj7",
+        keys: ["F2", "C3", "E3", "A3", "C4", "E4"],
+        hand: "both",
+        color: "#C0392B",
+        noteOffsets: [0, 0.08, 0.16, 0.24, 0.32, 0.4],
+      },
+      {
+        time: 54,
+        duration: 4,
+        chordName: "C",
+        keys: ["C2", "G2", "C3", "E3", "G3", "C4"],
+        hand: "both",
+        color: "#4A90E2",
+        noteOffsets: [0, 0.08, 0.16, 0.24, 0.32, 0.4],
+      },
     ],
-    sections: [
-      { name: 'Intro', startTime: 0, endTime: 8 },
-      { name: 'A Section', startTime: 8, endTime: 24 },
-      { name: 'B Section', startTime: 24, endTime: 40 },
-      { name: 'Ending', startTime: 40, endTime: 56 },
-    ],
-  },
+  }
 
 ]
