@@ -228,7 +228,7 @@ import { ref, onMounted, watch } from "vue";
 import type { Song } from "../types";
 import { RecordingStorage, type Recording } from "../utils/recordingEngine";
 
-const props = defineProps<{
+defineProps<{
   songs: Song[];
   currentSong: Song | null;
   currentRecording?: Recording | null;

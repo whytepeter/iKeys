@@ -513,27 +513,7 @@ const stop = () => {
   chordDetector.clear();
 };
 
-const changePlayMode = (mode: PlayMode) => {
-  stop();
-  playMode.value = mode;
-};
-
-const changeHandMode = (mode: HandMode) => {
-  handMode.value = mode;
-};
-
-const changeTempo = (value: number) => {
-  tempo.value = value;
-};
-
-const changeVolume = (value: number) => {
-  volume.value = value;
-  audioEngine.setVolume(value / 100);
-};
-
-const toggleLoop = () => {
-  loop.value = !loop.value;
-};
+// Settings are now updated directly via v-model bindings
 
 // Auto playback - chords play automatically
 const startAutoPlayback = () => {

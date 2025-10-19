@@ -52,7 +52,7 @@ interface Props {
 const props = defineProps<Props>();
 
 // Constants for visual layout
-const CONTAINER_HEIGHT = 400; // pixels
+// Container height is managed by CSS (420px in App.vue)
 const HIT_LINE_POSITION = 320; // pixels from top
 const PIXELS_PER_SECOND = 100; // How fast notes fall
 const LOOKAHEAD_TIME = 5; // Show notes up to 5 seconds ahead

@@ -48,7 +48,7 @@ export class RecordingEngine {
         return this.recordedNotes
     }
 
-    public recordKeyPress(note: string, velocity: number = 0.8) {
+    public recordKeyPress(note: string, _velocity: number = 0.8) {
         if (!this.isRecording) return
 
         const currentTime = (performance.now() - this.startTime) / 1000

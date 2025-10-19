@@ -12,7 +12,7 @@
           }}
         </h3>
         <div v-if="currentSong" class="text-sm text-muted-foreground">
-          Note {{ currentNoteIndex + 1 }} / {{ currentSong.notes.length }}
+          Chord {{ currentNoteIndex + 1 }} / {{ currentSong.chords.length }}
         </div>
       </div>
 
@@ -38,7 +38,7 @@
           >
             <!-- Note on Staff -->
             <div
-              v-for="(singleNote, noteIdx) in getNoteArray(note.note)"
+              v-for="(singleNote, noteIdx) in note.keys"
               :key="noteIdx"
               :class="[
                 'musical-note',
@@ -162,12 +162,8 @@ const notePositions: Record<string, number> = {
 };
 
 const displayNotes = computed(() => {
-  return props.currentSong?.notes || [];
+  return props.currentSong?.chords || [];
 });
-
-const getNoteArray = (note: string | string[]): string[] => {
-  return Array.isArray(note) ? note : [note];
-};
 
 const getNotePosition = (index: number): number => {
   return 200 + index * noteSpacing; // Start 200px from left

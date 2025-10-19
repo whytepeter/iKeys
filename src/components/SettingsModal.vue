@@ -218,22 +218,22 @@ const emit = defineEmits<{
 
 const playModes = [
   {
-    value: "free",
+    value: "free" as const,
     label: "Free Play",
     description: "Play any chords freely",
   },
   {
-    value: "auto",
+    value: "auto" as const,
     label: "Auto Play",
     description: "Watch chords play automatically",
   },
   {
-    value: "practice",
+    value: "practice" as const,
     label: "Practice",
     description: "Follow along with feedback",
   },
   {
-    value: "wait",
+    value: "wait" as const,
     label: "Wait Mode",
     description: "Song pauses until correct chord",
   },

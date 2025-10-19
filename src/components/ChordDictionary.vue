@@ -3,7 +3,7 @@
     <!-- Filter -->
     <div class="filter-tabs">
       <button
-        v-for="difficulty in ['all', 'easy', 'medium', 'hard']"
+        v-for="difficulty in ['all', 'easy', 'medium', 'hard'] as const"
         :key="difficulty"
         @click="selectedDifficulty = difficulty"
         :class="['filter-tab', selectedDifficulty === difficulty && 'active']"

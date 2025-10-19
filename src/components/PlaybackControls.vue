@@ -3,15 +3,16 @@
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
       <!-- Play Mode Selection -->
       <div class="mb-6">
-        <h3 class="text-sm font-semibold mb-3 text-slate-700 dark:text-slate-200">Play Mode</h3>
+        <h3
+          class="text-sm font-semibold mb-3 text-slate-700 dark:text-slate-200"
+        >
+          Play Mode
+        </h3>
         <div class="flex gap-2">
           <button
             v-for="mode in playModes"
             :key="mode.value"
-            :class="[
-              'mode-button',
-              { 'active': playMode === mode.value }
-            ]"
+            :class="['mode-button', { active: playMode === mode.value }]"
             @click="changeMode(mode.value)"
           >
             <span class="mode-icon">{{ mode.icon }}</span>
@@ -22,11 +23,7 @@
 
       <!-- Transport Controls -->
       <div class="mb-6 flex items-center justify-center gap-4">
-        <button
-          class="control-button stop"
-          @click="emit('stop')"
-          title="Stop"
-        >
+        <button class="control-button stop" @click="emit('stop')" title="Stop">
           ⏹️
         </button>
         <button
@@ -46,7 +43,7 @@
           ⏸️
         </button>
         <button
-          :class="['control-button loop', { 'active': loop }]"
+          :class="['control-button loop', { active: loop }]"
           @click="emit('toggleLoop')"
           title="Loop"
         >
@@ -109,46 +106,46 @@
 </template>
 
 <script setup lang="ts">
-import type { PlayMode } from '../types'
+import type { PlayMode } from "../types";
 
 defineProps<{
-  isPlaying: boolean
-  playMode: PlayMode
-  tempo: number
-  volume: number
-  loop: boolean
-  progress: number
-}>()
+  isPlaying: boolean;
+  playMode: PlayMode;
+  tempo: number;
+  volume: number;
+  loop: boolean;
+  progress: number;
+}>();
 
 const emit = defineEmits<{
-  play: []
-  pause: []
-  stop: []
-  changeMode: [mode: PlayMode]
-  changeTempo: [value: number]
-  changeVolume: [value: number]
-  toggleLoop: []
-}>()
+  play: [];
+  pause: [];
+  stop: [];
+  changeMode: [mode: PlayMode];
+  changeTempo: [value: number];
+  changeVolume: [value: number];
+  toggleLoop: [];
+}>();
 
 const playModes = [
-  { value: 'free', label: 'Free Play', icon: '🎹' },
-  { value: 'auto', label: 'Auto Play', icon: '▶️' },
-  { value: 'practice', label: 'Practice', icon: '🎓' },
-]
+  { value: "free" as const, label: "Free Play", icon: "🎹" },
+  { value: "auto" as const, label: "Auto Play", icon: "▶️" },
+  { value: "practice" as const, label: "Practice", icon: "🎓" },
+];
 
 const changeMode = (mode: PlayMode) => {
-  emit('changeMode', mode)
-}
+  emit("changeMode", mode);
+};
 
 const updateTempo = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  emit('changeTempo', Number(target.value))
-}
+  const target = event.target as HTMLInputElement;
+  emit("changeTempo", Number(target.value));
+};
 
 const updateVolume = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  emit('changeVolume', Number(target.value))
-}
+  const target = event.target as HTMLInputElement;
+  emit("changeVolume", Number(target.value));
+};
 </script>
 
 <style scoped>
@@ -341,17 +338,17 @@ const updateVolume = (event: Event) => {
     padding: 10px 12px;
     font-size: 0.75rem;
   }
-  
+
   .mode-icon {
     font-size: 1rem;
   }
-  
+
   .control-button {
     width: 56px;
     height: 56px;
     font-size: 1.25rem;
   }
-  
+
   .control-button.play,
   .control-button.pause {
     width: 72px;
@@ -360,4 +357,3 @@ const updateVolume = (event: Event) => {
   }
 }
 </style>
-

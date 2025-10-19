@@ -154,11 +154,4 @@ function formatTime(seconds: number): string {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
-
-function getAccuracyClass(accuracy: number): string {
-  if (accuracy >= 90) return "excellent";
-  if (accuracy >= 70) return "good";
-  if (accuracy >= 50) return "fair";
-  return "poor";
-}
 </script>
