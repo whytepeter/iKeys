@@ -40,6 +40,7 @@
           <SongLibraryModal
             ref="songLibraryModalRef"
             :songs="songs"
+            :tutorials="tutorials"
             :current-song="currentSong"
             :current-recording="playingRecording"
             :is-playing="isPlaying && playingRecording !== null"
@@ -293,7 +294,7 @@ import InputModal from "./components/InputModal.vue";
 import AlertModal from "./components/AlertModal.vue";
 import AuthModal from "./components/AuthModal.vue";
 import ToastContainer from "./components/ToastContainer.vue";
-import { songs } from "./data/songs";
+import { songs, tutorials } from "./data/songs";
 import { AudioEngine } from "./utils/audioEngine";
 import { ChordDetector } from "./utils/chordDetection";
 import {
@@ -499,25 +500,25 @@ const closeSong = () => {
 
 const playModeOptions = [
   {
-    value: "auto",
+    value: "auto" as PlayMode,
     label: "Auto Play",
     icon: "▶️",
     desc: "Plays chords automatically",
   },
   {
-    value: "practice",
+    value: "practice" as PlayMode,
     label: "Practice",
     icon: "🎓",
     desc: "Wait for correct chords",
   },
   {
-    value: "wait",
+    value: "wait" as PlayMode,
     label: "Wait Mode",
     icon: "⏸️",
     desc: "Pause until you play",
   },
   {
-    value: "free",
+    value: "free" as PlayMode,
     label: "Free Play",
     icon: "🎹",
     desc: "Play without guidance",
@@ -528,7 +529,7 @@ const togglePlayModeMenu = () => {
   showPlayModeMenu.value = !showPlayModeMenu.value;
 };
 
-const selectPlayMode = (mode: string) => {
+const selectPlayMode = (mode: PlayMode) => {
   playMode.value = mode;
   showPlayModeMenu.value = false;
 };

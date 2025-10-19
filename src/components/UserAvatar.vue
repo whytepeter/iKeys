@@ -104,15 +104,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useUserStore } from "../stores/user";
-import { useDropdown } from "../composables/useDropdown";
+// import { useDropdown } from "../composables/useDropdown";
 
 const userStore = useUserStore();
-const { isOpen, toggle: toggleDropdown, close } = useDropdown();
+// const { isOpen, toggle: toggleDropdown, close } = useDropdown();
+const isOpen = ref(false);
+const toggleDropdown = () => { isOpen.value = !isOpen.value; };
+// const close = () => { isOpen.value = false; };
 
-const isAuthenticated = computed(() => userStore?.isAuthenticated ?? false);
-const username = computed(() => userStore?.username);
+const isAuthenticated = computed(() => userStore.isLoggedIn);
+const username = computed(() => userStore.profile?.name);
 const userInitial = computed(() =>
   isAuthenticated.value && username.value
     ? username.value[0].toUpperCase()
@@ -120,12 +123,12 @@ const userInitial = computed(() =>
 );
 
 function handleLogin() {
-  userStore.setAuthenticated(true, "John Doe");
-  close();
+  // userStore.setAuthenticated(true, "John Doe");
+  // close();
 }
 
 function handleLogout() {
-  userStore.setAuthenticated(false);
-  close();
+  userStore.logout();
+  // close();
 }
 </script>

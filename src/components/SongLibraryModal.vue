@@ -53,31 +53,32 @@
       </button>
     </div>
 
-    <!-- Songs Tab -->
+    <!-- Community Tab -->
     <div
-      v-if="activeTab === 'songs'"
+      v-if="activeTab === 'community'"
       class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
     >
       <!-- Loading State -->
       <div
         v-if="
-          recordingsStore.isLoadingPublishedSongs && filteredSongs.length === 0
+          recordingsStore.isLoadingPublishedSongs &&
+          filteredCommunity.length === 0
         "
         class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
       >
         <div class="loading-spinner mb-4"></div>
-        <h3 class="text-xl text-zinc-200 mb-2">Loading Songs...</h3>
+        <h3 class="text-xl text-zinc-200 mb-2">Loading Community Songs...</h3>
         <p class="text-zinc-400 max-w-md">
           Please wait while we fetch the latest songs
         </p>
       </div>
       <!-- Empty State -->
       <div
-        v-else-if="filteredSongs.length === 0"
+        v-else-if="filteredCommunity.length === 0"
         class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
       >
         <div class="text-6xl mb-4 opacity-50">🎵</div>
-        <h3 class="text-2xl text-zinc-200 mb-2">No Songs Found</h3>
+        <h3 class="text-2xl text-zinc-200 mb-2">No Community Songs Found</h3>
         <p class="text-zinc-400 max-w-md">
           {{
             searchQuery
@@ -87,7 +88,7 @@
         </p>
       </div>
       <div
-        v-for="item in filteredSongs"
+        v-for="item in filteredCommunity"
         :key="isRegularSong(item) ? item.id : item.$id"
         :class="[
           'flex flex-col gap-3 p-5 rounded-xl border-[1.5px] cursor-pointer transition-all duration-200 relative min-h-[200px]',
@@ -168,6 +169,103 @@
             (isRegularSong(item) && currentSong?.id === item.id) ||
             (!isRegularSong(item) && currentRecording?.id === item.$id)
           "
+          class="absolute top-4 right-4 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#D97757] to-[#fb923c] text-white text-[11px] font-bold shadow-[0_2px_8px_rgba(217,119,87,0.4)]"
+        >
+          ✓ Playing
+        </div>
+      </div>
+    </div>
+
+    <!-- Songs Tab (Romantic & Jazz) -->
+    <div
+      v-if="activeTab === 'songs'"
+      class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+    >
+      <!-- Empty State -->
+      <div
+        v-if="filteredSongs.length === 0"
+        class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
+      >
+        <div class="text-6xl mb-4 opacity-50">🎵</div>
+        <h3 class="text-2xl text-zinc-200 mb-2">No Songs Found</h3>
+        <p class="text-zinc-400 max-w-md">
+          {{
+            searchQuery
+              ? "Try adjusting your search query"
+              : "No songs available"
+          }}
+        </p>
+      </div>
+      <div
+        v-for="song in filteredSongs"
+        :key="song.id"
+        :class="[
+          'flex flex-col gap-3 p-5 rounded-xl border-[1.5px] cursor-pointer transition-all duration-200 relative min-h-[200px]',
+          currentSong?.id === song.id
+            ? 'border-[#D97757] bg-[#D97757]/15 shadow-[0_4px_20px_rgba(217,119,87,0.4)]'
+            : 'border-[#D97757]/30 bg-[#2d2d2d] hover:border-[#D97757] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgba(217,119,87,0.3)]',
+        ]"
+        @click="selectSong(song)"
+      >
+        <div class="flex justify-between items-start">
+          <svg
+            class="w-12 h-12 text-[#D97757]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+            />
+          </svg>
+
+          <!-- Difficulty Badge -->
+          <span
+            :class="[
+              'px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider',
+              song.difficulty === 'beginner'
+                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                : song.difficulty === 'intermediate'
+                ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                : 'bg-red-500/20 text-red-400 border border-red-500/30',
+            ]"
+          >
+            {{ song.difficulty }}
+          </span>
+        </div>
+
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold text-white mb-1 leading-snug">
+            {{ song.title }}
+          </h3>
+          <p class="text-sm m-0 text-white/70">{{ song.artist }}</p>
+        </div>
+
+        <div
+          class="flex items-center justify-between pt-3 border-t border-white/10"
+        >
+          <div class="flex gap-5 text-xs text-white/70">
+            <span class="flex items-center gap-1.5">
+              ⏱️
+              <span class="font-medium">{{ song.duration }}s</span>
+            </span>
+            <span class="flex items-center gap-1.5">
+              🎵
+              <span class="font-medium">{{ song.tempo }} BPM</span>
+            </span>
+            <span class="flex items-center gap-1.5">
+              🎹
+              <span class="font-medium">{{ song.chords.length }} chords</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Playing Badge -->
+        <div
+          v-if="currentSong?.id === song.id && isPlaying"
           class="absolute top-4 right-4 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#D97757] to-[#fb923c] text-white text-[11px] font-bold shadow-[0_2px_8px_rgba(217,119,87,0.4)]"
         >
           ✓ Playing
@@ -475,7 +573,7 @@
       :is-open="recordingToDelete !== null"
       title="Delete Recording"
       :message="`Are you sure you want to delete '${recordingToDelete?.title}'? This action cannot be undone.`"
-      type="confirm"
+      type="error"
       confirm-text="Delete"
       cancel-text="Cancel"
       @confirm="handleDeleteConfirm"
@@ -496,6 +594,7 @@ import AlertModal from "./AlertModal.vue";
 
 const props = defineProps<{
   songs: Song[];
+  tutorials: Song[];
   currentSong: Song | null;
   currentRecording?: Recording | null;
   isPlaying?: boolean;
@@ -511,7 +610,9 @@ const userStore = useUserStore();
 const recordingsStore = useRecordingsStore();
 const toast = useToast();
 
-const activeTab = ref<"songs" | "my-songs" | "tutorials">("songs");
+const activeTab = ref<"community" | "songs" | "my-songs" | "tutorials">(
+  "community"
+);
 const searchQuery = ref("");
 
 const isAuthenticated = computed(() => userStore.isLoggedIn);
@@ -523,29 +624,32 @@ const editingTitle = ref("");
 // Deleting state
 const deletingRecordingId = ref<string | null>(null);
 
-// Separate tutorials from songs
-const tutorialSongs = computed(() =>
-  props.songs.filter((song: Song) => song.title.includes("🎓"))
-);
-
-// Only show published recordings from database (no predefined songs)
-const allSongsWithRecordings = computed(() => {
+// Community tab - Only show published recordings from database
+const communitySongs = computed(() => {
   return recordingsStore.publishedSongs;
 });
 
 // Filtered lists based on search
-const filteredSongs = computed(() => {
-  if (!searchQuery.value) return allSongsWithRecordings.value;
+const filteredCommunity = computed(() => {
+  if (!searchQuery.value) return communitySongs.value;
   const query = searchQuery.value.toLowerCase();
-  return allSongsWithRecordings.value.filter(
-    (song: Song | RecordingDocument) => {
-      const title = "title" in song ? song.title : "";
-      const artist = "artist" in song ? song.artist : "";
-      return (
-        title.toLowerCase().includes(query) ||
-        artist.toLowerCase().includes(query)
-      );
-    }
+  return communitySongs.value.filter((song: Song | RecordingDocument) => {
+    const title = "title" in song ? song.title : "";
+    const artist = "artist" in song ? song.artist : "";
+    return (
+      title.toLowerCase().includes(query) ||
+      artist.toLowerCase().includes(query)
+    );
+  });
+});
+
+const filteredSongs = computed(() => {
+  if (!searchQuery.value) return props.songs;
+  const query = searchQuery.value.toLowerCase();
+  return props.songs.filter(
+    (song: Song) =>
+      song.title.toLowerCase().includes(query) ||
+      song.artist.toLowerCase().includes(query)
   );
 });
 
@@ -558,9 +662,9 @@ const filteredMyRecordings = computed(() => {
 });
 
 const filteredTutorials = computed(() => {
-  if (!searchQuery.value) return tutorialSongs.value;
+  if (!searchQuery.value) return props.tutorials;
   const query = searchQuery.value.toLowerCase();
-  return tutorialSongs.value.filter(
+  return props.tutorials.filter(
     (song: Song) =>
       song.title.toLowerCase().includes(query) ||
       song.artist.toLowerCase().includes(query)
@@ -569,6 +673,12 @@ const filteredTutorials = computed(() => {
 
 const tabs = computed(() => {
   const allTabs = [
+    {
+      id: "community" as const,
+      label: "Community",
+      icon: '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
+      count: filteredCommunity.value.length,
+    },
     {
       id: "songs" as const,
       label: "Songs",
@@ -741,8 +851,8 @@ onMounted(() => {
 });
 
 // Watch for tab changes and reload data when needed
-watch(activeTab, (newTab: "songs" | "my-songs" | "tutorials") => {
-  if (newTab === "songs") {
+watch(activeTab, (newTab) => {
+  if (newTab === "community") {
     loadPublishedSongs();
   } else if (newTab === "my-songs" && isAuthenticated.value) {
     loadMyRecordings();

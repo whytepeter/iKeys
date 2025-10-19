@@ -53,9 +53,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { PLAY_MODE_OPTIONS } from '../constants';
-import { useDropdown } from '../composables/useDropdown';
+// import { useDropdown } from '../composables/useDropdown';
 import type { PlayMode } from '../types';
 
 interface Props {
@@ -67,7 +67,10 @@ const emit = defineEmits<{
   'update:play-mode': [mode: PlayMode];
 }>();
 
-const { isOpen, toggle: toggleDropdown, close } = useDropdown();
+// const { isOpen, toggle: toggleDropdown, close } = useDropdown();
+const isOpen = ref(false);
+const toggleDropdown = () => { isOpen.value = !isOpen.value; };
+const close = () => { isOpen.value = false; };
 
 const currentModeLabel = computed(() => {
   const mode = PLAY_MODE_OPTIONS.find((m) => m.value === props.playMode);

@@ -168,10 +168,6 @@ const miniPianoKeys = [
 // Keyboard mapping for notes - Two-hand layout
 import { NOTE_TO_KEYBOARD_KEY } from "../constants";
 
-function formatKeys(keys: string[]): string[] {
-  return keys.map((key) => key.replace(/\d+/, ""));
-}
-
 function formatKeysWithKeyboard(
   keys: string[]
 ): Array<{ keyboard: string; note: string }> {

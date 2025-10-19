@@ -277,7 +277,7 @@ interface Props {
   loop: boolean;
   playMode: PlayMode;
   playModeOptions: Array<{
-    value: string;
+    value: PlayMode;
     label: string;
     icon: string;
     desc: string;

@@ -164,6 +164,10 @@ function formatKeysWithNotes(
   });
 }
 
+function formatKeys(keys: string[]): string[] {
+  return keys.map((key) => key.replace(/\d+/, ""));
+}
+
 function formatHand(hand: "left" | "right" | "both"): string {
   const handMap = {
     left: "Left Hand",
