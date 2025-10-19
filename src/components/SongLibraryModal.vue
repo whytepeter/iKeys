@@ -710,7 +710,7 @@ const loadMyRecordings = async () => {
   try {
     await recordingsStore.loadMyRecordings(userStore.profile.id);
   } catch (error) {
-    toast.error("Failed to load your recordings");
+    // Silently handle error - no toast notification
   }
 };
 
@@ -718,7 +718,7 @@ const loadPublishedSongs = async () => {
   try {
     await recordingsStore.loadPublishedSongs(searchQuery.value || undefined);
   } catch (error) {
-    toast.error("Failed to load published songs");
+    // Silently handle error - no toast notification
   }
 };
 
