@@ -162,7 +162,13 @@
           :class="['control-btn', 'loop', { active: loop }]"
           title="Loop"
         >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <path d="M17 1l4 4-4 4"></path>
             <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
             <path d="M7 23l-4-4 4-4"></path>
