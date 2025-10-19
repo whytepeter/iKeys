@@ -29,7 +29,9 @@
       </p>
 
       <!-- Actions -->
-      <div :class="['flex gap-3', confirmOnly ? 'justify-center' : 'justify-end']">
+      <div
+        :class="['flex gap-3', confirmOnly ? 'justify-center' : 'justify-end']"
+      >
         <button
           v-if="!confirmOnly"
           @click="handleCancel"
@@ -150,4 +152,3 @@ function handleBackdropClick() {
   animation: slideUp 0.3s ease-out;
 }
 </style>
-

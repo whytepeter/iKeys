@@ -181,6 +181,18 @@
       <div class="text-[11px] text-center text-white/60 font-medium">
         {{ playModeLabel }}
       </div>
+
+      <!-- Close Song Button -->
+      <button
+        @click="$emit('closeSong')"
+        class="w-full py-2.5 mt-2 rounded-xl font-semibold text-sm text-white bg-red-600/80 hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
+        title="Close Song"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"></path>
+        </svg>
+        Close Song
+      </button>
     </div>
   </div>
 </template>
@@ -214,6 +226,7 @@ defineEmits<{
   pause: [];
   stop: [];
   toggleLoop: [];
+  closeSong: [];
 }>();
 
 const playModeLabel = computed(() => {

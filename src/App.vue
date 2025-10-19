@@ -1,5 +1,8 @@
 <template>
   <div class="min-h-screen bg-zinc-950 flex flex-col overflow-hidden">
+    <!-- Mobile Blocker -->
+    <MobileBlocker />
+    
     <!-- Header -->
     <header
       class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-sm z-50"
@@ -126,6 +129,14 @@
             :show-accuracy="playMode === 'practice' || playMode === 'wait'"
             :current-time="currentTime"
             :total-duration="currentSong.duration"
+            :is-playing="isPlaying"
+            :play-mode="playMode"
+            :loop="loop"
+            @play="play"
+            @pause="pause"
+            @stop="stop"
+            @toggle-loop="loop = !loop"
+            @close-song="closeSong"
           />
         </div>
       </div>
@@ -249,50 +260,6 @@
       </button>
     </div>
 
-    <!-- Playback Controls - Floating Bottom Left -->
-    <div v-if="currentSong" class="fixed bottom-6 left-6 z-50">
-      <div
-        class="flex items-center gap-2 bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-700 px-6 py-4 backdrop-blur-xl"
-      >
-        <button @click="stop" class="claude-control-btn stop" title="Stop">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <rect x="6" y="6" width="12" height="12" rx="2" />
-          </svg>
-        </button>
-
-        <button
-          v-if="!isPlaying"
-          @click="play"
-          class="claude-control-btn play"
-          title="Play"
-        >
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </button>
-
-        <button
-          v-else
-          @click="pause"
-          class="claude-control-btn pause"
-          title="Pause"
-        >
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-          </svg>
-        </button>
-
-        <div class="h-8 w-px bg-zinc-700 mx-2"></div>
-
-        <div
-          class="text-sm font-medium text-zinc-300 flex items-center gap-2 px-3"
-        >
-          <span class="w-2 h-2 rounded-full bg-[#D97757]"></span>
-          {{ playModeLabel }}
-        </div>
-      </div>
-    </div>
-
     <!-- Modals -->
     <!-- Recording Title Input Modal -->
     <InputModal
@@ -322,6 +289,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import MobileBlocker from "./components/MobileBlocker.vue";
 import PianoKeyboard from "./components/PianoKeyboard.vue";
 import FallingChords from "./components/FallingChords.vue";
 import ChordInfoPanel from "./components/ChordInfoPanel.vue";
@@ -329,7 +297,7 @@ import SettingsModal from "./components/SettingsModal.vue";
 import SongLibraryModal from "./components/SongLibraryModal.vue";
 import ChordDictionary from "./components/ChordDictionary.vue";
 import InputModal from "./components/InputModal.vue";
-import ConfirmModal from "./components/ConfirmModal.vue";
+import AlertModal from "./components/AlertModal.vue";
 import { songs } from "./data/songs";
 import { AudioEngine } from "./utils/audioEngine";
 import { ChordDetector } from "./utils/chordDetection";
@@ -483,6 +451,12 @@ const selectSong = (song: Song) => {
   showSongLibrary.value = false;
   showChordDictionary.value = false;
   showSettings.value = false;
+};
+
+const closeSong = () => {
+  stop();
+  currentSong.value = null;
+  playingRecording.value = null;
 };
 
 const play = () => {
@@ -997,44 +971,4 @@ const convertNotesToChords = (notes: RecordedNote[]): Chord[] => {
   }
 }
 
-/* Claude-style control buttons */
-.claude-control-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(63, 63, 70, 0.5);
-  color: white;
-}
-
-.claude-control-btn:hover {
-  transform: scale(1.05);
-}
-
-.claude-control-btn.play {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  width: 56px;
-  height: 56px;
-}
-
-.claude-control-btn.pause {
-  background: linear-gradient(135deg, #d97757 0%, #fb923c 100%);
-  width: 56px;
-  height: 56px;
-}
-
-.claude-control-btn.stop {
-  background: rgba(63, 63, 70, 0.5);
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.claude-control-btn.stop:hover {
-  background: #ef4444;
-  color: white;
-}
 </style>

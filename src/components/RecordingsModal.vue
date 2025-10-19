@@ -46,7 +46,7 @@
               }}
             </button>
             <button
-              @click="deleteRecording(recording.id)"
+              @click="confirmDelete(recording.id, recording.title)"
               class="action-btn delete-btn"
             >
               🗑️
@@ -55,12 +55,25 @@
         </div>
       </div>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <AlertModal
+      :is-open="showDeleteConfirm"
+      title="Delete Recording"
+      :message="`Are you sure you want to delete '${recordingToDelete.title}'? This action cannot be undone.`"
+      type="confirm"
+      confirm-text="Delete"
+      cancel-text="Cancel"
+      @confirm="handleDeleteConfirm"
+      @cancel="handleDeleteCancel"
+    />
   </Modal>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import Modal from "./Modal.vue";
+import AlertModal from "./AlertModal.vue";
 import { RecordingStorage, type Recording } from "../utils/recordingEngine";
 
 const props = defineProps<{
@@ -75,6 +88,8 @@ const emit = defineEmits<{
 }>();
 
 const recordings = ref<Recording[]>([]);
+const showDeleteConfirm = ref(false);
+const recordingToDelete = ref({ id: "", title: "" });
 
 const loadRecordings = () => {
   recordings.value = RecordingStorage.getAll();
@@ -84,11 +99,21 @@ const playRecording = (recording: Recording) => {
   emit("playRecording", recording);
 };
 
-const deleteRecording = (id: string) => {
-  if (confirm("Are you sure you want to delete this recording?")) {
-    RecordingStorage.delete(id);
-    loadRecordings();
-  }
+const confirmDelete = (id: string, title: string) => {
+  recordingToDelete.value = { id, title };
+  showDeleteConfirm.value = true;
+};
+
+const handleDeleteConfirm = () => {
+  RecordingStorage.delete(recordingToDelete.value.id);
+  showDeleteConfirm.value = false;
+  recordingToDelete.value = { id: "", title: "" };
+  loadRecordings();
+};
+
+const handleDeleteCancel = () => {
+  showDeleteConfirm.value = false;
+  recordingToDelete.value = { id: "", title: "" };
 };
 
 const formatDate = (dateString: string): string => {
