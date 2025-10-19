@@ -49,47 +49,52 @@ const emit = defineEmits<{
 
 // Piano keys configuration - QWERTY Layout (Intuitive!)
 // White keys span across QWERTY rows: Q-U, I-V, B-/
-// Black keys use numbers (2,3,5,6,7,9,0) and letters (S,D,F,H,J,L,;) between white keys
+// Two-hand layout: Left hand (A-J) = Octave 3, Right hand (K-') = Octave 4
+// White keys on home row, black keys on row above
 const pianoKeys: PianoKey[] = [
-  // ===== OCTAVE 3 (Top row: Q-U with numbers 2,3,5,6,7 for black keys) =====
-  { note: "C", octave: 3, type: "white", keyboardKey: "Q", frequency: 130.81 },
-  { note: "C#", octave: 3, type: "black", keyboardKey: "2", frequency: 138.59 },
-  { note: "D", octave: 3, type: "white", keyboardKey: "W", frequency: 146.83 },
-  { note: "D#", octave: 3, type: "black", keyboardKey: "3", frequency: 155.56 },
-  { note: "E", octave: 3, type: "white", keyboardKey: "E", frequency: 164.81 },
-  { note: "F", octave: 3, type: "white", keyboardKey: "R", frequency: 174.61 },
-  { note: "F#", octave: 3, type: "black", keyboardKey: "5", frequency: 185.0 },
-  { note: "G", octave: 3, type: "white", keyboardKey: "T", frequency: 196.0 },
-  { note: "G#", octave: 3, type: "black", keyboardKey: "6", frequency: 207.65 },
-  { note: "A", octave: 3, type: "white", keyboardKey: "Y", frequency: 220.0 },
-  { note: "A#", octave: 3, type: "black", keyboardKey: "7", frequency: 233.08 },
-  { note: "B", octave: 3, type: "white", keyboardKey: "U", frequency: 246.94 },
+  // ===== OCTAVE 3 (Left hand: ASDFGHJ with WETYU for black keys) =====
+  { note: "C", octave: 3, type: "white", keyboardKey: "A", frequency: 130.81 },
+  { note: "C#", octave: 3, type: "black", keyboardKey: "W", frequency: 138.59 },
+  { note: "D", octave: 3, type: "white", keyboardKey: "S", frequency: 146.83 },
+  { note: "D#", octave: 3, type: "black", keyboardKey: "E", frequency: 155.56 },
+  { note: "E", octave: 3, type: "white", keyboardKey: "D", frequency: 164.81 },
+  { note: "F", octave: 3, type: "white", keyboardKey: "F", frequency: 174.61 },
+  { note: "F#", octave: 3, type: "black", keyboardKey: "T", frequency: 185.0 },
+  { note: "G", octave: 3, type: "white", keyboardKey: "G", frequency: 196.0 },
+  { note: "G#", octave: 3, type: "black", keyboardKey: "Y", frequency: 207.65 },
+  { note: "A", octave: 3, type: "white", keyboardKey: "H", frequency: 220.0 },
+  { note: "A#", octave: 3, type: "black", keyboardKey: "U", frequency: 233.08 },
+  { note: "B", octave: 3, type: "white", keyboardKey: "J", frequency: 246.94 },
 
-  // ===== OCTAVE 4 (Mixed: I-P, then Z-V with S,D,F for black keys) =====
-  { note: "C", octave: 4, type: "white", keyboardKey: "I", frequency: 261.63 },
-  { note: "C#", octave: 4, type: "black", keyboardKey: "9", frequency: 277.18 },
-  { note: "D", octave: 4, type: "white", keyboardKey: "O", frequency: 293.66 },
-  { note: "D#", octave: 4, type: "black", keyboardKey: "0", frequency: 311.13 },
-  { note: "E", octave: 4, type: "white", keyboardKey: "P", frequency: 329.63 },
-  { note: "F", octave: 4, type: "white", keyboardKey: "Z", frequency: 349.23 },
-  { note: "F#", octave: 4, type: "black", keyboardKey: "S", frequency: 369.99 },
-  { note: "G", octave: 4, type: "white", keyboardKey: "X", frequency: 392.0 },
-  { note: "G#", octave: 4, type: "black", keyboardKey: "D", frequency: 415.3 },
-  { note: "A", octave: 4, type: "white", keyboardKey: "C", frequency: 440.0 },
-  { note: "A#", octave: 4, type: "black", keyboardKey: "F", frequency: 466.16 },
-  { note: "B", octave: 4, type: "white", keyboardKey: "V", frequency: 493.88 },
+  // ===== OCTAVE 4 (Right hand: KL;' with IOP] for black keys) =====
+  { note: "C", octave: 4, type: "white", keyboardKey: "K", frequency: 261.63 },
+  { note: "C#", octave: 4, type: "black", keyboardKey: "I", frequency: 277.18 },
+  { note: "D", octave: 4, type: "white", keyboardKey: "L", frequency: 293.66 },
+  { note: "D#", octave: 4, type: "black", keyboardKey: "O", frequency: 311.13 },
+  { note: "E", octave: 4, type: "white", keyboardKey: ";", frequency: 329.63 },
+  { note: "F", octave: 4, type: "white", keyboardKey: "'", frequency: 349.23 },
+  { note: "F#", octave: 4, type: "black", keyboardKey: "]", frequency: 369.99 },
+  {
+    note: "G",
+    octave: 4,
+    type: "white",
+    keyboardKey: "Enter",
+    frequency: 392.0,
+  },
 
-  // ===== OCTAVE 5 (Bottom row: B-/ with H,J,L,; for black keys) =====
-  { note: "C", octave: 5, type: "white", keyboardKey: "B", frequency: 523.25 },
-  { note: "C#", octave: 5, type: "black", keyboardKey: "H", frequency: 554.37 },
-  { note: "D", octave: 5, type: "white", keyboardKey: "N", frequency: 587.33 },
-  { note: "D#", octave: 5, type: "black", keyboardKey: "J", frequency: 622.25 },
-  { note: "E", octave: 5, type: "white", keyboardKey: "M", frequency: 659.25 },
-  { note: "F", octave: 5, type: "white", keyboardKey: ",", frequency: 698.46 },
-  { note: "F#", octave: 5, type: "black", keyboardKey: "L", frequency: 739.99 },
-  { note: "G", octave: 5, type: "white", keyboardKey: ".", frequency: 783.99 },
-  { note: "G#", octave: 5, type: "black", keyboardKey: ";", frequency: 830.61 },
-  { note: "A", octave: 5, type: "white", keyboardKey: "/", frequency: 880.0 },
+  // ===== OCTAVE 5 (Extended range: ZXCV with QB for black keys) =====
+  { note: "C", octave: 5, type: "white", keyboardKey: "Z", frequency: 523.25 },
+  { note: "C#", octave: 5, type: "black", keyboardKey: "Q", frequency: 554.37 },
+  { note: "D", octave: 5, type: "white", keyboardKey: "X", frequency: 587.33 },
+  { note: "D#", octave: 5, type: "black", keyboardKey: "2", frequency: 622.25 },
+  { note: "E", octave: 5, type: "white", keyboardKey: "C", frequency: 659.25 },
+  { note: "F", octave: 5, type: "white", keyboardKey: "V", frequency: 698.46 },
+  { note: "F#", octave: 5, type: "black", keyboardKey: "3", frequency: 739.99 },
+  { note: "G", octave: 5, type: "white", keyboardKey: "B", frequency: 783.99 },
+  { note: "G#", octave: 5, type: "black", keyboardKey: "5", frequency: 830.61 },
+  { note: "A", octave: 5, type: "white", keyboardKey: "N", frequency: 880.0 },
+  { note: "A#", octave: 5, type: "black", keyboardKey: "6", frequency: 932.33 },
+  { note: "B", octave: 5, type: "white", keyboardKey: "M", frequency: 987.77 },
 ];
 
 // Check if a key is currently pressed by user

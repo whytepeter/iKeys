@@ -27,14 +27,15 @@
         </div>
         <p class="chord-name">{{ chord.name }}</p>
 
-        <!-- Keys -->
+        <!-- Keys with keyboard mappings -->
         <div class="chord-keys-display">
           <span
-            v-for="(key, i) in formatKeys(chord.keys)"
+            v-for="(keyInfo, i) in formatKeysWithKeyboard(chord.keys)"
             :key="i"
             class="key-chip"
           >
-            {{ key }}
+            <span class="keyboard-key">{{ keyInfo.keyboard }}</span>
+            <span class="note-name">{{ keyInfo.note }}</span>
           </span>
         </div>
 
@@ -84,10 +85,19 @@
         <!-- Keys and Fingers -->
         <div class="detail-info">
           <div class="info-row">
-            <span class="info-label">Keys:</span>
-            <span class="info-value">{{
-              formatKeys(selectedChord.keys).join(" - ")
-            }}</span>
+            <span class="info-label">Keyboard Keys:</span>
+            <span class="info-value keyboard-keys">
+              <span
+                v-for="(keyInfo, i) in formatKeysWithKeyboard(
+                  selectedChord.keys
+                )"
+                :key="i"
+                class="detail-key-chip"
+              >
+                <span class="key-kbd">{{ keyInfo.keyboard }}</span>
+                <span class="key-note-small">{{ keyInfo.note }}</span>
+              </span>
+            </span>
           </div>
           <div v-if="selectedChord.fingers" class="info-row">
             <span class="info-label">Fingers:</span>
@@ -155,8 +165,24 @@ const miniPianoKeys = [
   { note: "B", octave: 4, type: "white" },
 ];
 
+// Keyboard mapping for notes - Two-hand layout
+import { NOTE_TO_KEYBOARD_KEY } from "../constants";
+
 function formatKeys(keys: string[]): string[] {
   return keys.map((key) => key.replace(/\d+/, ""));
+}
+
+function formatKeysWithKeyboard(
+  keys: string[]
+): Array<{ keyboard: string; note: string }> {
+  return keys.map((key) => {
+    const noteName = key.replace(/\d+/, "");
+    const keyboardKey = NOTE_TO_KEYBOARD_KEY[key] || "?";
+    return {
+      keyboard: keyboardKey,
+      note: noteName,
+    };
+  });
 }
 
 function isKeyInChord(
@@ -292,12 +318,27 @@ function playChord(chord: ChordDefinition) {
 }
 
 .key-chip {
-  padding: 4px 8px;
+  padding: 6px 10px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   font-size: 12px;
   color: #ffffff;
   font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.keyboard-key {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fb923c;
+}
+
+.note-name {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .chord-fingers {
@@ -473,6 +514,33 @@ function playChord(chord: ChordDefinition) {
 .info-value {
   color: white;
   font-weight: 600;
+}
+
+.keyboard-keys {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detail-key-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  background: rgba(217, 119, 87, 0.2);
+  border-radius: 6px;
+}
+
+.key-kbd {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fb923c;
+}
+
+.key-note-small {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .detail-play-btn {

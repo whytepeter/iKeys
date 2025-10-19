@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-zinc-950 flex flex-col overflow-hidden">
     <!-- Mobile Blocker -->
     <MobileBlocker />
-    
+
     <!-- Header -->
     <header
       class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-sm z-50"
@@ -22,17 +22,250 @@
           </div>
         </div>
 
-        <!-- Song Info -->
-        <div v-if="currentSong" class="flex items-center gap-4">
-          <div class="text-right">
-            <h2 class="text-lg font-semibold text-white">
-              {{ currentSong.title }}
-            </h2>
-            <p class="text-sm text-zinc-400">
-              {{ currentSong.artist }} · {{ currentSong.difficulty }}
-            </p>
+        <!-- Playback Controls (shown when song is active) -->
+        <div
+          v-if="currentSong"
+          class="flex items-center gap-4 bg-zinc-800/50 px-4 py-2 rounded-xl border border-zinc-700"
+        >
+          <!-- Transport Controls -->
+          <div class="flex items-center gap-2">
+            <button @click="stop" class="nav-control-btn stop" title="Stop">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+              </svg>
+            </button>
+
+            <button
+              v-if="!isPlaying"
+              @click="play"
+              class="nav-control-btn play"
+              title="Play"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </button>
+
+            <button
+              v-else
+              @click="pause"
+              class="nav-control-btn pause"
+              title="Pause"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 4h4v16H6zM14 4h4v16h-4z"></path>
+              </svg>
+            </button>
+
+            <button
+              @click="loop = !loop"
+              :class="[
+                'nav-control-btn',
+                'loop',
+                { active: loop, inactive: !loop },
+              ]"
+              title="Loop"
+            >
+              <svg
+                class="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M17 1l4 4-4 4"></path>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                <path d="M7 23l-4-4 4-4"></path>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+              </svg>
+            </button>
           </div>
-          <div class="w-2 h-2 rounded-full bg-[#D97757] animate-pulse"></div>
+
+          <!-- Divider -->
+          <div class="h-8 w-px bg-zinc-700"></div>
+
+          <!-- Play Mode Selector -->
+          <div class="relative">
+            <button
+              @click.stop="togglePlayModeMenu"
+              class="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#D97757]/20 border border-[#D97757]/40 hover:bg-[#D97757]/30 transition-colors"
+              title="Change play mode"
+            >
+              <span class="text-xs text-white font-medium">{{
+                playModeLabel
+              }}</span>
+              <svg
+                class="w-3 h-3 text-white/60"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </button>
+
+            <!-- Play Mode Dropdown -->
+            <div
+              v-if="showPlayModeMenu"
+              @click.stop
+              class="absolute top-full mt-2 right-0 w-48 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-50 py-2"
+            >
+              <button
+                v-for="mode in playModeOptions"
+                :key="mode.value"
+                @click="selectPlayMode(mode.value)"
+                :class="[
+                  'w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-zinc-700/50 transition-colors',
+                  { 'bg-zinc-700/30': playMode === mode.value },
+                ]"
+              >
+                <span class="text-lg">{{ mode.icon }}</span>
+                <div class="flex flex-col">
+                  <span class="text-sm font-medium text-white">{{
+                    mode.label
+                  }}</span>
+                  <span class="text-xs text-zinc-400">{{ mode.desc }}</span>
+                </div>
+                <svg
+                  v-if="playMode === mode.value"
+                  class="w-4 h-4 text-[#D97757] ml-auto"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="h-8 w-px bg-zinc-700"></div>
+
+          <!-- Close Button -->
+          <button
+            @click="closeSong"
+            class="text-zinc-400 hover:text-red-500 transition-colors"
+            title="Close Song"
+          >
+            <svg
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- User Profile -->
+        <div class="relative">
+          <button
+            @click.stop="showUserMenu = !showUserMenu"
+            class="flex items-center gap-3 px-3 py-2 rounded-xl bg-zinc-800/50 border border-zinc-700 hover:bg-zinc-800 transition-colors"
+            title="User profile"
+          >
+            <div
+              class="w-8 h-8 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold text-sm"
+            >
+              {{ userInitial }}
+            </div>
+            <svg
+              class="w-3 h-3 text-white/60"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
+          </button>
+
+          <!-- User Dropdown -->
+          <div
+            v-if="showUserMenu"
+            @click.stop
+            class="absolute top-full mt-2 right-0 w-64 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-50 py-2"
+          >
+            <div
+              v-if="isUserAuthenticated"
+              class="px-4 py-3 border-b border-zinc-700"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold"
+                >
+                  {{ userInitial }}
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-sm font-semibold text-white">{{
+                    userStore.profile?.name || "User"
+                  }}</span>
+                  <span class="text-xs text-zinc-400">{{
+                    userStore.profile?.email || "user@ikeys.app"
+                  }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div v-else class="px-4 py-3 border-b border-zinc-700">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center text-zinc-400 font-semibold"
+                >
+                  G
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-sm font-semibold text-white">Guest</span>
+                  <span class="text-xs text-zinc-400">Not logged in</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="py-2">
+              <button
+                v-if="isUserAuthenticated"
+                @click="handleLogout"
+                class="w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-zinc-700/50 transition-colors text-red-400 hover:text-red-300"
+              >
+                <svg
+                  class="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span class="text-sm font-medium">Logout</span>
+              </button>
+
+              <button
+                v-else
+                @click="handleLogin"
+                class="w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-zinc-700/50 transition-colors text-[#D97757] hover:text-[#fb923c]"
+              >
+                <svg
+                  class="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                  <polyline points="10 17 15 12 10 7"></polyline>
+                  <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+                <span class="text-sm font-medium">Login</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -129,14 +362,6 @@
             :show-accuracy="playMode === 'practice' || playMode === 'wait'"
             :current-time="currentTime"
             :total-duration="currentSong.duration"
-            :is-playing="isPlaying"
-            :play-mode="playMode"
-            :loop="loop"
-            @play="play"
-            @pause="pause"
-            @stop="stop"
-            @toggle-loop="loop = !loop"
-            @close-song="closeSong"
           />
         </div>
       </div>
@@ -284,6 +509,9 @@
       @confirm="showRecordingAlert = false"
       @cancel="showRecordingAlert = false"
     />
+
+    <!-- Auth Modal (controlled by ?auth=login|register|forgot-password|reset-password) -->
+    <AuthModal @auth-success="handleAuthSuccess" />
   </div>
 </template>
 
@@ -298,6 +526,7 @@ import SongLibraryModal from "./components/SongLibraryModal.vue";
 import ChordDictionary from "./components/ChordDictionary.vue";
 import InputModal from "./components/InputModal.vue";
 import AlertModal from "./components/AlertModal.vue";
+import AuthModal from "./components/AuthModal.vue";
 import { songs } from "./data/songs";
 import { AudioEngine } from "./utils/audioEngine";
 import { ChordDetector } from "./utils/chordDetection";
@@ -308,6 +537,7 @@ import {
   type RecordedNote,
 } from "./utils/recordingEngine";
 import type { Song, PlayMode, Chord, ChordMatch, HandMode } from "./types";
+import { useUserStore } from "./stores/user";
 
 // State
 const currentSong = ref<Song | null>(null);
@@ -330,6 +560,25 @@ const showRecordingAlert = ref(false);
 const recordingAlertMessage = ref("");
 const recordingAlertType = ref<"alert" | "success" | "error">("alert");
 const pendingRecordingNotes = ref<any[]>([]);
+const showPlayModeMenu = ref(false);
+const showUserMenu = ref(false);
+
+// User store
+const userStore = useUserStore();
+
+// Safe computed properties for user
+const isUserAuthenticated = computed(() => userStore?.isLoggedIn ?? false);
+const userInitial = computed(() =>
+  isUserAuthenticated.value && userStore?.profile?.name
+    ? userStore.profile.name[0].toUpperCase()
+    : "G"
+);
+
+// Close dropdowns when clicking outside
+const handleDocumentClick = () => {
+  if (showPlayModeMenu.value) showPlayModeMenu.value = false;
+  if (showUserMenu.value) showUserMenu.value = false;
+};
 
 // Chord-specific state
 const currentChord = ref<Chord | null>(null);
@@ -350,27 +599,19 @@ let animationFrameId: number | null = null;
 let lastFrameTime = 0;
 let recordingTimerInterval: number | null = null;
 
-const playModeLabel = computed(() => {
-  const labels: Record<string, string> = {
-    free: "Free Play",
-    auto: "Auto Play",
-    practice: "Practice Mode",
-    wait: "Wait Mode",
-  };
-  return labels[playMode.value];
-});
-
 onMounted(() => {
   audioEngine = new AudioEngine();
   chordDetector = new ChordDetector();
   recordingEngine = new RecordingEngine();
   setupKeyboardListeners();
+  document.addEventListener("click", handleDocumentClick);
 });
 
 onUnmounted(() => {
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
   }
+  document.removeEventListener("click", handleDocumentClick);
   removeKeyboardListeners();
 });
 
@@ -457,6 +698,67 @@ const closeSong = () => {
   stop();
   currentSong.value = null;
   playingRecording.value = null;
+};
+
+const playModeOptions = [
+  {
+    value: "auto",
+    label: "Auto Play",
+    icon: "▶️",
+    desc: "Plays chords automatically",
+  },
+  {
+    value: "practice",
+    label: "Practice",
+    icon: "🎓",
+    desc: "Wait for correct chords",
+  },
+  {
+    value: "wait",
+    label: "Wait Mode",
+    icon: "⏸️",
+    desc: "Pause until you play",
+  },
+  {
+    value: "free",
+    label: "Free Play",
+    icon: "🎹",
+    desc: "Play without guidance",
+  },
+];
+
+const playModeLabel = computed(() => {
+  const mode = playModeOptions.find((m) => m.value === playMode.value);
+  return mode ? `${mode.icon} ${mode.label}` : "▶️ Auto Play";
+});
+
+const togglePlayModeMenu = () => {
+  showPlayModeMenu.value = !showPlayModeMenu.value;
+};
+
+const selectPlayMode = (mode: string) => {
+  playMode.value = mode;
+  showPlayModeMenu.value = false;
+};
+
+const handleLogin = () => {
+  // Open auth modal with login view
+  const url = new URL(window.location.href);
+  url.searchParams.set("auth", "login");
+  window.history.pushState({}, "", url.toString());
+  // Dispatch custom event to trigger modal to check URL
+  window.dispatchEvent(new Event("urlchange"));
+  showUserMenu.value = false;
+};
+
+const handleLogout = () => {
+  userStore.logout();
+  showUserMenu.value = false;
+};
+
+const handleAuthSuccess = () => {
+  // Authentication successful - user store is already updated by the auth forms
+  console.log("Authentication successful!");
 };
 
 const play = () => {
@@ -652,49 +954,47 @@ const handleKeyUp = (note: string) => {
   }
 };
 
-// Keyboard mapping - QWERTY Layout (Intuitive!)
-// White keys span across QWERTY rows: Q-U, I-V, B-/
-// Black keys use numbers (2,3,5,6,7,9,0) and letters (S,D,F,H,J,L,;) between white keys
+// Keyboard mapping - Two-hand layout for intuitive playing
+// Left hand (A-J) = Octave 3, Right hand (K-') = Octave 4
+// White keys on home row, black keys on row above
 const keyMap: Record<string, string> = {
-  // ===== OCTAVE 3 (Top row: Q-U with numbers for black keys) =====
-  q: "C3",
-  "2": "C#3",
-  w: "D3",
-  "3": "D#3",
-  e: "E3",
-  r: "F3",
-  "5": "F#3",
-  t: "G3",
-  "6": "G#3",
-  y: "A3",
-  "7": "A#3",
-  u: "B3",
+  // ===== OCTAVE 3 (Left hand: ASDFGHJ with WETYU for black keys) =====
+  a: "C3",
+  w: "C#3",
+  s: "D3",
+  e: "D#3",
+  d: "E3",
+  f: "F3",
+  t: "F#3",
+  g: "G3",
+  y: "G#3",
+  h: "A3",
+  u: "A#3",
+  j: "B3",
 
-  // ===== OCTAVE 4 (Mixed: I-P, then Z-V with letters for black keys) =====
-  i: "C4", // Middle C
-  "9": "C#4",
-  o: "D4",
-  "0": "D#4",
-  p: "E4",
-  z: "F4",
-  s: "F#4",
-  x: "G4",
-  d: "G#4",
-  c: "A4",
-  f: "A#4",
-  v: "B4",
+  // ===== OCTAVE 4 (Right hand: KL;' with IOP] for black keys) =====
+  k: "C4", // Middle C
+  i: "C#4",
+  l: "D4",
+  o: "D#4",
+  ";": "E4",
+  "'": "F4",
+  "]": "F#4",
+  enter: "G4",
 
-  // ===== OCTAVE 5 (Bottom row: B-/ with letters for black keys) =====
-  b: "C5",
-  h: "C#5",
-  n: "D5",
-  j: "D#5",
-  m: "E5",
-  ",": "F5",
-  l: "F#5",
-  ".": "G5",
-  ";": "G#5",
-  "/": "A5",
+  // ===== OCTAVE 5 (Extended range: ZXCV with QB2356 for black keys) =====
+  z: "C5",
+  q: "C#5",
+  x: "D5",
+  "2": "D#5",
+  c: "E5",
+  v: "F5",
+  "3": "F#5",
+  b: "G5",
+  "5": "G#5",
+  n: "A5",
+  "6": "A#5",
+  m: "B5",
 };
 
 const handleKeyboardDown = (event: KeyboardEvent) => {
@@ -971,4 +1271,57 @@ const convertNotesToChords = (notes: RecordedNote[]): Chord[] => {
   }
 }
 
+/* Navbar control buttons */
+.nav-control-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.nav-control-btn:hover {
+  transform: scale(1.05);
+}
+
+.nav-control-btn:active {
+  transform: scale(0.95);
+}
+
+.nav-control-btn.play {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  width: 44px;
+  height: 44px;
+}
+
+.nav-control-btn.pause {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  width: 44px;
+  height: 44px;
+}
+
+.nav-control-btn.stop {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.nav-control-btn.loop {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.nav-control-btn.loop.active {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+  opacity: 1;
+}
+
+.nav-control-btn.loop.inactive {
+  opacity: 0.4;
+}
 </style>

@@ -1,80 +1,86 @@
-# iKeys - Chord-Based Piano Learning App
+# 🎹 iKeys - Interactive Piano Learning App
 
-A modern, interactive piano learning application that teaches you to play songs using **chords** instead of individual notes. Built with Vue 3, TypeScript, and Tailwind CSS.
+**Learn piano chords through interactive gameplay and visual feedback**
 
-## 🎹 What Makes iKeys Different?
+🌐 **Live Demo**: [iKeys.onrender.com](https://iKeys.onrender.com)
 
-Unlike traditional piano apps that require you to play notes one by one, iKeys uses a **chord-based system** similar to OnlinePianist:
+---
 
-- **Play chords** (multiple keys together) instead of individual notes
-- **Falling chord blocks** show which key combinations to press
-- **Visual feedback** with multi-key highlighting
-- **Beginner-friendly** - simpler and faster to learn songs
+## 🎯 What is iKeys?
 
-## ✨ Features
+iKeys is a modern, interactive web application that makes learning piano fun and accessible. Whether you're a complete beginner or looking to improve your chord knowledge, iKeys provides an engaging way to learn piano using just your computer keyboard.
 
-### 🎵 Chord-Based Playing System
-- Colored chord blocks fall from top toward piano keyboard
-- Each block shows the chord name and which keys to press simultaneously
-- Block length indicates how long to hold the chord
-- Real-time highlighting of chord shapes on the keyboard
+### ✨ Key Features
 
-### 🎮 Play Modes
-- **Free Play**: Play any chords without guidance
-- **Auto Play**: Watch chords play automatically
-- **Practice Mode**: Follow along with visual feedback
-- **Wait Mode**: Song pauses until you press the correct chord
+- 🎵 **Play Piano with Your Keyboard** - Transform your computer keyboard into a virtual piano with an intuitive two-hand layout
+- 📚 **Song Library** - Learn popular songs including "Let It Be", "Imagine", "Someone Like You", and more
+- 🎓 **Multiple Learning Modes**:
+  - **Auto Play** - Watch and listen as chords play automatically
+  - **Practice Mode** - Wait for you to play the correct chords
+  - **Wait Mode** - Pause until you're ready to play
+  - **Free Play** - Explore and experiment without guidance
+- 🎼 **Visual Chord Guide** - See falling chords with finger positions and keyboard mappings
+- 🎬 **Real-time Feedback** - Visual indicators show you exactly which keys to press
+- 📼 **Record & Playback** - Capture your performances and play them back
+- 👤 **User Profiles** - Track your progress and achievements
+- 🎨 **Beautiful UI** - Modern, dark-themed interface with smooth animations
 
-### 📊 Interactive Chord Display
-- **Falling Chords Area**: Dark canvas with colorful chord blocks scrolling down
-- **Chord Info Panel**: Shows current chord, next chord preview, and accuracy
-- **Progress Tracking**: Visual progress bar and timing display
-- **Section Labels**: "Verse", "Chorus", "Bridge" indicators
+---
 
-### 🎹 Professional Piano Sound
-- High-quality sampled piano sounds (Salamander Grand Piano)
-- Natural sustain and release behavior
-- Polyphonic support (10+ simultaneous notes)
-- Realistic ADSR envelope
+## 🚀 How It Works
 
-### 📚 Chord Dictionary
-- Built-in reference for all common chords
-- Visual piano diagrams
-- Audio preview of each chord
-- Finger position guides
-- Difficulty ratings
+### Keyboard Layout
 
-### 🎼 Song Library
-Current songs include:
-- **Let It Be** - The Beatles (Beginner)
-- **All of Me** - John Legend (Beginner)
-- **Someone Like You** - Adele (Beginner)
-- **Imagine** - John Lennon (Beginner)
-- **Perfect** - Ed Sheeran (Intermediate)
+iKeys uses an intuitive two-hand keyboard layout:
 
-Each song shows:
-- Tempo (BPM)
-- Difficulty level
-- Number of chords
-- Hand assignments
+**Left Hand (Octave 3):**
+- White keys: `A` `S` `D` `F` `G` `H` `J`
+- Black keys: `W` `E` `T` `Y` `U`
 
-### ⚙️ Settings & Controls
-- **Speed Control**: 50-150% tempo adjustment
-- **Volume Control**: 0-100% with smooth fading
-- **Hand Selection**: Left hand only, right hand only, or both hands
-- **Loop Mode**: Repeat songs continuously
-- **Keyboard Mapping**: Play piano with computer keyboard
+**Right Hand (Octave 4):**
+- White keys: `K` `L` `;` `'` `Enter`
+- Black keys: `I` `O` `P` `]`
 
-### 🎨 Claude Design System
-- Clean, modern UI with warm orange/coral accents
-- Dark mode optimized for extended practice sessions
-- Smooth animations and transitions
-- Responsive layout for all screen sizes
+**Extended Range (Octave 5):**
+- White keys: `Z` `X` `C` `V` `B` `N` `M`
+- Black keys: `Q` `2` `3` `5` `6`
 
-## 🚀 Getting Started
+### Learning Flow
+
+1. **Choose a Song** - Browse the song library and select a track to learn
+2. **Select Your Mode** - Pick a learning mode that suits your skill level
+3. **Follow the Guide** - Watch falling chords and see which keys to press
+4. **Practice** - Play along and build muscle memory
+5. **Record** - Capture your performance and review later
+
+---
+
+## 🎓 For Beginners
+
+iKeys includes a comprehensive **Piano Basics Tutorial** that teaches:
+- The musical scale (Do-Re-Mi-Fa-Sol-La-Ti-Do)
+- How to play simple melodies
+- Basic chord progressions
+- Two-hand coordination
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend Framework**: Vue.js 3 (Composition API)
+- **Language**: TypeScript
+- **Audio Engine**: Tone.js
+- **State Management**: Pinia (with persistence)
+- **Styling**: Tailwind CSS
+- **Build Tool**: Vite
+
+---
+
+## 💻 Local Development
 
 ### Prerequisites
-- Node.js 16+ 
+
+- Node.js (v16 or higher)
 - npm or yarn
 
 ### Installation
@@ -91,123 +97,108 @@ npm install
 npm run dev
 ```
 
-The app will open at `http://localhost:5173`
+The app will be available at `http://localhost:5173/`
 
-## 🎹 How to Play
+### Build for Production
 
-1. **Select a Song**: Click the song library button (🎵) and choose a song
-2. **Choose a Mode**: 
-   - **Auto Play** - Watch and learn the chord progression
-   - **Practice** - Play along with visual feedback
-   - **Wait Mode** - Perfect each chord before advancing
-3. **Play Chords**: 
-   - Watch the falling chord blocks
-   - When a block reaches the hit line, press all keys in that chord simultaneously
-   - Hold the chord for the duration shown by the block length
-   - Release and prepare for the next chord
-
-### Keyboard Controls
-
-**Computer Keyboard Mapping** (2 octaves):
-- `A S D F G H J K L ;` - White keys
-- `W E T Y U O P` - Black keys
-
-**Playback Controls**:
-- Click **Play** to start
-- Click **Pause** to pause
-- Click **Stop** to reset to beginning
-
-## 📖 Understanding Chords
-
-### What is a Chord?
-A chord is multiple piano keys pressed simultaneously (e.g., C Major = C + E + G)
-
-### Chord Types in the App
-- **Major Chords** (C, G, F, D) - Happy, bright sound
-- **Minor Chords** (Am, Em, Dm) - Sad, emotional sound  
-- **Seventh Chords** (G7, C7, Am7) - Rich, jazzy sound
-
-### Color-Coded System
-Each unique chord in a song has its own color:
-- Helps you recognize patterns
-- Makes chord changes easier to anticipate
-- Consistent throughout the song
-
-## 🛠️ Technical Stack
-
-- **Framework**: Vue 3 (Composition API)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Audio**: Tone.js with Salamander Grand Piano samples
-- **Build Tool**: Vite
-- **UI Components**: Shadcn Vue / Radix Vue
-
-## 📁 Project Structure
-
+```bash
+npm run build
 ```
-iKeys/
-├── src/
-│   ├── components/
-│   │   ├── FallingChords.vue       # Animated falling chord blocks
-│   │   ├── ChordInfoPanel.vue      # Current chord display & accuracy
-│   │   ├── PianoKeyboard.vue       # Interactive piano with multi-key highlighting
-│   │   ├── ChordDictionary.vue     # Chord reference library
-│   │   ├── Modal.vue               # Reusable modal component
-│   │   ├── SettingsModal.vue       # Settings and controls
-│   │   └── SongLibraryModal.vue    # Song selection
-│   ├── data/
-│   │   ├── chords.ts               # Chord definitions and dictionary
-│   │   └── songs.ts                # Song library with chord progressions
-│   ├── utils/
-│   │   ├── audioEngine.ts          # Tone.js audio management
-│   │   └── chordDetection.ts       # Chord matching engine
-│   ├── types/
-│   │   └── index.ts                # TypeScript type definitions
-│   ├── App.vue                     # Main app component
-│   └── main.ts                     # App entry point
-```
-
-## 🎯 Key Algorithms
-
-### Chord Detection
-- Tracks all currently pressed keys
-- Matches against target chord with tolerance for timing
-- Calculates accuracy percentage
-- Identifies missing and extra keys
-
-### Falling Chord Animation
-- 60 FPS smooth animation using `requestAnimationFrame`
-- Time-based positioning with speed multiplier
-- Lookahead rendering (shows chords 6 seconds ahead)
-- Hit line detection for perfect timing
-
-### Audio Playback
-- Polyphonic sampler with independent note releases
-- Natural ADSR envelope (Attack, Decay, Sustain, Release)
-- Velocity-sensitive dynamics
-- Fallback synthesis if samples fail to load
-
-## 🔮 Future Enhancements
-
-- **More Songs**: Expand library with more difficulty levels
-- **Custom Songs**: Upload MIDI files or create custom chord progressions
-- **Achievement System**: Earn badges for accuracy and completion
-- **Multiplayer**: Challenge friends to chord battles
-- **Recording**: Record and playback your performances
-- **Mobile Support**: Touch-optimized interface for tablets
-- **Sheet Music View**: Optional traditional notation display
-- **Chord Transitions**: Practice exercises for difficult chord changes
-
-## 📄 License
-
-MIT License - feel free to use this for learning or your own projects!
-
-## 🙏 Acknowledgments
-
-- Piano samples from [Salamander Grand Piano](https://archive.org/details/SalamanderGrandPianoV3)
-- Inspired by OnlinePianist, Simply Piano, and Flowkey
-- Built with ❤️ using Claude's design system
 
 ---
 
-**Happy chord playing! 🎹🎵**
+## 🎮 Usage Tips
+
+1. **Use headphones** for the best audio experience
+2. **Start with Auto Play** to hear how the song should sound
+3. **Practice Mode** helps you learn the correct finger positions
+4. **Record yourself** to track your improvement over time
+5. **Explore the Chord Dictionary** to learn chord theory
+
+---
+
+## 📱 Device Requirements
+
+iKeys is designed for **desktop use only**. A physical keyboard is required to play the piano. Mobile devices are not currently supported.
+
+**Minimum Requirements:**
+- Desktop computer (Windows, Mac, or Linux)
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Physical keyboard
+- Audio output (speakers or headphones)
+
+---
+
+## 🎵 Song Library
+
+iKeys currently features:
+- 🎓 Piano Basics Tutorial
+- 🎸 Let It Be - The Beatles
+- 🎤 Someone Like You - Adele
+- 🎹 Imagine - John Lennon
+- ❤️ Perfect - Ed Sheeran
+- 🎼 All of Me - John Legend
+- 🎶 Piano Ballad Demo
+
+More songs are being added regularly!
+
+---
+
+## 🌟 Features in Detail
+
+### Falling Chords Visualization
+Watch chords fall down the screen in sync with the music, showing you exactly when to play each note.
+
+### Chord Info Panel
+Displays:
+- Current chord name
+- Keyboard keys to press
+- Finger positions (1-5)
+- Hand guidance (left/right/both)
+- Next chord preview
+- Song section (verse, chorus, etc.)
+
+### Recording Engine
+- Record your playing in real-time
+- Save recordings with custom names
+- Play back recordings with full visualization
+- Track recording duration and note accuracy
+
+### User Progress
+- Create a profile to track your journey
+- View songs completed
+- Monitor practice time
+- Earn achievements
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit issues and pull requests.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 🙏 Acknowledgments
+
+- Built with ❤️ using Vue.js and Tone.js
+- Piano samples from Salamander Grand Piano
+- Inspired by the joy of learning music
+
+---
+
+## 🔗 Links
+
+- **Live App**: [iKeys.onrender.com](https://iKeys.onrender.com)
+- **Report Issues**: Create an issue on GitHub
+- **Feedback**: We'd love to hear from you!
+
+---
+
+**Start your piano learning journey today! 🎹✨**
+

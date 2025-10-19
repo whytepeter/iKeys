@@ -62,47 +62,45 @@ const LOOKAHEAD_TIME = 5; // Show notes up to 5 seconds ahead
 // White key centers: 25px, 75px, 125px, ... (every 50px)
 // Black keys overlap between white keys with -16px margins
 // Positions as percentage of total keyboard width for responsive layout
-// Keyboard mapping for notes
+// Keyboard mapping for notes - Two-hand layout
 const noteToKeyboardKey: Record<string, string> = {
-  // Octave 3
-  C3: "Q",
-  "C#3": "2",
-  D3: "W",
-  "D#3": "3",
-  E3: "E",
-  F3: "R",
-  "F#3": "5",
-  G3: "T",
-  "G#3": "6",
-  A3: "Y",
-  "A#3": "7",
-  B3: "U",
+  // Octave 3 (Left hand: ASDFGHJ with WETYU for black keys)
+  C3: "A",
+  "C#3": "W",
+  D3: "S",
+  "D#3": "E",
+  E3: "D",
+  F3: "F",
+  "F#3": "T",
+  G3: "G",
+  "G#3": "Y",
+  A3: "H",
+  "A#3": "U",
+  B3: "J",
 
-  // Octave 4
-  C4: "I", // Middle C
-  "C#4": "9",
-  D4: "O",
-  "D#4": "0",
-  E4: "P",
-  F4: "Z",
-  "F#4": "S",
-  G4: "X",
-  "G#4": "D",
-  A4: "C",
-  "A#4": "F",
-  B4: "V",
+  // Octave 4 (Right hand: KL;' with IOP] for black keys)
+  C4: "K", // Middle C
+  "C#4": "I",
+  D4: "L",
+  "D#4": "O",
+  E4: ";",
+  F4: "'",
+  "F#4": "]",
+  G4: "↵",
 
-  // Octave 5
-  C5: "B",
-  "C#5": "H",
-  D5: "N",
-  "D#5": "J",
-  E5: "M",
-  F5: ",",
-  "F#5": "L",
-  G5: ".",
-  "G#5": ";",
-  A5: "/",
+  // Octave 5 (Extended range: ZXCVBNM with Q2356 for black keys)
+  C5: "Z",
+  "C#5": "Q",
+  D5: "X",
+  "D#5": "2",
+  E5: "C",
+  F5: "V",
+  "F#5": "3",
+  G5: "B",
+  "G#5": "5",
+  A5: "N",
+  "A#5": "6",
+  B5: "M",
 };
 
 const keyPositions: Record<string, number> = {
@@ -290,7 +288,7 @@ function getNoteBarStyle(noteBar: NoteBar) {
 // Format chord preview to show keyboard keys
 function formatChordPreview(chord: Chord): string {
   if (chord.keys.length === 1) {
-    const keyboardKey = noteToKeyboardKey[chord.keys[0]];
+    const keyboardKey = NOTE_TO_KEYBOARD_KEY[chord.keys[0]];
     return keyboardKey || chord.chordName;
   }
   return chord.chordName;
