@@ -23,11 +23,14 @@
         </div>
         <div class="flex gap-2 flex-wrap justify-center">
           <span
-            v-for="(key, i) in formatKeys(currentChord.keys)"
+            v-for="(keyInfo, i) in formatKeysWithNotes(currentChord.keys)"
             :key="i"
-            class="bg-white/30 backdrop-blur-sm px-3 py-1.5 rounded-lg text-sm font-semibold text-white"
+            class="bg-white/30 backdrop-blur-sm px-3 py-1.5 rounded-lg text-sm font-semibold text-white flex flex-col items-center gap-0.5"
           >
-            {{ key }}
+            <span class="text-base leading-none">{{ keyInfo.keyboard }}</span>
+            <!-- <span class="text-[10px] opacity-80 leading-none">{{
+              keyInfo.note
+            }}</span> -->
           </span>
         </div>
         <div class="text-[13px] text-white/90 font-medium mt-1">
@@ -49,9 +52,20 @@
         >
           {{ nextChord.chordName }}
         </span>
-        <div class="flex gap-1.5 text-[11px] text-white/70">
-          <span v-for="(key, i) in formatKeys(nextChord.keys)" :key="i">
-            {{ key }}
+        <div
+          class="flex gap-1.5 text-[11px] text-white/70 flex-wrap justify-center"
+        >
+          <span
+            v-for="(keyInfo, i) in formatKeysWithNotes(nextChord.keys)"
+            :key="i"
+            class="flex flex-col items-center"
+          >
+            <span class="text-sm font-bold text-white leading-none">{{
+              keyInfo.keyboard
+            }}</span>
+            <!-- <span class="text-[9px] opacity-70 leading-none">{{
+              keyInfo.note
+            }}</span> -->
           </span>
         </div>
       </div>
@@ -110,6 +124,58 @@
         {{ formatTime(currentTime) }} / {{ formatTime(totalDuration) }}
       </div>
     </div>
+
+    <!-- Playback Controls -->
+    <div class="flex flex-col gap-3 pt-3 border-t border-white/10">
+      <!-- Transport Controls -->
+      <div class="flex items-center justify-center gap-2">
+        <button @click="$emit('stop')" class="control-btn stop" title="Stop">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+          </svg>
+        </button>
+
+        <button
+          v-if="!isPlaying"
+          @click="$emit('play')"
+          class="control-btn play"
+          title="Play"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"></path>
+          </svg>
+        </button>
+
+        <button
+          v-else
+          @click="$emit('pause')"
+          class="control-btn pause"
+          title="Pause"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 4h4v16H6zM14 4h4v16h-4z"></path>
+          </svg>
+        </button>
+
+        <button
+          @click="$emit('toggleLoop')"
+          :class="['control-btn', 'loop', { active: loop }]"
+          title="Loop"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 1l4 4-4 4"></path>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+            <path d="M7 23l-4-4 4-4"></path>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Play Mode -->
+      <div class="text-[11px] text-center text-white/60 font-medium">
+        {{ playModeLabel }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -125,10 +191,33 @@ interface Props {
   showAccuracy?: boolean;
   currentTime: number;
   totalDuration: number;
+  isPlaying?: boolean;
+  playMode?: string;
+  loop?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   showAccuracy: false,
+  isPlaying: false,
+  playMode: "auto",
+  loop: false,
+});
+
+defineEmits<{
+  play: [];
+  pause: [];
+  stop: [];
+  toggleLoop: [];
+}>();
+
+const playModeLabel = computed(() => {
+  const labels: Record<string, string> = {
+    free: "🎹 Free Play",
+    auto: "▶️ Auto Play",
+    practice: "🎓 Practice",
+    wait: "⏸️ Wait Mode",
+  };
+  return labels[props.playMode || "auto"] || "Auto Play";
 });
 
 const progress = computed(() => {
@@ -136,8 +225,68 @@ const progress = computed(() => {
   return (props.currentTime / props.totalDuration) * 100;
 });
 
+// Keyboard mapping for notes
+const noteToKeyboardKey: Record<string, string> = {
+  // Octave 3
+  C3: "Q",
+  "C#3": "2",
+  D3: "W",
+  "D#3": "3",
+  E3: "E",
+  F3: "R",
+  "F#3": "5",
+  G3: "T",
+  "G#3": "6",
+  A3: "Y",
+  "A#3": "7",
+  B3: "U",
+
+  // Octave 4
+  C4: "I", // Middle C
+  "C#4": "9",
+  D4: "O",
+  "D#4": "0",
+  E4: "P",
+  F4: "Z",
+  "F#4": "S",
+  G4: "X",
+  "G#4": "D",
+  A4: "C",
+  "A#4": "F",
+  B4: "V",
+
+  // Octave 5
+  C5: "B",
+  "C#5": "H",
+  D5: "N",
+  "D#5": "J",
+  E5: "M",
+  F5: ",",
+  "F#5": "L",
+  G5: ".",
+  "G#5": ";",
+  A5: "/",
+};
+
 function formatKeys(keys: string[]): string[] {
-  return keys.map((key) => key.replace(/\d+/, ""));
+  return keys.map((key) => {
+    const noteName = key.replace(/\d+/, "");
+    const keyboardKey = noteToKeyboardKey[key];
+    return keyboardKey ? keyboardKey : noteName;
+  });
+}
+
+function formatKeysWithNotes(
+  keys: string[]
+): Array<{ keyboard: string; note: string }> {
+  return keys.map((key) => {
+    const noteName = key.replace(/\d+/, "");
+    const keyboardKey = noteToKeyboardKey[key];
+    return {
+      keyboard: keyboardKey || "?",
+      note: noteName,
+    };
+  });
 }
 
 function formatHand(hand: "left" | "right" | "both"): string {
@@ -155,3 +304,53 @@ function formatTime(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 </script>
+
+<style scoped>
+.control-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.control-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+.control-btn.play {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  width: 48px;
+  height: 48px;
+}
+
+.control-btn.pause {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  width: 48px;
+  height: 48px;
+}
+
+.control-btn.stop {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.control-btn.loop {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.control-btn.loop.active {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.5);
+}
+</style>

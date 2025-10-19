@@ -307,12 +307,13 @@
     />
 
     <!-- Recording Alert Modal -->
-    <ConfirmModal
+    <AlertModal
       :is-open="showRecordingAlert"
       title="Recording"
       :message="recordingAlertMessage"
       :type="recordingAlertType"
       confirm-text="OK"
+      confirm-only
       @confirm="showRecordingAlert = false"
       @cancel="showRecordingAlert = false"
     />
@@ -475,6 +476,7 @@ const handleChordDictionaryPlay = (chordKeys: string[]) => {
 
 const selectSong = (song: Song) => {
   stop();
+  playingRecording.value = null; // Clear any playing recording
   currentSong.value = song;
   playMode.value = "auto";
   // Close all views to show the song
@@ -511,6 +513,7 @@ const stop = () => {
   nextChord.value = null;
   chordMatch.value = null;
   chordDetector.clear();
+  playingRecording.value = null; // Clear recording state when stopping
 };
 
 // Settings are now updated directly via v-model bindings
@@ -721,6 +724,16 @@ const keyMap: Record<string, string> = {
 };
 
 const handleKeyboardDown = (event: KeyboardEvent) => {
+  // Ignore keyboard events when user is typing in input fields
+  const target = event.target as HTMLElement;
+  if (
+    target.tagName === "INPUT" ||
+    target.tagName === "TEXTAREA" ||
+    target.isContentEditable
+  ) {
+    return;
+  }
+
   const key = event.key.toLowerCase();
   const note = keyMap[key];
 
@@ -730,6 +743,16 @@ const handleKeyboardDown = (event: KeyboardEvent) => {
 };
 
 const handleKeyboardUp = (event: KeyboardEvent) => {
+  // Ignore keyboard events when user is typing in input fields
+  const target = event.target as HTMLElement;
+  if (
+    target.tagName === "INPUT" ||
+    target.tagName === "TEXTAREA" ||
+    target.isContentEditable
+  ) {
+    return;
+  }
+
   const key = event.key.toLowerCase();
   const note = keyMap[key];
 
@@ -802,16 +825,28 @@ const stopRecording = () => {
 const handleRecordingTitleConfirm = (title: string) => {
   showRecordingTitleInput.value = false;
 
+  // Calculate duration from the notes (last note time + duration)
+  let calculatedDuration = 0;
+  if (pendingRecordingNotes.value.length > 0) {
+    const lastNote = pendingRecordingNotes.value.reduce((latest, note) => {
+      const noteEnd = note.time + note.duration;
+      const latestEnd = latest.time + latest.duration;
+      return noteEnd > latestEnd ? note : latest;
+    });
+    calculatedDuration = lastNote.time + lastNote.duration;
+  }
+
   const recording: Recording = {
     id: Date.now().toString(),
     title,
     date: new Date().toISOString(),
-    duration: recordingElapsedTime.value,
+    duration: calculatedDuration,
     notes: pendingRecordingNotes.value,
   };
 
   RecordingStorage.save(recording);
   console.log("✅ Recording saved:", recording);
+  console.log("Duration calculated from notes:", calculatedDuration, "seconds");
 
   // Clear pending notes
   pendingRecordingNotes.value = [];
@@ -834,8 +869,12 @@ const playRecording = (recording: Recording) => {
     stop();
   }
 
+  // Close the song library to show the falling chords
+  showSongLibrary.value = false;
+  showChordDictionary.value = false;
+  showSettings.value = false;
+
   playingRecording.value = recording;
-  isPlaying.value = true;
   currentTime.value = 0;
 
   // Convert recording to song format for playback
@@ -852,11 +891,26 @@ const playRecording = (recording: Recording) => {
   currentSong.value = recordingSong;
   playMode.value = "auto";
 
+  console.log(
+    "🎵 Playing recording:",
+    recording.title,
+    "with",
+    recording.notes.length,
+    "notes"
+  );
+  console.log("Converted to", recordingSong.chords.length, "chords");
+
   // Start playback by calling play
-  play();
+  // Use setTimeout to ensure the UI has updated before starting playback
+  setTimeout(() => {
+    isPlaying.value = true;
+    play();
+  }, 100);
 };
 
 const convertNotesToChords = (notes: RecordedNote[]): Chord[] => {
+  console.log("Converting recorded notes to chords:", notes);
+
   // Group notes that start at the same time into chords
   const chords: Chord[] = [];
   const groupedNotes = new Map<number, RecordedNote[]>();
@@ -869,20 +923,27 @@ const convertNotesToChords = (notes: RecordedNote[]): Chord[] => {
     groupedNotes.set(roundedTime, existing);
   });
 
+  console.log("Grouped notes by time:", Array.from(groupedNotes.entries()));
+
   // Convert groups to chords
   groupedNotes.forEach((groupNotes, time) => {
-    chords.push({
+    const chord: Chord = {
       time,
       duration: Math.max(...groupNotes.map((n) => n.duration)),
       chordName: groupNotes.length === 1 ? groupNotes[0].note : "Chord",
       keys: groupNotes.map((n) => n.note),
       hand: "both" as const,
       color: "#D97757",
+      fingers: groupNotes.map((_, i) => i + 1), // Add fingers property
       noteDurations: groupNotes.map((n) => n.duration),
-    });
+    };
+    chords.push(chord);
+    console.log("Created chord:", chord);
   });
 
-  return chords.sort((a, b) => a.time - b.time);
+  const sortedChords = chords.sort((a, b) => a.time - b.time);
+  console.log("Final sorted chords for playback:", sortedChords);
+  return sortedChords;
 };
 </script>
 

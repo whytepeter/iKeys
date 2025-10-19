@@ -12,6 +12,8 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-vue-next": "^0.344.0",
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.5.0",
     "radix-vue": "^1.5.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",

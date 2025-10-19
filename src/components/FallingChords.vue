@@ -33,7 +33,7 @@
     <!-- Next chord preview -->
     <div v-if="nextChord" class="next-chord-preview">
       <span class="preview-label">Next:</span>
-      <span class="preview-chord">{{ nextChord.chordName }}</span>
+      <span class="preview-chord">{{ formatChordPreview(nextChord) }}</span>
     </div>
   </div>
 </template>
@@ -62,6 +62,49 @@ const LOOKAHEAD_TIME = 5; // Show notes up to 5 seconds ahead
 // White key centers: 25px, 75px, 125px, ... (every 50px)
 // Black keys overlap between white keys with -16px margins
 // Positions as percentage of total keyboard width for responsive layout
+// Keyboard mapping for notes
+const noteToKeyboardKey: Record<string, string> = {
+  // Octave 3
+  C3: "Q",
+  "C#3": "2",
+  D3: "W",
+  "D#3": "3",
+  E3: "E",
+  F3: "R",
+  "F#3": "5",
+  G3: "T",
+  "G#3": "6",
+  A3: "Y",
+  "A#3": "7",
+  B3: "U",
+
+  // Octave 4
+  C4: "I", // Middle C
+  "C#4": "9",
+  D4: "O",
+  "D#4": "0",
+  E4: "P",
+  F4: "Z",
+  "F#4": "S",
+  G4: "X",
+  "G#4": "D",
+  A4: "C",
+  "A#4": "F",
+  B4: "V",
+
+  // Octave 5
+  C5: "B",
+  "C#5": "H",
+  D5: "N",
+  "D#5": "J",
+  E5: "M",
+  F5: ",",
+  "F#5": "L",
+  G5: ".",
+  "G#5": ";",
+  A5: "/",
+};
+
 const keyPositions: Record<string, number> = {
   // ===== OCTAVE 3 =====
   // White keys (50px wide, centers at 25, 75, 125, 175, 225, 275, 325...)
@@ -242,6 +285,15 @@ function getNoteBarStyle(noteBar: NoteBar) {
       : `2px solid rgba(255, 255, 255, 0.3)`,
     transform: isActive ? "scale(1.1)" : "scale(1)",
   };
+}
+
+// Format chord preview to show keyboard keys
+function formatChordPreview(chord: Chord): string {
+  if (chord.keys.length === 1) {
+    const keyboardKey = noteToKeyboardKey[chord.keys[0]];
+    return keyboardKey || chord.chordName;
+  }
+  return chord.chordName;
 }
 
 // Calculate style for chord labels
