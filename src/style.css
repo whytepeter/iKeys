@@ -1,9 +1,9 @@
+/* Import Accessibility Styles */
+@import './assets/styles/accessibility.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Accessibility Styles */
-@import './assets/styles/accessibility.css';
 
 @layer base {
   :root {

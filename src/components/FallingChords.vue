@@ -288,7 +288,7 @@ function getNoteBarStyle(noteBar: NoteBar) {
 // Format chord preview to show keyboard keys
 function formatChordPreview(chord: Chord): string {
   if (chord.keys.length === 1) {
-    const keyboardKey = NOTE_TO_KEYBOARD_KEY[chord.keys[0]];
+    const keyboardKey = noteToKeyboardKey[chord.keys[0]];
     return keyboardKey || chord.chordName;
   }
   return chord.chordName;

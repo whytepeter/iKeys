@@ -148,7 +148,11 @@ export const useUserStore = defineStore(
     }
   },
   {
-    persist: true,
+    // Only persist progress and achievements, NOT user profile
+    // Appwrite manages authentication via HTTP-only cookies
+    persist: {
+      paths: ['progress', 'achievements'],
+    },
   }
 )
 

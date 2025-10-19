@@ -10,8 +10,8 @@ export interface RecordingDocument {
     notes: RecordedNote[];
     duration: number;
     isPublished: boolean;
-    createdAt: string;
-    updatedAt: string;
+    $createdAt: string;
+    $updatedAt: string;
 }
 
 class RecordingsService {
@@ -33,8 +33,6 @@ class RecordingsService {
                     notes: JSON.stringify(notes),
                     duration,
                     isPublished: false,
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
                 }
             );
             return this.parseRecording(recording);
@@ -52,7 +50,7 @@ class RecordingsService {
                 RECORDINGS_COLLECTION_ID,
                 [
                     Query.equal('userId', userId),
-                    Query.orderDesc('createdAt'),
+                    Query.orderDesc('$createdAt'),
                     Query.limit(100)
                 ]
             );
@@ -68,7 +66,7 @@ class RecordingsService {
         try {
             const queries = [
                 Query.equal('isPublished', true),
-                Query.orderDesc('createdAt'),
+                Query.orderDesc('$createdAt'),
                 Query.limit(100)
             ];
 
@@ -99,10 +97,7 @@ class RecordingsService {
         }>
     ): Promise<RecordingDocument> {
         try {
-            const updateData: any = {
-                ...data,
-                updatedAt: new Date().toISOString(),
-            };
+            const updateData: any = { ...data };
 
             if (data.notes) {
                 updateData.notes = JSON.stringify(data.notes);
@@ -149,8 +144,8 @@ class RecordingsService {
             notes: typeof doc.notes === 'string' ? JSON.parse(doc.notes) : doc.notes,
             duration: doc.duration,
             isPublished: doc.isPublished,
-            createdAt: doc.createdAt,
-            updatedAt: doc.updatedAt,
+            $createdAt: doc.$createdAt,
+            $updatedAt: doc.$updatedAt,
         };
     }
 }

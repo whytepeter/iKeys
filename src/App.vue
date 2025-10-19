@@ -3,272 +3,30 @@
     <!-- Mobile Blocker -->
     <MobileBlocker />
 
-    <!-- Header -->
-    <header
-      class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-sm z-50"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
-      >
-        <div class="flex items-center gap-3">
-          <div class="text-3xl">🎹</div>
-          <div>
-            <h1
-              class="text-2xl font-bold bg-gradient-to-r from-[#D97757] to-[#fb923c] bg-clip-text text-transparent"
-            >
-              iKeys
-            </h1>
-            <p class="text-xs text-zinc-400">Learn chords. Play songs.</p>
-          </div>
-        </div>
-
-        <!-- Playback Controls (shown when song is active) -->
-        <div
-          v-if="currentSong"
-          class="flex items-center gap-4 bg-zinc-800/50 px-4 py-2 rounded-xl border border-zinc-700"
-        >
-          <!-- Transport Controls -->
-          <div class="flex items-center gap-2">
-            <button @click="stop" class="nav-control-btn stop" title="Stop">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                <rect x="6" y="6" width="12" height="12" rx="2"></rect>
-              </svg>
-            </button>
-
-            <button
-              v-if="!isPlaying"
-              @click="play"
-              class="nav-control-btn play"
-              title="Play"
-            >
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"></path>
-              </svg>
-            </button>
-
-            <button
-              v-else
-              @click="pause"
-              class="nav-control-btn pause"
-              title="Pause"
-            >
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 4h4v16H6zM14 4h4v16h-4z"></path>
-              </svg>
-            </button>
-
-            <button
-              @click="loop = !loop"
-              :class="[
-                'nav-control-btn',
-                'loop',
-                { active: loop, inactive: !loop },
-              ]"
-              title="Loop"
-            >
-              <svg
-                class="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M17 1l4 4-4 4"></path>
-                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                <path d="M7 23l-4-4 4-4"></path>
-                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-              </svg>
-            </button>
-          </div>
-
-          <!-- Divider -->
-          <div class="h-8 w-px bg-zinc-700"></div>
-
-          <!-- Play Mode Selector -->
-          <div class="relative">
-            <button
-              @click.stop="togglePlayModeMenu"
-              class="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#D97757]/20 border border-[#D97757]/40 hover:bg-[#D97757]/30 transition-colors"
-              title="Change play mode"
-            >
-              <span class="text-xs text-white font-medium">{{
-                playModeLabel
-              }}</span>
-              <svg
-                class="w-3 h-3 text-white/60"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M6 9l6 6 6-6"></path>
-              </svg>
-            </button>
-
-            <!-- Play Mode Dropdown -->
-            <div
-              v-if="showPlayModeMenu"
-              @click.stop
-              class="absolute top-full mt-2 right-0 w-48 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-50 py-2"
-            >
-              <button
-                v-for="mode in playModeOptions"
-                :key="mode.value"
-                @click="selectPlayMode(mode.value)"
-                :class="[
-                  'w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-zinc-700/50 transition-colors',
-                  { 'bg-zinc-700/30': playMode === mode.value },
-                ]"
-              >
-                <span class="text-lg">{{ mode.icon }}</span>
-                <div class="flex flex-col">
-                  <span class="text-sm font-medium text-white">{{
-                    mode.label
-                  }}</span>
-                  <span class="text-xs text-zinc-400">{{ mode.desc }}</span>
-                </div>
-                <svg
-                  v-if="playMode === mode.value"
-                  class="w-4 h-4 text-[#D97757] ml-auto"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- Divider -->
-          <div class="h-8 w-px bg-zinc-700"></div>
-
-          <!-- Close Button -->
-          <button
-            @click="closeSong"
-            class="text-zinc-400 hover:text-red-500 transition-colors"
-            title="Close Song"
-          >
-            <svg
-              class="w-5 h-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M18 6L6 18M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
-
-        <!-- User Profile -->
-        <div class="relative">
-          <button
-            @click.stop="showUserMenu = !showUserMenu"
-            class="flex items-center gap-3 px-3 py-2 rounded-xl bg-zinc-800/50 border border-zinc-700 hover:bg-zinc-800 transition-colors"
-            title="User profile"
-          >
-            <div
-              class="w-8 h-8 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold text-sm"
-            >
-              {{ userInitial }}
-            </div>
-            <svg
-              class="w-3 h-3 text-white/60"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M6 9l6 6 6-6"></path>
-            </svg>
-          </button>
-
-          <!-- User Dropdown -->
-          <div
-            v-if="showUserMenu"
-            @click.stop
-            class="absolute top-full mt-2 right-0 w-64 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-50 py-2"
-          >
-            <div
-              v-if="isUserAuthenticated"
-              class="px-4 py-3 border-b border-zinc-700"
-            >
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-10 h-10 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold"
-                >
-                  {{ userInitial }}
-                </div>
-                <div class="flex flex-col">
-                  <span class="text-sm font-semibold text-white">{{
-                    userStore.profile?.name || "User"
-                  }}</span>
-                  <span class="text-xs text-zinc-400">{{
-                    userStore.profile?.email || "user@ikeys.app"
-                  }}</span>
-                </div>
-              </div>
-            </div>
-
-            <div v-else class="px-4 py-3 border-b border-zinc-700">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center text-zinc-400 font-semibold"
-                >
-                  G
-                </div>
-                <div class="flex flex-col">
-                  <span class="text-sm font-semibold text-white">Guest</span>
-                  <span class="text-xs text-zinc-400">Not logged in</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="py-2">
-              <button
-                v-if="isUserAuthenticated"
-                @click="handleLogout"
-                class="w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-zinc-700/50 transition-colors text-red-400 hover:text-red-300"
-              >
-                <svg
-                  class="w-4 h-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                  <polyline points="16 17 21 12 16 7"></polyline>
-                  <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
-                <span class="text-sm font-medium">Logout</span>
-              </button>
-
-              <button
-                v-else
-                @click="handleLogin"
-                class="w-full px-4 py-2.5 text-left flex items-center gap-3 hover:bg-zinc-700/50 transition-colors text-[#D97757] hover:text-[#fb923c]"
-              >
-                <svg
-                  class="w-4 h-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                  <polyline points="10 17 15 12 10 7"></polyline>
-                  <line x1="15" y1="12" x2="3" y2="12"></line>
-                </svg>
-                <span class="text-sm font-medium">Login</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Navbar -->
+    <Navbar
+      :current-song="currentSong"
+      :is-playing="isPlaying"
+      :loop="loop"
+      :play-mode="playMode"
+      :play-mode-options="playModeOptions"
+      :show-play-mode-menu="showPlayModeMenu"
+      :show-user-menu="showUserMenu"
+      :is-user-authenticated="isUserAuthenticated"
+      :user-initial="userInitial"
+      :user-name="userStore.profile?.name"
+      :user-email="userStore.profile?.email"
+      @stop="stop"
+      @play="play"
+      @pause="pause"
+      @toggle-loop="loop = !loop"
+      @toggle-play-mode-menu="togglePlayModeMenu"
+      @select-play-mode="selectPlayMode"
+      @close-song="closeSong"
+      @toggle-user-menu="showUserMenu = !showUserMenu"
+      @logout="handleLogout"
+      @login="handleLogin"
+    />
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col overflow-hidden">
@@ -280,12 +38,14 @@
         <!-- Song Library (when active) -->
         <div v-if="showSongLibrary" class="flex-1 min-w-0 overflow-auto">
           <SongLibraryModal
+            ref="songLibraryModalRef"
             :songs="songs"
             :current-song="currentSong"
             :current-recording="playingRecording"
             :is-playing="isPlaying && playingRecording !== null"
             @select-song="selectSong"
             @play-recording="playRecording"
+            @open-auth="handleLogin"
           />
         </div>
 
@@ -494,6 +254,7 @@
       :placeholder="'My Recording'"
       :default-value="`Recording ${new Date().toLocaleTimeString()}`"
       confirm-text="Save"
+      :loading="isSavingRecording"
       @confirm="handleRecordingTitleConfirm"
       @cancel="handleRecordingTitleCancel"
     />
@@ -512,12 +273,16 @@
 
     <!-- Auth Modal (controlled by ?auth=login|register|forgot-password|reset-password) -->
     <AuthModal @auth-success="handleAuthSuccess" />
+
+    <!-- Toast Notifications -->
+    <ToastContainer />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import MobileBlocker from "./components/MobileBlocker.vue";
+import Navbar from "./components/Navbar.vue";
 import PianoKeyboard from "./components/PianoKeyboard.vue";
 import FallingChords from "./components/FallingChords.vue";
 import ChordInfoPanel from "./components/ChordInfoPanel.vue";
@@ -527,6 +292,7 @@ import ChordDictionary from "./components/ChordDictionary.vue";
 import InputModal from "./components/InputModal.vue";
 import AlertModal from "./components/AlertModal.vue";
 import AuthModal from "./components/AuthModal.vue";
+import ToastContainer from "./components/ToastContainer.vue";
 import { songs } from "./data/songs";
 import { AudioEngine } from "./utils/audioEngine";
 import { ChordDetector } from "./utils/chordDetection";
@@ -538,6 +304,10 @@ import {
 } from "./utils/recordingEngine";
 import type { Song, PlayMode, Chord, ChordMatch, HandMode } from "./types";
 import { useUserStore } from "./stores/user";
+import { useRecordingsStore } from "./stores/recordings";
+import { authService } from "./services/authService";
+import { recordingsService } from "./services/recordingsService";
+import { useToast } from "./composables/useToast";
 
 // State
 const currentSong = ref<Song | null>(null);
@@ -554,6 +324,9 @@ const showSettings = ref(false);
 const showSongLibrary = ref(false);
 const showChordDictionary = ref(false);
 
+// Template refs
+const songLibraryModalRef = ref<{ refreshRecordings: () => Promise<void> } | null>(null);
+
 // Recording modals
 const showRecordingTitleInput = ref(false);
 const showRecordingAlert = ref(false);
@@ -562,9 +335,14 @@ const recordingAlertType = ref<"alert" | "success" | "error">("alert");
 const pendingRecordingNotes = ref<any[]>([]);
 const showPlayModeMenu = ref(false);
 const showUserMenu = ref(false);
+const isSavingRecording = ref(false);
 
-// User store
+// Stores
 const userStore = useUserStore();
+const recordingsStore = useRecordingsStore();
+
+// Toast
+const toast = useToast();
 
 // Safe computed properties for user
 const isUserAuthenticated = computed(() => userStore?.isLoggedIn ?? false);
@@ -599,12 +377,29 @@ let animationFrameId: number | null = null;
 let lastFrameTime = 0;
 let recordingTimerInterval: number | null = null;
 
-onMounted(() => {
+onMounted(async () => {
   audioEngine = new AudioEngine();
   chordDetector = new ChordDetector();
   recordingEngine = new RecordingEngine();
   setupKeyboardListeners();
   document.addEventListener("click", handleDocumentClick);
+
+  // Check for existing auth session with Appwrite
+  // Note: Appwrite manages authentication via HTTP-only cookies
+  // We only store user profile in memory, not localStorage
+  try {
+    const user = await authService.getCurrentUser();
+    if (user) {
+      userStore.setProfile({
+        id: user.$id,
+        name: user.name,
+        email: user.email,
+        createdAt: new Date().toISOString(),
+      });
+    }
+  } catch (error) {
+    console.error("Auth check error:", error);
+  }
 });
 
 onUnmounted(() => {
@@ -727,11 +522,6 @@ const playModeOptions = [
   },
 ];
 
-const playModeLabel = computed(() => {
-  const mode = playModeOptions.find((m) => m.value === playMode.value);
-  return mode ? `${mode.icon} ${mode.label}` : "▶️ Auto Play";
-});
-
 const togglePlayModeMenu = () => {
   showPlayModeMenu.value = !showPlayModeMenu.value;
 };
@@ -751,9 +541,15 @@ const handleLogin = () => {
   showUserMenu.value = false;
 };
 
-const handleLogout = () => {
-  userStore.logout();
-  showUserMenu.value = false;
+const handleLogout = async () => {
+  try {
+    await authService.logout();
+    userStore.logout();
+    recordingsStore.clearAll(); // Clear recordings on logout
+    showUserMenu.value = false;
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
 };
 
 const handleAuthSuccess = () => {
@@ -1055,6 +851,13 @@ const toggleRecording = () => {
 };
 
 const startRecording = () => {
+  // Check if user is logged in
+  if (!isUserAuthenticated.value) {
+    // Show login modal if not logged in
+    handleLogin();
+    return;
+  }
+
   // Stop any current playback
   if (isPlaying.value) {
     stop();
@@ -1096,39 +899,66 @@ const stopRecording = () => {
 };
 
 // Handle recording title confirmation
-const handleRecordingTitleConfirm = (title: string) => {
-  showRecordingTitleInput.value = false;
-
+const handleRecordingTitleConfirm = async (title: string) => {
   // Calculate duration from the notes (last note time + duration)
   let calculatedDuration = 0;
   if (pendingRecordingNotes.value.length > 0) {
-    const lastNote = pendingRecordingNotes.value.reduce((latest, note) => {
-      const noteEnd = note.time + note.duration;
-      const latestEnd = latest.time + latest.duration;
-      return noteEnd > latestEnd ? note : latest;
-    });
+    const lastNote = pendingRecordingNotes.value.reduce(
+      (latest: RecordedNote, note: RecordedNote) => {
+        const noteEnd = note.time + note.duration;
+        const latestEnd = latest.time + latest.duration;
+        return noteEnd > latestEnd ? note : latest;
+      }
+    );
     calculatedDuration = lastNote.time + lastNote.duration;
   }
 
-  const recording: Recording = {
-    id: Date.now().toString(),
-    title,
-    date: new Date().toISOString(),
-    duration: calculatedDuration,
-    notes: pendingRecordingNotes.value,
-  };
+  isSavingRecording.value = true;
 
-  RecordingStorage.save(recording);
-  console.log("✅ Recording saved:", recording);
-  console.log("Duration calculated from notes:", calculatedDuration, "seconds");
+  try {
+    if (userStore.isLoggedIn && userStore.profile?.id) {
+      // Save to Appwrite if user is logged in
+      const savedRecording = await recordingsService.createRecording(
+        userStore.profile.id,
+        title,
+        pendingRecordingNotes.value,
+        calculatedDuration
+      );
+      
+      // Add to store
+      recordingsStore.addRecording(savedRecording);
+      console.log("✅ Recording saved to Appwrite and added to store");
+    } else {
+      // Save to local storage if not logged in
+      const recording: Recording = {
+        id: Date.now().toString(),
+        title,
+        date: new Date().toISOString(),
+        duration: calculatedDuration,
+        notes: pendingRecordingNotes.value,
+      };
+      RecordingStorage.save(recording);
+      console.log("✅ Recording saved to local storage");
+    }
 
-  // Clear pending notes
-  pendingRecordingNotes.value = [];
+    // Clear pending notes
+    pendingRecordingNotes.value = [];
 
-  // Show success message
-  recordingAlertMessage.value = `Recording "${title}" saved successfully!`;
-  recordingAlertType.value = "success";
-  showRecordingAlert.value = true;
+    // Close modal on success
+    showRecordingTitleInput.value = false;
+
+    // Show success toast
+    toast.success(`Recording "${title}" saved successfully! 🎵`);
+  } catch (error: any) {
+    console.error("Failed to save recording:", error);
+
+    // Show error toast with specific message
+    const errorMessage =
+      error?.message || "Failed to save recording. Please try again.";
+    toast.error(errorMessage);
+  } finally {
+    isSavingRecording.value = false;
+  }
 };
 
 // Handle recording title cancel
@@ -1269,59 +1099,5 @@ const convertNotesToChords = (notes: RecordedNote[]): Chord[] => {
   50% {
     box-shadow: 0 4px 20px rgba(239, 68, 68, 0.8);
   }
-}
-
-/* Navbar control buttons */
-.nav-control-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.nav-control-btn:hover {
-  transform: scale(1.05);
-}
-
-.nav-control-btn:active {
-  transform: scale(0.95);
-}
-
-.nav-control-btn.play {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  width: 44px;
-  height: 44px;
-}
-
-.nav-control-btn.pause {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  width: 44px;
-  height: 44px;
-}
-
-.nav-control-btn.stop {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-}
-
-.nav-control-btn.loop {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-  opacity: 0.4;
-  transition: opacity 0.2s ease;
-}
-
-.nav-control-btn.loop.active {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
-  opacity: 1;
-}
-
-.nav-control-btn.loop.inactive {
-  opacity: 0.4;
 }
 </style>

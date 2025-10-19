@@ -128,6 +128,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useUserStore } from "../../stores/user";
+import { authService } from "../../services/authService";
 
 const emit = defineEmits<{
   (e: "switch-to-register"): void;
@@ -149,26 +150,32 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     // Basic validation
     if (!email.value || !password.value) {
       errorMessage.value = "Please fill in all fields";
       return;
     }
 
-    // For demo purposes - accept any email/password
+    // Login with Appwrite
+    const user = await authService.login(email.value, password.value);
+
+    // Update user store
     userStore.setProfile({
-      id: "user-" + Date.now(),
-      name: email.value.split("@")[0],
-      email: email.value,
+      id: user.$id,
+      name: user.name,
+      email: user.email,
       createdAt: new Date().toISOString(),
     });
 
     emit("login-success");
-  } catch (error) {
-    errorMessage.value = "Invalid email or password";
+  } catch (error: any) {
+    console.error("Login error:", error);
+    if (error.code === 401) {
+      errorMessage.value = "Invalid email or password";
+    } else {
+      errorMessage.value =
+        error.message || "Failed to login. Please try again.";
+    }
   } finally {
     isLoading.value = false;
   }

@@ -196,7 +196,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { authService } from "../../services/authService";
 
 const emit = defineEmits<{
   (e: "switch-to-login"): void;
@@ -210,6 +211,8 @@ const showConfirmPassword = ref(false);
 const isLoading = ref(false);
 const errorMessage = ref("");
 const successMessage = ref("");
+const userId = ref("");
+const secret = ref("");
 
 // Password strength calculation
 const passwordStrength = computed(() => {
@@ -236,6 +239,18 @@ const passwordStrengthText = computed(() => {
   if (passwordStrength.value < 40) return "Weak";
   if (passwordStrength.value < 70) return "Medium";
   return "Strong";
+});
+
+// Get reset parameters from URL on mount
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  userId.value = urlParams.get("userId") || "";
+  secret.value = urlParams.get("secret") || "";
+
+  // Check if we have the required parameters
+  if (!userId.value || !secret.value) {
+    errorMessage.value = "Invalid or expired reset link. Please request a new one.";
+  }
 });
 
 const handleSubmit = async () => {
@@ -265,17 +280,35 @@ const handleSubmit = async () => {
       return;
     }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Check if we have the required parameters
+    if (!userId.value || !secret.value) {
+      errorMessage.value = "Invalid reset link. Please request a new one.";
+      return;
+    }
 
-    successMessage.value = "Password reset successfully!";
+    // Reset password with Appwrite
+    await authService.resetPassword(
+      userId.value,
+      secret.value,
+      newPassword.value
+    );
+
+    successMessage.value = "Password reset successfully! Redirecting to login...";
 
     // Wait a bit before switching to login
     setTimeout(() => {
       emit("reset-success");
-    }, 1500);
-  } catch (error) {
-    errorMessage.value = "Failed to reset password. Please try again.";
+      emit("switch-to-login");
+    }, 2000);
+  } catch (error: any) {
+    console.error("Reset password error:", error);
+    
+    // Handle specific Appwrite errors
+    if (error.code === 401) {
+      errorMessage.value = "Invalid or expired reset link. Please request a new one.";
+    } else {
+      errorMessage.value = error.message || "Failed to reset password. Please try again.";
+    }
   } finally {
     isLoading.value = false;
   }

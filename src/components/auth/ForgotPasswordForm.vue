@@ -106,6 +106,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { authService } from "../../services/authService";
 
 const emit = defineEmits<{
   (e: "switch-to-login"): void;
@@ -129,8 +130,8 @@ const handleSubmit = async () => {
       return;
     }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Send password reset email via Appwrite
+    await authService.forgotPassword(email.value);
 
     successMessage.value =
       "Reset link sent! Check your email for instructions.";
@@ -139,8 +140,10 @@ const handleSubmit = async () => {
     setTimeout(() => {
       emit("reset-sent");
     }, 2000);
-  } catch (error) {
-    errorMessage.value = "Failed to send reset link. Please try again.";
+  } catch (error: any) {
+    console.error("Forgot password error:", error);
+    errorMessage.value =
+      error.message || "Failed to send reset link. Please try again.";
   } finally {
     isLoading.value = false;
   }

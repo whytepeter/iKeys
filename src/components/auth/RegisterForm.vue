@@ -217,6 +217,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useUserStore } from "../../stores/user";
+import { authService } from "../../services/authService";
 
 const emit = defineEmits<{
   (e: "switch-to-login"): void;
@@ -290,14 +291,18 @@ const handleSubmit = async () => {
       return;
     }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Register with Appwrite
+    const user = await authService.register(
+      email.value,
+      password.value,
+      fullName.value
+    );
 
-    // Create user profile
+    // Update user store
     userStore.setProfile({
-      id: "user-" + Date.now(),
-      name: fullName.value,
-      email: email.value,
+      id: user.$id,
+      name: user.name,
+      email: user.email,
       createdAt: new Date().toISOString(),
     });
 
@@ -305,8 +310,19 @@ const handleSubmit = async () => {
     setTimeout(() => {
       emit("register-success");
     }, 1000);
-  } catch (error) {
-    errorMessage.value = "Failed to create account. Please try again.";
+  } catch (error: any) {
+    console.error("Registration error:", error);
+
+    // Handle specific Appwrite errors
+    if (error.code === 409) {
+      errorMessage.value = "An account with this email already exists";
+    } else if (error.message?.includes("password")) {
+      errorMessage.value =
+        "Password must be at least 8 characters with uppercase, lowercase, and numbers";
+    } else {
+      errorMessage.value =
+        error.message || "Failed to create account. Please try again.";
+    }
   } finally {
     isLoading.value = false;
   }

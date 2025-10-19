@@ -6,7 +6,7 @@
       title="User profile"
     >
       <div
-        class="w-8 h-8 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold text-sm"
+        class="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold text-sm"
       >
         {{ userInitial }}
       </div>
@@ -28,21 +28,18 @@
       class="absolute top-full mt-2 right-0 w-64 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-50 py-2"
     >
       <!-- Authenticated User -->
-      <div
-        v-if="isAuthenticated"
-        class="px-4 py-3 border-b border-zinc-700"
-      >
+      <div v-if="isAuthenticated" class="px-4 py-3 border-b border-zinc-700">
         <div class="flex items-center gap-3">
           <div
-            class="w-10 h-10 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold"
+            class="w-10 h-10 shrink-0 rounded-full bg-gradient-to-br from-[#D97757] to-[#fb923c] flex items-center justify-center text-white font-semibold"
           >
             {{ userInitial }}
           </div>
-          <div class="flex flex-col">
-            <span class="text-sm font-semibold text-white">{{
-              username || 'User'
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-sm font-semibold text-white truncate">{{
+              username || "User"
             }}</span>
-            <span class="text-xs text-zinc-400">user@ikeys.app</span>
+            <span class="text-xs text-zinc-400 truncate">user@ikeys.app</span>
           </div>
         </div>
       </div>
@@ -51,7 +48,7 @@
       <div v-else class="px-4 py-3 border-b border-zinc-700">
         <div class="flex items-center gap-3">
           <div
-            class="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center text-zinc-400 font-semibold"
+            class="w-10 h-10 shrink-0 rounded-full bg-zinc-700 flex items-center justify-center text-zinc-400 font-semibold"
           >
             G
           </div>
@@ -107,9 +104,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useUserStore } from '../stores/user';
-import { useDropdown } from '../composables/useDropdown';
+import { computed } from "vue";
+import { useUserStore } from "../stores/user";
+import { useDropdown } from "../composables/useDropdown";
 
 const userStore = useUserStore();
 const { isOpen, toggle: toggleDropdown, close } = useDropdown();
@@ -119,11 +116,11 @@ const username = computed(() => userStore?.username);
 const userInitial = computed(() =>
   isAuthenticated.value && username.value
     ? username.value[0].toUpperCase()
-    : 'G'
+    : "G"
 );
 
 function handleLogin() {
-  userStore.setAuthenticated(true, 'John Doe');
+  userStore.setAuthenticated(true, "John Doe");
   close();
 }
 
@@ -132,4 +129,3 @@ function handleLogout() {
   close();
 }
 </script>
-

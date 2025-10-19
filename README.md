@@ -22,7 +22,11 @@ iKeys is a modern, interactive web application that makes learning piano fun and
 - 🎼 **Visual Chord Guide** - See falling chords with finger positions and keyboard mappings
 - 🎬 **Real-time Feedback** - Visual indicators show you exactly which keys to press
 - 📼 **Record & Playback** - Capture your performances and play them back
-- 👤 **User Profiles** - Track your progress and achievements
+- 👤 **User Profiles** - Track your progress and achievements (with Appwrite backend)
+- 🔐 **Authentication** - Secure user accounts with email/password login
+- ☁️ **Cloud Storage** - Save your recordings to the cloud and access them anywhere
+- 📤 **Publish & Share** - Share your recordings with the community
+- 🔍 **Searchable Library** - Find songs, tutorials, and user recordings easily
 - 🎨 **Beautiful UI** - Modern, dark-themed interface with smooth animations
 
 ---
@@ -69,6 +73,7 @@ iKeys includes a comprehensive **Piano Basics Tutorial** that teaches:
 
 - **Frontend Framework**: Vue.js 3 (Composition API)
 - **Language**: TypeScript
+- **Backend**: Appwrite (Authentication, Database, Storage)
 - **Audio Engine**: Tone.js
 - **State Management**: Pinia (with persistence)
 - **Styling**: Tailwind CSS
@@ -93,11 +98,18 @@ cd iKeys
 # Install dependencies
 npm install
 
+# Set up Appwrite (see APPWRITE_SETUP.md)
+# Create .env file with your Appwrite credentials
+cp .env.example .env
+# Edit .env with your Appwrite project details
+
 # Start development server
 npm run dev
 ```
 
 The app will be available at `http://localhost:5173/`
+
+**Note**: The app will work in offline mode without Appwrite, but cloud features (authentication, cloud storage, publishing) require an Appwrite backend. See `APPWRITE_SETUP.md` for setup instructions.
 
 ### Build for Production
 
@@ -131,8 +143,10 @@ iKeys is designed for **desktop use only**. A physical keyboard is required to p
 
 ## 🎵 Song Library
 
-iKeys currently features:
-- 🎓 Piano Basics Tutorial
+iKeys features three categories:
+
+### 📚 Songs
+Pre-loaded popular songs:
 - 🎸 Let It Be - The Beatles
 - 🎤 Someone Like You - Adele
 - 🎹 Imagine - John Lennon
@@ -140,7 +154,21 @@ iKeys currently features:
 - 🎼 All of Me - John Legend
 - 🎶 Piano Ballad Demo
 
-More songs are being added regularly!
+### 🎙️ My Songs
+Your personal recordings:
+- Record your performances
+- Publish to share with the community
+- Unpublish to keep them private
+- Cloud sync when logged in
+
+### 🎓 Tutorials
+Step-by-step learning content:
+- Piano Basics Tutorial (Do-Re-Mi-Fa-Sol-La-Ti-Do)
+- Scale practice
+- Simple melodies
+- Two-hand coordination
+
+More content is being added regularly!
 
 ---
 
@@ -169,6 +197,13 @@ Displays:
 - View songs completed
 - Monitor practice time
 - Earn achievements
+- Cloud sync across devices (with Appwrite)
+
+### Cloud Features (Requires Appwrite Setup)
+- **Authentication**: Secure user accounts with email/password
+- **Cloud Storage**: Save recordings to the cloud
+- **Publishing**: Share your recordings with the community
+- **Cross-Device Sync**: Access your data from any device
 
 ---
 
@@ -195,6 +230,7 @@ This project is licensed under the MIT License.
 ## 🔗 Links
 
 - **Live App**: [iKeys.onrender.com](https://iKeys.onrender.com)
+- **Appwrite Setup Guide**: See `APPWRITE_SETUP.md`
 - **Report Issues**: Create an issue on GitHub
 - **Feedback**: We'd love to hear from you!
 
