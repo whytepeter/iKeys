@@ -1,5 +1,5 @@
 <template>
-  <div class="piano-container space-y-2.5">
+  <div class="piano-container space-y-2">
     <div class="piano-keyboard">
       <div
         v-for="key in pianoKeys"
@@ -27,7 +27,7 @@
         }}</span>
       </div>
     </div>
-    <p class="text-[0.65rem] text-zinc-700 text-center">
+    <p class="text-[0.6rem] text-zinc-700 text-center">
       I built this app because I wanted to play <b>All of Me</b> by John Legend
       to my girlfriend <b>Edisemi</b> 💕😊
     </p>
@@ -161,7 +161,7 @@ const handleMouseUp = (key: PianoKey) => {
 <style scoped>
 .piano-container {
   width: 100%;
-  padding: 20px 0;
+  padding: 15px 0;
   background: linear-gradient(to bottom, #f5f5f5, #ffffff);
   border-top: 3px solid #e5e5e5;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);

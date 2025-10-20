@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-zinc-950 flex flex-col overflow-hidden">
+  <div class="h-screen overflow-y-auto bg-zinc-950 flex flex-col">
     <!-- Mobile Blocker -->
     <MobileBlocker />
 
@@ -32,7 +32,7 @@
     <main class="flex-1 flex flex-col overflow-hidden">
       <!-- Main Content Area: Falling Chords, Song Library, Settings, OR Chord Dictionary -->
       <div
-        class="flex gap-4 px-4 py-4 max-w-[1600px] mx-auto w-full"
+        class="flex gap-4 px-4 max-w-[1600px] mx-auto w-full"
         style="height: 420px"
       >
         <!-- Song Library (when active) -->
@@ -129,7 +129,7 @@
 
       <!-- Piano Keyboard - Full Width -->
       <div
-        class="flex-1 flex-col gap-4 border-t-4 border-[#D97757] flex items-center justify-center"
+        class="flex-1 border-t-4 border-[#D97757] flex items-center justify-center"
       >
         <PianoKeyboard
           :active-keys="activeKeys"

@@ -1,6 +1,8 @@
 <template>
-  <header class="border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-sm z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <header
+    class="border-b sticky h-[4.5rem] top-0 left-0 w-full border-zinc-800 bg-zinc-900/80 backdrop-blur-sm z-50"
+  >
+    <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
       <!-- Logo -->
       <div class="flex items-center gap-3">
         <div class="text-3xl">🎹</div>
@@ -17,7 +19,7 @@
       <!-- Playback Controls (shown when song is active) -->
       <div
         v-if="currentSong"
-        class="flex items-center gap-4 bg-zinc-800/50 px-4 py-2 rounded-xl border border-zinc-700"
+        class="flex items-center gap-4 px-4 py-2 rounded-xl"
       >
         <!-- Transport Controls -->
         <div class="flex items-center gap-2">
