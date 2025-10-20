@@ -1,5 +1,5 @@
 <template>
-  <div class="piano-container">
+  <div class="piano-container space-y-2.5">
     <div class="piano-keyboard">
       <div
         v-for="key in pianoKeys"
@@ -27,6 +27,10 @@
         }}</span>
       </div>
     </div>
+    <p class="text-[0.65rem] text-zinc-700 text-center">
+      I built this app because I wanted to play <b>All of Me</b> by John Legend
+      to my girlfriend <b>Edisemi</b> 💕😊
+    </p>
   </div>
 </template>
 

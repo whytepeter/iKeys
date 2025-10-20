@@ -139,10 +139,6 @@
           @key-down="handleKeyDown"
           @key-up="handleKeyUp"
         />
-        <p class="text-xs text-zinc-400">
-          I built this app because I wanted to play <b>All of Me</b> by John
-          Legend to my girlfriend <b>Edisemi</b> 💕😊
-        </p>
       </div>
     </main>
 
