@@ -129,7 +129,7 @@
 
       <!-- Piano Keyboard - Full Width -->
       <div
-        class="flex-1 border-t-4 border-[#D97757] flex items-center justify-center"
+        class="flex-1 flex-col gap-4 border-t-4 border-[#D97757] flex items-center justify-center"
       >
         <PianoKeyboard
           :active-keys="activeKeys"
@@ -139,6 +139,10 @@
           @key-down="handleKeyDown"
           @key-up="handleKeyUp"
         />
+        <p class="text-xs text-zinc-400">
+          I built this app because I wanted to play <b>All of Me</b> by John
+          Legend to my girlfriend <b>Edisemi</b> 💕😊
+        </p>
       </div>
     </main>
 
