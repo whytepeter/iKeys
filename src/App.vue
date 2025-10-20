@@ -32,8 +32,7 @@
     <main class="flex-1 flex flex-col overflow-hidden">
       <!-- Main Content Area: Falling Chords, Song Library, Settings, OR Chord Dictionary -->
       <div
-        class="flex gap-4 px-4 max-w-[1600px] mx-auto w-full"
-        style="height: 420px"
+        class="flex gap-4 px-4 max-w-[1600px] mx-auto w-full h-[calc(100dvh-330px)]"
       >
         <!-- Song Library (when active) -->
         <div v-if="showSongLibrary" class="flex-1 min-w-0 overflow-auto">

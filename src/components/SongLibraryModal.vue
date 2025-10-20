@@ -116,6 +116,7 @@
             "
           />
         </svg>
+
         <div class="flex-1 flex flex-col gap-2">
           <h3 class="text-xl font-extrabold m-0 text-white leading-tight">
             {{ item.title }}
@@ -275,7 +276,7 @@
 
     <!-- My Songs Tab -->
     <div
-      v-else-if="activeTab === 'my-songs'"
+      v-if="activeTab === 'my-songs'"
       class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
     >
       <div
@@ -515,7 +516,10 @@
     </div>
 
     <!-- Tutorials Tab -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div
+      v-if="activeTab === 'tutorials'"
+      class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+    >
       <div
         v-if="filteredTutorials.length === 0"
         class="col-span-full flex flex-col items-center justify-center py-16 px-8 text-center"
