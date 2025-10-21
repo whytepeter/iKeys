@@ -1,0 +1,29 @@
+{
+  "name": "iKeys - Interactive Piano Learning Platform",
+  "short_name": "iKeys",
+  "description": "Master piano playing with iKeys - an interactive piano learning platform featuring falling chord visualization, practice modes, chord dictionary, and recording capabilities.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#D97757",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "/piano.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "music", "entertainment"],
+  "lang": "en",
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "/piano.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ]
+}

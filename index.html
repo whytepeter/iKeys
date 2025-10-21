@@ -4,11 +4,169 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/piano.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>iKeys - Interactive Piano Learning</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>iKeys - Interactive Piano Learning Platform | Learn Piano Online</title>
+    <meta name="title" content="iKeys - Interactive Piano Learning Platform | Learn Piano Online" />
+    <meta name="description" content="Master piano playing with iKeys - an interactive piano learning platform featuring falling chord visualization, practice modes, chord dictionary, and recording capabilities. Perfect for beginners and intermediate players." />
+    <meta name="keywords" content="piano learning, interactive piano, piano lessons, chord practice, piano tutorial, music education, piano app, learn piano online, piano chords, music learning" />
+    <meta name="author" content="iKeys" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ikeys.app/" />
+    <meta property="og:title" content="iKeys - Interactive Piano Learning Platform" />
+    <meta property="og:description" content="Master piano playing with iKeys - an interactive piano learning platform featuring falling chord visualization, practice modes, chord dictionary, and recording capabilities." />
+    <meta property="og:image" content="https://ikeys.app/piano.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="iKeys" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://ikeys.app/" />
+    <meta property="twitter:title" content="iKeys - Interactive Piano Learning Platform" />
+    <meta property="twitter:description" content="Master piano playing with iKeys - an interactive piano learning platform featuring falling chord visualization, practice modes, chord dictionary, and recording capabilities." />
+    <meta property="twitter:image" content="https://ikeys.app/piano.svg" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#D97757" />
+    <meta name="msapplication-TileColor" content="#D97757" />
+    <meta name="application-name" content="iKeys" />
+    <meta name="apple-mobile-web-app-title" content="iKeys" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://ikeys.app/" />
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Additional performance hints -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "iKeys - Interactive Piano Learning Platform",
+      "description": "Master piano playing with iKeys - an interactive piano learning platform featuring falling chord visualization, practice modes, chord dictionary, and recording capabilities.",
+      "url": "https://ikeys.app/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "iKeys"
+      },
+      "featureList": [
+        "Interactive Piano Keyboard",
+        "Falling Chord Visualization",
+        "Practice Modes",
+        "Chord Dictionary",
+        "Recording Capabilities",
+        "Song Library",
+        "Real-time Chord Detection"
+      ],
+      "screenshot": "https://ikeys.app/piano.svg",
+      "softwareVersion": "1.0.0",
+      "datePublished": "2024-01-01",
+      "dateModified": "2024-01-01",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "softwareHelp": "https://ikeys.app/#help",
+      "downloadUrl": "https://ikeys.app/",
+      "installUrl": "https://ikeys.app/",
+      "memoryRequirements": "512MB",
+      "storageRequirements": "50MB",
+      "permissions": "microphone, storage",
+      "releaseNotes": "Initial release of iKeys - Interactive Piano Learning Platform"
+    }
+    </script>
+    
+    <!-- Additional Structured Data for Educational Content -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "Interactive Piano Learning Course",
+      "description": "Learn piano playing through interactive lessons with falling chord visualization and practice modes",
+      "provider": {
+        "@type": "Organization",
+        "name": "iKeys",
+        "url": "https://ikeys.app/"
+      },
+      "courseMode": "online",
+      "educationalLevel": "beginner",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "teaches": [
+        "Piano playing",
+        "Music theory",
+        "Chord recognition",
+        "Rhythm training",
+        "Ear training"
+      ],
+      "coursePrerequisites": "No prior musical experience required",
+      "timeRequired": "PT30M",
+      "educationalUse": "instruction",
+      "learningResourceType": "interactive multimedia"
+    }
+    </script>
   </head>
   <body>
-    <div id="app"></div>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="px-4 py-2 text-white bg-blue-600 rounded sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4">Skip to main content</a>
+    
+    <div id="app">
+      <!-- Main content landmark for accessibility -->
+      <main id="main-content" role="main">
+        <!-- App content will be rendered here -->
+      </main>
+    </div>
+    
+    <!-- Performance: Load scripts after content -->
     <script type="module" src="/src/main.ts"></script>
+    
+    <!-- Additional SEO and Performance Scripts -->
+    <script>
+      // Service Worker registration for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+      
+      // Performance monitoring
+      window.addEventListener('load', () => {
+        if ('performance' in window) {
+          const perfData = performance.getEntriesByType('navigation')[0];
+          console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+        }
+      });
+    </script>
   </body>
 </html>
 

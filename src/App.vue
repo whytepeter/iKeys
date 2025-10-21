@@ -308,6 +308,7 @@ import { useRecordingsStore } from "./stores/recordings";
 import { authService } from "./services/authService";
 import { recordingsService } from "./services/recordingsService";
 import { useToast } from "./composables/useToast";
+import { useSEO } from "./composables/useSEO";
 
 // State
 const currentSong = ref<Song | null>(null);
@@ -345,6 +346,9 @@ const recordingsStore = useRecordingsStore();
 
 // Toast
 const toast = useToast();
+
+// SEO
+const { updateSEO } = useSEO();
 
 // Safe computed properties for user
 const isUserAuthenticated = computed(() => userStore?.isLoggedIn ?? false);
@@ -489,12 +493,28 @@ const selectSong = (song: Song) => {
   showSongLibrary.value = false;
   showChordDictionary.value = false;
   showSettings.value = false;
+
+  // Update SEO for the selected song
+  updateSEO({
+    title: `${song.title} - ${song.artist} | iKeys Piano Learning`,
+    description: `Learn to play "${song.title}" by ${song.artist} on iKeys. Interactive piano learning with falling chord visualization and practice modes.`,
+    keywords: `piano learning, ${song.title}, ${song.artist}, piano tutorial, chord practice, music education`,
+    url: `https://ikeys.app/?song=${song.id}`,
+  });
 };
 
 const closeSong = () => {
   stop();
   currentSong.value = null;
   playingRecording.value = null;
+
+  // Reset SEO to default
+  updateSEO({
+    title: "iKeys - Interactive Piano Learning Platform | Learn Piano Online",
+    description:
+      "Master piano playing with iKeys - an interactive piano learning platform featuring falling chord visualization, practice modes, chord dictionary, and recording capabilities. Perfect for beginners and intermediate players.",
+    url: "https://ikeys.app/",
+  });
 };
 
 const playModeOptions = [

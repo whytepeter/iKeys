@@ -19,6 +19,56 @@ const chordColors = {
 // 🎓 TUTORIALS - Learning Exercises
 // ========================================
 export const tutorials: Song[] = [
+  {
+    id: 'tutorial-do-re-mi-csharp',
+    title: '🎶 Do–Re–Mi Melody in C# Major (3-Chord Practice)',
+    artist: 'iKeys Learning',
+    tempo: 72,
+    duration: 48,
+    difficulty: 'intermediate',
+    chords: [
+      // ===== Section 1: C# Major (Do–Re–Mi) =====
+      { time: 0, duration: 1, chordName: 'C#', keys: ['C#4', 'F4', 'G#4'], hand: 'right', color: chordColors['C'], fingers: [1, 3, 5] },
+      { time: 1, duration: 1, chordName: 'C#', keys: ['D#4'], hand: 'right', color: chordColors['C'], fingers: [2] }, // Re
+      { time: 2, duration: 1, chordName: 'C#', keys: ['F4'], hand: 'right', color: chordColors['C'], fingers: [3] }, // Mi
+      { time: 3, duration: 1, chordName: 'C#', keys: ['C#4'], hand: 'right', color: chordColors['C'], fingers: [1] }, // Do again
+      { time: 4, duration: 1, chordName: 'C#', keys: ['F4'], hand: 'right', color: chordColors['C'], fingers: [3] },
+      { time: 5, duration: 1, chordName: 'C#', keys: ['G#4'], hand: 'right', color: chordColors['C'], fingers: [5] },
+      { time: 6, duration: 2, chordName: 'C#', keys: ['C#5'], hand: 'right', color: chordColors['C'], fingers: [1] },
+
+      // ===== Section 2: F# Major (Fa–Sol–La–Ti–Do) =====
+      { time: 8, duration: 1, chordName: 'F#', keys: ['F#4', 'A#4', 'C#5'], hand: 'right', color: chordColors['F'], fingers: [1, 3, 5] },
+      { time: 9, duration: 1, chordName: 'F#', keys: ['G#4'], hand: 'right', color: chordColors['F'], fingers: [2] },
+      { time: 10, duration: 1, chordName: 'F#', keys: ['A#4'], hand: 'right', color: chordColors['F'], fingers: [3] },
+      { time: 11, duration: 1, chordName: 'F#', keys: ['C#5'], hand: 'right', color: chordColors['F'], fingers: [5] },
+      { time: 12, duration: 1, chordName: 'F#', keys: ['A#4'], hand: 'right', color: chordColors['F'], fingers: [3] },
+      { time: 13, duration: 1, chordName: 'F#', keys: ['G#4'], hand: 'right', color: chordColors['F'], fingers: [2] },
+      { time: 14, duration: 2, chordName: 'F#', keys: ['F#4'], hand: 'right', color: chordColors['F'], fingers: [1] },
+
+      // ===== Section 3: G# Major (Sol–La–Ti–Do high) =====
+      { time: 16, duration: 1, chordName: 'G#', keys: ['G#4', 'C5', 'D#5'], hand: 'right', color: chordColors['G'], fingers: [1, 3, 5] },
+      { time: 17, duration: 1, chordName: 'G#', keys: ['A#4'], hand: 'right', color: chordColors['G'], fingers: [2] },
+      { time: 18, duration: 1, chordName: 'G#', keys: ['C5'], hand: 'right', color: chordColors['G'], fingers: [3] },
+      { time: 19, duration: 1, chordName: 'G#', keys: ['D#5'], hand: 'right', color: chordColors['G'], fingers: [5] },
+      { time: 20, duration: 1, chordName: 'G#', keys: ['C5'], hand: 'right', color: chordColors['G'], fingers: [3] },
+      { time: 21, duration: 1, chordName: 'G#', keys: ['A#4'], hand: 'right', color: chordColors['G'], fingers: [2] },
+      { time: 22, duration: 2, chordName: 'G#', keys: ['G#4'], hand: 'right', color: chordColors['G'], fingers: [1] },
+
+      // ===== Section 4: Chord Progression Practice =====
+      { time: 24, duration: 4, chordName: 'C#', keys: ['C#4', 'F4', 'G#4'], hand: 'right', color: chordColors['C'], fingers: [1, 3, 5] },
+      { time: 28, duration: 4, chordName: 'F#', keys: ['F#4', 'A#4', 'C#5'], hand: 'right', color: chordColors['F'], fingers: [1, 3, 5] },
+      { time: 32, duration: 4, chordName: 'G#', keys: ['G#4', 'C5', 'D#5'], hand: 'right', color: chordColors['G'], fingers: [1, 3, 5] },
+      { time: 36, duration: 4, chordName: 'C#', keys: ['C#4', 'F4', 'G#4'], hand: 'right', color: chordColors['C'], fingers: [1, 3, 5] },
+      { time: 40, duration: 4, chordName: 'F#', keys: ['F#4', 'A#4', 'C#5'], hand: 'right', color: chordColors['F'], fingers: [1, 3, 5] },
+      { time: 44, duration: 4, chordName: 'C#', keys: ['C#4', 'F4', 'G#4'], hand: 'right', color: chordColors['C'], fingers: [1, 3, 5] },
+    ],
+    sections: [
+      { name: 'C# Major Intro', startTime: 0, endTime: 8 },
+      { name: 'F# Major Section', startTime: 8, endTime: 16 },
+      { name: 'G# Major Section', startTime: 16, endTime: 24 },
+      { name: 'Chord Progression', startTime: 24, endTime: 48 },
+    ],
+  },
 
   {
     id: 'piano-tutorial-basics',
