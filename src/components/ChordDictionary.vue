@@ -149,20 +149,20 @@ const filteredChords = computed(() => {
   return getChordsByDifficulty(selectedDifficulty.value);
 });
 
-// Mini piano for visualization (1 octave) - start from A for consistency
+// Mini piano for visualization (1 octave)
 const miniPianoKeys = [
-  { note: "A", octave: 4, type: "white", keyboardKey: "A" },
-  { note: "A#", octave: 4, type: "black", keyboardKey: "W" },
-  { note: "B", octave: 4, type: "white", keyboardKey: "S" },
-  { note: "C", octave: 4, type: "white", keyboardKey: "E" },
-  { note: "C#", octave: 4, type: "black", keyboardKey: "D" },
-  { note: "D", octave: 4, type: "white", keyboardKey: "F" },
-  { note: "D#", octave: 4, type: "black", keyboardKey: "T" },
-  { note: "E", octave: 4, type: "white", keyboardKey: "G" },
-  { note: "F", octave: 4, type: "white", keyboardKey: "Y" },
-  { note: "F#", octave: 4, type: "black", keyboardKey: "H" },
-  { note: "G", octave: 4, type: "white", keyboardKey: "U" },
-  { note: "G#", octave: 4, type: "black", keyboardKey: "J" },
+  { note: "C", octave: 4, type: "white" },
+  { note: "C#", octave: 4, type: "black" },
+  { note: "D", octave: 4, type: "white" },
+  { note: "D#", octave: 4, type: "black" },
+  { note: "E", octave: 4, type: "white" },
+  { note: "F", octave: 4, type: "white" },
+  { note: "F#", octave: 4, type: "black" },
+  { note: "G", octave: 4, type: "white" },
+  { note: "G#", octave: 4, type: "black" },
+  { note: "A", octave: 4, type: "white" },
+  { note: "A#", octave: 4, type: "black" },
+  { note: "B", octave: 4, type: "white" },
 ];
 
 // Keyboard mapping for notes - Two-hand layout
