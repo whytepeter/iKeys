@@ -83,10 +83,19 @@ export function useSEO(config: SEOConfig = {}) {
         if (newConfig.url) updateURL(newConfig.url)
     }
 
-    // Watch for changes and update meta tags
-    watch(seoConfig, (newConfig) => {
-        updateSEO(newConfig)
-    }, { deep: true })
+    // Watch for changes and update meta tags without reassigning seoConfig
+    // (calling updateSEO here would reassign seoConfig and retrigger the watcher)
+    watch(
+        seoConfig,
+        (newConfig) => {
+            if (newConfig.title) updateTitle(newConfig.title)
+            if (newConfig.description) updateDescription(newConfig.description)
+            if (newConfig.keywords) updateKeywords(newConfig.keywords)
+            if (newConfig.image) updateImage(newConfig.image)
+            if (newConfig.url) updateURL(newConfig.url)
+        },
+        { deep: true }
+    )
 
     return {
         seoConfig,
