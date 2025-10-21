@@ -2155,5 +2155,46 @@ export const allOfMe_001: Song = {
   chords: convertRecordedNotesToChords(allOfMe_001_notes),
 };
 
+// Post-process: where single-note 'chords' align with strong beats, replace with simple triads
+function suggestTriadForNote(note: string) {
+  // Basic mapping for C major key-centered suggestions
+  const mapping: Record<string, { chordName: string; keys: string[] }> = {
+    'C4': { chordName: 'C', keys: ['C3', 'E3', 'G3'] },
+    'B3': { chordName: 'Em', keys: ['E3', 'G3', 'B3'] },
+    'A3': { chordName: 'Am', keys: ['A3', 'C4', 'E4'] },
+    'G5': { chordName: 'G', keys: ['G3', 'B3', 'D4'] },
+    'E5': { chordName: 'C', keys: ['C3', 'E3', 'G3'] },
+    'A5': { chordName: 'Am', keys: ['A3', 'C4', 'E4'] },
+    'B5': { chordName: 'G', keys: ['G3', 'B3', 'D4'] },
+    'C5': { chordName: 'C', keys: ['C3', 'E3', 'G3'] },
+  };
+  return mapping[note] || { chordName: 'C', keys: ['C3', 'E3', 'G3'] };
+}
+
+function postProcessChords(chords: any[], tempoBpm: number) {
+  const secondsPerBeat = 60 / tempoBpm;
+  return chords.map(ch => {
+    // If this is a single-note event and occurs near a downbeat (within 0.12s), suggest a triad
+    if (ch.keys && ch.keys.length === 1) {
+      const beatPos = Math.abs(ch.time / secondsPerBeat - Math.round(ch.time / secondsPerBeat));
+      if (beatPos * secondsPerBeat < 0.12) {
+        const triad = suggestTriadForNote(ch.keys[0]);
+        const colorKey = (triad.chordName.replace(/[0-9]/g, '') as keyof typeof chordColors) || 'C';
+        return {
+          ...ch,
+          chordName: triad.chordName,
+          keys: triad.keys,
+          hand: 'left' as const,
+          color: chordColors[colorKey] || chordColors['C'],
+        };
+      }
+    }
+    return ch;
+  });
+}
+
+// Apply post-processing to make the transcription more chord-focused
+allOfMe_001.chords = postProcessChords(allOfMe_001.chords, allOfMe_001.tempo);
+
 // Register the transcribed recording so it appears in the song library
 songs.push(allOfMe_001 as unknown as Song);
