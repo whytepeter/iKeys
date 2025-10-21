@@ -1841,3 +1841,319 @@ export const allOfMeC = {
 
 // Register All of Me in the main songs list so it appears in the app
 songs.push(allOfMeC as unknown as Song);
+
+// === User recording: convert monophonic notes into chord-like entries ===
+const allOfMe_001_notes = [
+  {
+    "note": "B3",
+    "time": 1.2415999999940395,
+    "duration": 0.6747000000178816,
+    "velocity": 0.8
+  },
+  {
+    "note": "B3",
+    "time": 2.042,
+    "duration": 0.724199999988079,
+    "velocity": 0.8
+  },
+  {
+    "note": "B3",
+    "time": 2.908,
+    "duration": 0.14259999999403972,
+    "velocity": 0.8
+  },
+  {
+    "note": "C4",
+    "time": 3.412300000011921,
+    "duration": 0.7011999999880794,
+    "velocity": 0.8
+  },
+  {
+    "note": "C4",
+    "time": 4.2385,
+    "duration": 0.6506999999880785,
+    "velocity": 0.8
+  },
+  {
+    "note": "C4",
+    "time": 5.065699999988079,
+    "duration": 0.1349000000059597,
+    "velocity": 0.8
+  },
+  {
+    "note": "B3",
+    "time": 5.60540000000596,
+    "duration": 0.7129000000059609,
+    "velocity": 0.8
+  },
+  {
+    "note": "B3",
+    "time": 6.436,
+    "duration": 0.7286999999880788,
+    "velocity": 0.8
+  },
+  {
+    "note": "B3",
+    "time": 7.3035,
+    "duration": 0.16230000001192124,
+    "velocity": 0.8
+  },
+  {
+    "note": "A3",
+    "time": 7.823300000011921,
+    "duration": 0.7300000000000004,
+    "velocity": 0.8
+  },
+  {
+    "note": "A3",
+    "time": 8.6925,
+    "duration": 0.5980999999940391,
+    "velocity": 0.8
+  },
+  {
+    "note": "A3",
+    "time": 9.44830000001192,
+    "duration": 0.10879999998211787,
+    "velocity": 0.8
+  },
+  {
+    "note": "A5",
+    "time": 10.46080000001192,
+    "duration": 0.09559999999403956,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 10.735300000011922,
+    "duration": 0.07749999999999879,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 11.018,
+    "duration": 0.26880000001191995,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 11.57290000000596,
+    "duration": 0.07169999998807874,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 11.84759999999404,
+    "duration": 0.041900000005959726,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 12.11459999999404,
+    "duration": 0.14780000001192128,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 12.70190000000596,
+    "duration": 0.14100000000000001,
+    "velocity": 0.8
+  },
+  {
+    "note": "G5",
+    "time": 13.31359999999404,
+    "duration": 0.23300000000000054,
+    "velocity": 0.8
+  },
+  {
+    "note": "G5",
+    "time": 13.927699999988079,
+    "duration": 0.8866000000238419,
+    "velocity": 0.8
+  },
+  {
+    "note": "A5",
+    "time": 15.047800000011922,
+    "duration": 0.11669999998807867,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 15.374800000011922,
+    "duration": 0.07069999998807752,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 15.66669999998808,
+    "duration": 0.2339000000059599,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 16.27380000001192,
+    "duration": 0.06179999998211727,
+    "velocity": 0.8
+  },
+  {
+    "note": "A5",
+    "time": 16.50340000000596,
+    "duration": 0.08919999998807882,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 16.80309999999404,
+    "duration": 0.17940000000596257,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 17.37819999998808,
+    "duration": 0.11820000001787889,
+    "velocity": 0.8
+  },
+  {
+    "note": "A5",
+    "time": 17.73119999998808,
+    "duration": 0.093100000023842,
+    "velocity": 0.8
+  },
+  {
+    "note": "G5",
+    "time": 18.07890000000596,
+    "duration": 0.07450000000000045,
+    "velocity": 0.8
+  },
+  {
+    "note": "G5",
+    "time": 18.45040000000596,
+    "duration": 0.1355000000000004,
+    "velocity": 0.8
+  },
+  {
+    "note": "E5",
+    "time": 18.71519999998808,
+    "duration": 1.3019999999999996,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 20.149599999994038,
+    "duration": 0.08070000001788458,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 20.4565,
+    "duration": 0.36409999999404263,
+    "velocity": 0.8
+  },
+  {
+    "note": "C4",
+    "time": 21.20669999998808,
+    "duration": 0.9155000000000015,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 22.3375,
+    "duration": 0.03049999999999997,
+    "velocity": 0.8
+  },
+  {
+    "note": "G5",
+    "time": 22.590300000011922,
+    "duration": 0.11569999998807745,
+    "velocity": 0.8
+  },
+  {
+    "note": "C4",
+    "time": 23.39190000000596,
+    "duration": 0.8085999999940405,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 24.45490000000596,
+    "duration": 0.0680999999940397,
+    "velocity": 0.8
+  },
+  {
+    "note": "G5",
+    "time": 24.75819999998808,
+    "duration": 0.07610000002384254,
+    "velocity": 0.8
+  },
+  {
+    "note": "G5",
+    "time": 25.437199999988078,
+    "duration": 0.10330000001192374,
+    "velocity": 0.8
+  },
+  {
+    "note": "A4",
+    "time": 25.74690000000596,
+    "duration": 0.9731999999880792,
+    "velocity": 0.8
+  },
+  {
+    "note": "B5",
+    "time": 26.88880000001192,
+    "duration": 0.10850000000000293,
+    "velocity": 0.8
+  },
+  {
+    "note": "A5",
+    "time": 27.20559999999404,
+    "duration": 0.10809999999403885,
+    "velocity": 0.8
+  },
+  {
+    "note": "E5",
+    "time": 27.7315,
+    "duration": 0.5495999999940402,
+    "velocity": 0.8
+  }
+];
+
+function convertRecordedNotesToChords(notes: any[]) {
+  // Group by rounded time (50ms) to form chords where notes are close together
+  const groups = new Map<number, any[]>();
+  notes.forEach(n => {
+  const t = Math.round(n.time * 20) / 20; // 50ms buckets
+  const arr = groups.get(t) || [];
+  arr.push(n);
+  groups.set(t, arr);
+  });
+
+  const chords = Array.from(groups.entries()).map(([time, arr]) => {
+  const keys = arr.map(x => x.note);
+  const duration = Math.max(...arr.map(x => x.duration));
+  return {
+    time,
+    duration,
+    chordName: arr.length > 1 ? 'Chord' : arr[0].note,
+    keys,
+    hand: 'right' as const,
+    color: chordColors['C'],
+  };
+  });
+
+  // Sort by time
+  chords.sort((a, b) => a.time - b.time);
+  return chords;
+}
+
+export const allOfMe_001: Song = {
+  id: 'all-of-me-001',
+  title: 'All of Me - 001 (Transcribed)',
+  artist: 'Whyte Peter',
+  tempo: 63,
+  duration: 28.281099999994,
+  difficulty: 'beginner',
+  sections: [ { name: 'Recording', startTime: 0, endTime: 28.2811 } ],
+  chords: convertRecordedNotesToChords(allOfMe_001_notes),
+};
+
+// Register the transcribed recording so it appears in the song library
+songs.push(allOfMe_001 as unknown as Song);
