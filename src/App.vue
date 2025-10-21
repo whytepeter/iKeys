@@ -309,6 +309,7 @@ import { authService } from "./services/authService";
 import { recordingsService } from "./services/recordingsService";
 import { useToast } from "./composables/useToast";
 import { useSEO } from "./composables/useSEO";
+import { KEYBOARD_MAP } from "./constants";
 
 // State
 const currentSong = ref<Song | null>(null);
@@ -772,48 +773,8 @@ const handleKeyUp = (note: string) => {
   }
 };
 
-// Keyboard mapping - Two-hand layout for intuitive playing
-// Left hand (A-J) = Octave 3, Right hand (K-') = Octave 4
-// White keys on home row, black keys on row above
-const keyMap: Record<string, string> = {
-  // ===== OCTAVE 3 (Left hand: ASDFGHJ with WETYU for black keys) =====
-  a: "C3",
-  w: "C#3",
-  s: "D3",
-  e: "D#3",
-  d: "E3",
-  f: "F3",
-  t: "F#3",
-  g: "G3",
-  y: "G#3",
-  h: "A3",
-  u: "A#3",
-  j: "B3",
-
-  // ===== OCTAVE 4 (Right hand: KL;' with IOP] for black keys) =====
-  k: "C4", // Middle C
-  i: "C#4",
-  l: "D4",
-  o: "D#4",
-  ";": "E4",
-  "'": "F4",
-  "]": "F#4",
-  enter: "G4",
-
-  // ===== OCTAVE 5 (Extended range: ZXCV with QB2356 for black keys) =====
-  z: "C5",
-  q: "C#5",
-  x: "D5",
-  "2": "D#5",
-  c: "E5",
-  v: "F5",
-  "3": "F#5",
-  b: "G5",
-  "5": "G#5",
-  n: "A5",
-  "6": "A#5",
-  m: "B5",
-};
+// Use centralized mapping from constants (KEYBOARD_MAP)
+const keyMap = KEYBOARD_MAP;
 
 const handleKeyboardDown = (event: KeyboardEvent) => {
   // Ignore keyboard events when user is typing in input fields

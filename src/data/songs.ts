@@ -1308,6 +1308,7 @@ export const songs: Song[] = [
         fingers: [5, 3, 1],
       },
 
+
       // 🎶 Phrase 1 — “Happy birthday to you”
       {
         time: 1,
@@ -1561,113 +1562,7 @@ export const songs: Song[] = [
     ],
   },
 
-  // ========================= 3) All of Me — John Legend (A♭ major → spelled with G#/D#) =========================
-  // Constrained to mapped notes only: use octaves 3–5 and D#/G# instead of Eb/Ab.
-  {
-    id: "all-of-me-john-legend",
-    title: "All of Me",
-    artist: "John Legend",
-    tempo: 72,
-    duration: 210,
-    difficulty: "intermediate",
-    sections: [
-      { name: "Intro", startTime: 0, endTime: 16 },
-      { name: "Verse 1", startTime: 16, endTime: 64 },
-      { name: "Chorus 1", startTime: 64, endTime: 96 },
-      { name: "Verse 2", startTime: 96, endTime: 144 },
-      { name: "Chorus 2", startTime: 144, endTime: 176 },
-      { name: "Bridge", startTime: 176, endTime: 196 },
-      { name: "Final Chorus", startTime: 196, endTime: 206 },
-      { name: "Outro", startTime: 206, endTime: 210 },
-    ],
-    chords: [
-      // Intro progression (4 bars): G# → Fm → D# → C#  (original: Ab → Fm → Eb → Db)
-      {
-        time: 0,
-        duration: 4,
-        chordName: "G#",
-        keys: ["G#3", "D#4", "G#4", "C5"], // Ab major: Ab C Eb → G# C D#
-        hand: "both",
-        color: "#4A90E2",
-        noteOffsets: [0, 0.2, 0.4, 0.6],
-      },
-      {
-        time: 4,
-        duration: 4,
-        chordName: "Fm",
-        keys: ["F3", "C4", "F4", "G#4"], // F A♭ C → F G# C (mapped)
-        hand: "both",
-        color: "#9B59B6",
-      },
-      {
-        time: 8,
-        duration: 4,
-        chordName: "D#",
-        keys: ["D#3", "A#3", "D#4", "G4"], // Eb: Eb G Bb → D# G A#
-        hand: "both",
-        color: "#F5A623",
-      },
-      {
-        time: 12,
-        duration: 4,
-        chordName: "C#",
-        keys: ["C#3", "G#3", "C#4", "F4"], // Db: Db F Ab → C# F G#
-        hand: "both",
-        color: "#50C878",
-      },
 
-      // Verse 1 — keep same 4-chord loop ×3 (compact layout with mapped notes)
-      { time: 16, duration: 4, chordName: "G#", keys: ["G#3", "D#4", "G#4", "C5"], hand: "both", color: "#4A90E2" },
-      { time: 20, duration: 4, chordName: "Fm", keys: ["F3", "C4", "F4", "G#4"], hand: "both", color: "#9B59B6" },
-      { time: 24, duration: 4, chordName: "D#", keys: ["D#3", "A#3", "D#4", "G4"], hand: "both", color: "#F5A623" },
-      { time: 28, duration: 4, chordName: "C#", keys: ["C#3", "G#3", "C#4", "F4"], hand: "both", color: "#50C878" },
-      { time: 32, duration: 4, chordName: "G#", keys: ["G#3", "D#4", "G#4", "C5"], hand: "both", color: "#4A90E2" },
-      { time: 36, duration: 4, chordName: "Fm", keys: ["F3", "C4", "F4", "G#4"], hand: "both", color: "#9B59B6" },
-      { time: 40, duration: 4, chordName: "D#", keys: ["D#3", "A#3", "D#4", "G4"], hand: "both", color: "#F5A623" },
-      { time: 44, duration: 4, chordName: "C#", keys: ["C#3", "G#3", "C#4", "F4"], hand: "both", color: "#50C878" },
-      { time: 48, duration: 4, chordName: "G#", keys: ["G#3", "D#4", "G#4", "C5"], hand: "both", color: "#4A90E2" },
-      { time: 52, duration: 4, chordName: "Fm", keys: ["F3", "C4", "F4", "G#4"], hand: "both", color: "#9B59B6" },
-      { time: 56, duration: 4, chordName: "D#", keys: ["D#3", "A#3", "D#4", "G4"], hand: "both", color: "#F5A623" },
-      { time: 60, duration: 4, chordName: "C#", keys: ["C#3", "G#3", "C#4", "F4"], hand: "both", color: "#50C878" },
-
-      // Chorus 1 — same loop with added top tones
-      { time: 64, duration: 4, chordName: "G#(add9)", keys: ["G#3", "D#4", "G#4", "C5", "D#5"], hand: "both", color: "#4A90E2" },
-      { time: 68, duration: 4, chordName: "Fm(add9)", keys: ["F3", "C4", "F4", "G#4", "G5"], hand: "both", color: "#9B59B6" },
-      { time: 72, duration: 4, chordName: "D#(add9)", keys: ["D#3", "A#3", "D#4", "G4", "F5"], hand: "both", color: "#F5A623" },
-      { time: 76, duration: 4, chordName: "C#(add9)", keys: ["C#3", "G#3", "C#4", "F4", "D#5"], hand: "both", color: "#50C878" },
-
-      // Verse 2 — loop ×2
-      { time: 96, duration: 4, chordName: "G#", keys: ["G#3", "D#4", "G#4", "C5"], hand: "both", color: "#4A90E2" },
-      { time: 100, duration: 4, chordName: "Fm", keys: ["F3", "C4", "F4", "G#4"], hand: "both", color: "#9B59B6" },
-      { time: 104, duration: 4, chordName: "D#", keys: ["D#3", "A#3", "D#4", "G4"], hand: "both", color: "#F5A623" },
-      { time: 108, duration: 4, chordName: "C#", keys: ["C#3", "G#3", "C#4", "F4"], hand: "both", color: "#50C878" },
-
-      // Chorus 2
-      { time: 144, duration: 4, chordName: "G#(add9)", keys: ["G#3", "D#4", "G#4", "C5", "D#5"], hand: "both", color: "#4A90E2" },
-      { time: 148, duration: 4, chordName: "Fm(add9)", keys: ["F3", "C4", "F4", "G#4", "G5"], hand: "both", color: "#9B59B6" },
-      { time: 152, duration: 4, chordName: "D#(add9)", keys: ["D#3", "A#3", "D#4", "G4", "F5"], hand: "both", color: "#F5A623" },
-      { time: 156, duration: 4, chordName: "C#(add9)", keys: ["C#3", "G#3", "C#4", "F4", "D#5"], hand: "both", color: "#50C878" },
-
-      // Bridge — (Fm → D# → C# → D#) lift
-      { time: 176, duration: 4, chordName: "Fm", keys: ["F3", "C4", "F4", "G#4"], hand: "both", color: "#9B59B6" },
-      { time: 180, duration: 4, chordName: "D#", keys: ["D#3", "A#3", "D#4", "G4"], hand: "both", color: "#F5A623" },
-      { time: 184, duration: 4, chordName: "C#", keys: ["C#3", "G#3", "C#4", "F4"], hand: "both", color: "#50C878" },
-      { time: 188, duration: 4, chordName: "D#", keys: ["D#3", "A#3", "D#4", "G4"], hand: "both", color: "#F5A623" },
-
-      // Final chorus & outro (cadence to G#)
-      { time: 196, duration: 4, chordName: "G#(add9)", keys: ["G#3", "D#4", "G#4", "C5", "D#5"], hand: "both", color: "#4A90E2" },
-      { time: 200, duration: 4, chordName: "C#(add9)", keys: ["C#3", "G#3", "C#4", "F4", "D#5"], hand: "both", color: "#50C878" },
-      {
-        time: 206,
-        duration: 4,
-        chordName: "G#",
-        keys: ["G#3", "D#4", "G#4", "C5", "G#5"], // final add octave
-        hand: "both",
-        color: "#4A90E2",
-        noteOffsets: [0, 0.08, 0.16, 0.24, 0.32],
-      },
-    ],
-  },
   // ========================= 1) Midnight Coffee — Smooth Jazz (C minor, swing) =========================
   {
     id: "midnight-coffee",
@@ -1872,3 +1767,77 @@ export const songs: Song[] = [
 
 
 ];
+
+// Add 'All of Me (C)' as a separate song entry
+export const allOfMeC = {
+  id: "all-of-me-c",
+  title: "All of Me (C) - Chord Practice",
+  artist: "John Legend (arr. iKeys)",
+  tempo: 63,
+  duration: 176,
+  difficulty: "intermediate",
+  sections: [
+    { name: "Intro", startTime: 0, endTime: 8 },
+    { name: "Verse 1", startTime: 8, endTime: 40 },
+    { name: "Pre-Chorus", startTime: 40, endTime: 56 },
+    { name: "Chorus", startTime: 56, endTime: 92 },
+    { name: "Verse 2", startTime: 92, endTime: 124 },
+    { name: "Bridge", startTime: 124, endTime: 152 },
+    { name: "Final Chorus / Outro", startTime: 152, endTime: 176 },
+  ],
+  chords: [
+    // Intro (0-8)
+    { time: 0, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+    { time: 4, duration: 4, chordName: "Am", keys: ["A3", "C4", "E4"], hand: "left", color: chordColors["Am"], fingers: [5, 3, 1] },
+
+    // Verse 1 (8-40) — simple 4-bar patterns
+    { time: 8, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 12, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+    { time: 16, duration: 4, chordName: "Am", keys: ["A3", "C4", "E4"], hand: "left", color: chordColors["Am"], fingers: [5, 3, 1] },
+    { time: 20, duration: 4, chordName: "Em", keys: ["E3", "G3", "B3"], hand: "left", color: chordColors["Em"], fingers: [5, 3, 1] },
+    { time: 24, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 28, duration: 4, chordName: "G", keys: ["G3", "B3", "D4"], hand: "left", color: chordColors["G"], fingers: [5, 3, 1] },
+    { time: 32, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+
+    // Pre-Chorus (40-56) — rising tension
+    { time: 40, duration: 4, chordName: "Am", keys: ["A3", "C4", "E4"], hand: "left", color: chordColors["Am"], fingers: [5, 3, 1] },
+    { time: 44, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 48, duration: 4, chordName: "G", keys: ["G3", "B3", "D4"], hand: "left", color: chordColors["G"], fingers: [5, 3, 1] },
+    { time: 52, duration: 4, chordName: "Em", keys: ["E3", "G3", "B3"], hand: "left", color: chordColors["Em"], fingers: [5, 3, 1] },
+
+    // Chorus (56-92) — main progression repeated
+    { time: 56, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+    { time: 60, duration: 4, chordName: "Em", keys: ["E3", "G3", "B3"], hand: "left", color: chordColors["Em"], fingers: [5, 3, 1] },
+    { time: 64, duration: 4, chordName: "Am", keys: ["A3", "C4", "E4"], hand: "left", color: chordColors["Am"], fingers: [5, 3, 1] },
+    { time: 68, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 72, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+    { time: 76, duration: 4, chordName: "Em", keys: ["E3", "G3", "B3"], hand: "left", color: chordColors["Em"], fingers: [5, 3, 1] },
+    { time: 80, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 84, duration: 8, chordName: "G", keys: ["G3", "B3", "D4"], hand: "left", color: chordColors["G"], fingers: [5, 3, 1] },
+
+    // Verse 2 (92-124) — similar to Verse 1 with small variations
+    { time: 92, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 96, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+    { time: 100, duration: 4, chordName: "Am", keys: ["A3", "C4", "E4"], hand: "left", color: chordColors["Am"], fingers: [5, 3, 1] },
+    { time: 104, duration: 4, chordName: "Em", keys: ["E3", "G3", "B3"], hand: "left", color: chordColors["Em"], fingers: [5, 3, 1] },
+    { time: 108, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 112, duration: 4, chordName: "G", keys: ["G3", "B3", "D4"], hand: "left", color: chordColors["G"], fingers: [5, 3, 1] },
+    { time: 116, duration: 8, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+
+    // Bridge (124-152) — a quieter, reflective section
+    { time: 124, duration: 4, chordName: "Am", keys: ["A3", "C4", "E4"], hand: "left", color: chordColors["Am"], fingers: [5, 3, 1] },
+    { time: 128, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 132, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+    { time: 136, duration: 4, chordName: "G", keys: ["G3", "B3", "D4"], hand: "left", color: chordColors["G"], fingers: [5, 3, 1] },
+    { time: 140, duration: 12, chordName: "Am", keys: ["A3", "C4", "E4"], hand: "left", color: chordColors["Am"], fingers: [5, 3, 1] },
+
+    // Final Chorus / Outro (152-176)
+    { time: 152, duration: 4, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+    { time: 156, duration: 4, chordName: "Em", keys: ["E3", "G3", "B3"], hand: "left", color: chordColors["Em"], fingers: [5, 3, 1] },
+    { time: 160, duration: 4, chordName: "F", keys: ["F3", "A3", "C4"], hand: "left", color: chordColors["F"], fingers: [5, 3, 1] },
+    { time: 164, duration: 12, chordName: "C", keys: ["C3", "E3", "G3"], hand: "left", color: chordColors["C"], fingers: [5, 3, 1] },
+  ],
+};
+
+// Register All of Me in the main songs list so it appears in the app
+songs.push(allOfMeC as unknown as Song);
