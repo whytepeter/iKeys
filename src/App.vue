@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen overflow-y-auto bg-zinc-950 flex flex-col">
+  <div class="flex flex-col h-screen overflow-y-auto bg-zinc-950">
     <!-- Mobile Blocker -->
     <MobileBlocker />
 
@@ -29,7 +29,7 @@
     />
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col overflow-hidden">
+    <main class="flex flex-col flex-1 overflow-hidden">
       <!-- Main Content Area: Falling Chords, Song Library, Settings, OR Chord Dictionary -->
       <div
         class="flex gap-4 px-4 max-w-[1600px] mx-auto w-full h-[calc(100dvh-330px)]"
@@ -52,16 +52,16 @@
         <!-- Settings (when active) -->
         <div v-else-if="showSettings" class="flex-1 min-w-0 overflow-auto">
           <SettingsModal
-            :tempo="tempo"
-            :volume="volume"
+            :tempo="settings.tempo"
+            :volume="settings.volume"
             :play-mode="playMode"
             :hand-mode="handMode"
             :loop="loop"
-            @update:tempo="tempo = $event"
+            @update:tempo="(val) => settings.setTempo(val)"
             @update:volume="
               (val) => {
-                volume = val;
-                audioEngine.setVolume(val);
+                settings.setVolume(val);
+                if (audioEngine) audioEngine.setVolume(val);
               }
             "
             @update:playMode="playMode = $event"
@@ -87,11 +87,11 @@
             :is-playing="isPlaying"
             :speed="speed"
           />
-          <div v-else class="h-full flex items-center justify-center">
+          <div v-else class="flex items-center justify-center h-full">
             <div class="text-center">
-              <div class="text-6xl mb-4">🎵</div>
-              <h3 class="text-2xl font-bold text-white mb-2">Choose a Song</h3>
-              <p class="text-zinc-400 mb-6">
+              <div class="mb-4 text-6xl">🎵</div>
+              <h3 class="mb-2 text-2xl font-bold text-white">Choose a Song</h3>
+              <p class="mb-6 text-zinc-400">
                 Select a song from the library to start playing chords
               </p>
               <button
@@ -112,7 +112,7 @@
             !showSettings &&
             !showChordDictionary
           "
-          class="w-72 flex-shrink-0"
+          class="flex-shrink-0 w-72"
         >
           <ChordInfoPanel
             :current-chord="currentChord"
@@ -142,9 +142,10 @@
     </main>
 
     <!-- Floating Action Buttons -->
-    <div class="fixed top-24 right-6 flex flex-col gap-3 z-50">
+    <div class="fixed z-50 flex flex-col gap-3 top-24 right-6">
       <!-- Record Button -->
       <button
+        id="record-btn"
         @click="toggleRecording"
         class="claude-fab"
         :class="{ 'recording-active': isRecording }"
@@ -305,6 +306,7 @@ import {
 import type { Song, PlayMode, Chord, ChordMatch, HandMode } from "./types";
 import { useUserStore } from "./stores/user";
 import { useRecordingsStore } from "./stores/recordings";
+import { useSettingsStore } from "./stores";
 import { authService } from "./services/authService";
 import { recordingsService } from "./services/recordingsService";
 import { useToast } from "./composables/useToast";
@@ -316,9 +318,9 @@ const currentSong = ref<Song | null>(null);
 const isPlaying = ref(false);
 const playMode = ref<PlayMode>("free");
 const handMode = ref<HandMode>("both");
-const tempo = ref(100);
-const speed = computed(() => tempo.value / 100); // Convert tempo to speed multiplier
-const volume = ref(70);
+// Persisted settings (Pinia store with persistence)
+const settings = useSettingsStore();
+const speed = computed(() => Number(settings.tempo) / 100); // Convert tempo to speed multiplier
 const loop = ref(false);
 const currentTime = ref(0);
 const activeKeys = ref<string[]>([]);
@@ -406,6 +408,15 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error("Auth check error:", error);
+  }
+
+  // Apply persisted volume to audio engine on startup
+  try {
+    if (audioEngine && settings && settings.volume != null) {
+      audioEngine.setVolume(Number(settings.volume));
+    }
+  } catch (e) {
+    // ignore
   }
 });
 
@@ -785,6 +796,18 @@ const handleKeyboardDown = (event: KeyboardEvent) => {
     target.isContentEditable
   ) {
     return;
+  }
+  // Prevent Enter from activating focused buttons (notably the record button)
+  // when a button is focused pressing Enter would synthesize a click which toggles
+  // recording unintentionally. We still allow Enter to be treated as a piano key.
+  if (event.key === "Enter") {
+    const active = document.activeElement as HTMLElement | null;
+    if (active && active.id === "record-btn") {
+      // stop the browser from synthesizing a click on the focused record button
+      event.preventDefault();
+      event.stopPropagation();
+      // continue to let our keyboard mapping handle the Enter key as a note
+    }
   }
 
   const key = event.key.toLowerCase();

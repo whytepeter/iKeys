@@ -19,7 +19,7 @@
         type="text"
         :placeholder="placeholder"
         class="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#D97757] focus:border-transparent mb-6"
-        @keyup.enter="handleConfirm"
+        @keyup.enter="handleEnterKey"
         @keyup.esc="handleCancel"
       />
 
@@ -94,6 +94,8 @@ const emit = defineEmits<{
 
 const inputValue = ref("");
 const inputRef = ref<HTMLInputElement | null>(null);
+// Timestamp (ms) when modal was opened - used to ignore stray Enter presses
+const openedAt = ref<number | null>(null);
 
 // Watch for modal opening to set default value and focus
 watch(
@@ -104,6 +106,8 @@ watch(
       nextTick(() => {
         inputRef.value?.focus();
         inputRef.value?.select();
+        // record open time to prevent immediate accidental Enter confirms
+        openedAt.value = Date.now();
       });
     }
   }
@@ -114,6 +118,18 @@ function handleConfirm() {
     emit("confirm", inputValue.value.trim());
     inputValue.value = "";
   }
+}
+
+function handleEnterKey() {
+  // Ignore Enter keys that happen immediately after the modal opens
+  const now = Date.now();
+  const threshold = 300; // ms
+  if (openedAt.value && now - openedAt.value < threshold) {
+    // swallow accidental Enter (likely from a held key while modal opened)
+    return;
+  }
+
+  handleConfirm();
 }
 
 function handleCancel() {
