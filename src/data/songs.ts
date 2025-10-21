@@ -2120,23 +2120,23 @@ function convertRecordedNotesToChords(notes: any[]) {
   // Group by rounded time (50ms) to form chords where notes are close together
   const groups = new Map<number, any[]>();
   notes.forEach(n => {
-  const t = Math.round(n.time * 20) / 20; // 50ms buckets
-  const arr = groups.get(t) || [];
-  arr.push(n);
-  groups.set(t, arr);
+    const t = Math.round(n.time * 20) / 20; // 50ms buckets
+    const arr = groups.get(t) || [];
+    arr.push(n);
+    groups.set(t, arr);
   });
 
   const chords = Array.from(groups.entries()).map(([time, arr]) => {
-  const keys = arr.map(x => x.note);
-  const duration = Math.max(...arr.map(x => x.duration));
-  return {
-    time,
-    duration,
-    chordName: arr.length > 1 ? 'Chord' : arr[0].note,
-    keys,
-    hand: 'right' as const,
-    color: chordColors['C'],
-  };
+    const keys = arr.map(x => x.note);
+    const duration = Math.max(...arr.map(x => x.duration));
+    return {
+      time,
+      duration,
+      chordName: arr.length > 1 ? 'Chord' : arr[0].note,
+      keys,
+      hand: 'right' as const,
+      color: chordColors['C'],
+    };
   });
 
   // Sort by time
@@ -2151,41 +2151,76 @@ export const allOfMe_001: Song = {
   tempo: 63,
   duration: 28.281099999994,
   difficulty: 'beginner',
-  sections: [ { name: 'Recording', startTime: 0, endTime: 28.2811 } ],
+  sections: [{ name: 'Recording', startTime: 0, endTime: 28.2811 }],
   chords: convertRecordedNotesToChords(allOfMe_001_notes),
 };
 
 // Post-process: where single-note 'chords' align with strong beats, replace with simple triads
-function suggestTriadForNote(note: string) {
-  // Basic mapping for C major key-centered suggestions
-  const mapping: Record<string, { chordName: string; keys: string[] }> = {
-    'C4': { chordName: 'C', keys: ['C3', 'E3', 'G3'] },
-    'B3': { chordName: 'Em', keys: ['E3', 'G3', 'B3'] },
-    'A3': { chordName: 'Am', keys: ['A3', 'C4', 'E4'] },
-    'G5': { chordName: 'G', keys: ['G3', 'B3', 'D4'] },
-    'E5': { chordName: 'C', keys: ['C3', 'E3', 'G3'] },
-    'A5': { chordName: 'Am', keys: ['A3', 'C4', 'E4'] },
-    'B5': { chordName: 'G', keys: ['G3', 'B3', 'D4'] },
-    'C5': { chordName: 'C', keys: ['C3', 'E3', 'G3'] },
-  };
-  return mapping[note] || { chordName: 'C', keys: ['C3', 'E3', 'G3'] };
+// Improved harmonic suggestion using diatonic triads in C major
+function noteClass(note: string) {
+  const m = note.match(/^([A-G]#?)/);
+  return m ? m[1] : note;
+}
+
+const DIATONIC_TRIADS: Record<string, string[]> = {
+  C: ['C', 'E', 'G'],
+  Dm: ['D', 'F', 'A'],
+  Em: ['E', 'G', 'B'],
+  F: ['F', 'A', 'C'],
+  G: ['G', 'B', 'D'],
+  Am: ['A', 'C', 'E'],
+  Bdim: ['B', 'D', 'F'],
+};
+
+const TRIAD_VOICINGS: Record<string, string[]> = {
+  C: ['C3', 'E3', 'G3'],
+  Dm: ['D3', 'F3', 'A3'],
+  Em: ['E3', 'G3', 'B3'],
+  F: ['F3', 'A3', 'C4'],
+  G: ['G3', 'B3', 'D4'],
+  Am: ['A3', 'C4', 'E4'],
+  Bdim: ['B2', 'D3', 'F3'],
+};
+
+const TRIAD_PRIORITY = ['C', 'Am', 'F', 'G', 'Em', 'Dm', 'Bdim'];
+
+function suggestTriadFromKeys(keys: string[]) {
+  const pcs = keys.map(k => noteClass(k));
+  let best = { name: '', score: -1 };
+
+  for (const [name, triad] of Object.entries(DIATONIC_TRIADS)) {
+    let score = 0;
+    triad.forEach(pc => { if (pcs.includes(pc)) score++; });
+    if (score > best.score) best = { name, score };
+    else if (score === best.score && best.score > 0) {
+      // prefer priority order
+      const priCurrent = TRIAD_PRIORITY.indexOf(best.name) >= 0 ? TRIAD_PRIORITY.indexOf(best.name) : 999;
+      const priNew = TRIAD_PRIORITY.indexOf(name) >= 0 ? TRIAD_PRIORITY.indexOf(name) : 999;
+      if (priNew < priCurrent) best = { name, score };
+    }
+  }
+
+  if (best.score <= 0) return null;
+  return { chordName: best.name, keys: TRIAD_VOICINGS[best.name] || TRIAD_VOICINGS['C'] };
 }
 
 function postProcessChords(chords: any[], tempoBpm: number) {
   const secondsPerBeat = 60 / tempoBpm;
   return chords.map(ch => {
-    // If this is a single-note event and occurs near a downbeat (within 0.12s), suggest a triad
-    if (ch.keys && ch.keys.length === 1) {
+    // focus on single-note events or small clusters
+    if (ch.keys && ch.keys.length <= 2) {
+      // allow suggestion on most strong rhythmic positions (near beat) or if it's a small cluster
       const beatPos = Math.abs(ch.time / secondsPerBeat - Math.round(ch.time / secondsPerBeat));
-      if (beatPos * secondsPerBeat < 0.12) {
-        const triad = suggestTriadForNote(ch.keys[0]);
-        const colorKey = (triad.chordName.replace(/[0-9]/g, '') as keyof typeof chordColors) || 'C';
+      const onDownbeat = beatPos * secondsPerBeat < 0.14; // ~140ms
+      const suggestion = suggestTriadFromKeys(ch.keys);
+      if (suggestion && (onDownbeat || ch.keys.length === 2)) {
+        const keyName = suggestion.chordName as keyof typeof chordColors;
         return {
           ...ch,
-          chordName: triad.chordName,
-          keys: triad.keys,
+          chordName: suggestion.chordName,
+          keys: suggestion.keys,
           hand: 'left' as const,
-          color: chordColors[colorKey] || chordColors['C'],
+          color: (chordColors[keyName] as string) || chordColors['C'],
         };
       }
     }
