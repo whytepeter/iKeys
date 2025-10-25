@@ -9,8 +9,14 @@
       @touchend="handleDragEnd"
     >
       <!-- Scroll handle visible on mobile -->
-      <div class="scroll-handle" :class="{ 'is-dragging': isDragging }">
-        <div class="scroll-handle-grip"></div>
+      <div
+        class="block -mb-4 md:hidden scroll-handle"
+        :class="[isDragging && 'is-dragging']"
+      >
+        <div
+          class="scroll-handle-grip"
+          :style="{ left: scrollHandlePosition + '%' }"
+        ></div>
       </div>
       <div
         v-for="key in pianoKeys"
@@ -172,25 +178,55 @@ const handleMouseUp = (key: PianoKey) => {
 const whiteCount = pianoKeys.filter((k) => k.type === "white").length;
 
 // Scroll handle state and refs
-import { ref } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 const keyboardRef = ref<HTMLDivElement | null>(null);
 const isDragging = ref(false);
+const scrollHandlePosition = ref(50); // percentage position
 let startX = 0;
 let scrollLeft = 0;
 
+// Calculate scroll handle position based on keyboard scroll
+const updateScrollHandlePosition = () => {
+  if (!keyboardRef.value) return;
+  const scrollWidth =
+    keyboardRef.value.scrollWidth - keyboardRef.value.clientWidth;
+  const scrollPercentage =
+    scrollWidth > 0 ? (keyboardRef.value.scrollLeft / scrollWidth) * 100 : 50;
+  scrollHandlePosition.value = Math.max(0, Math.min(100, scrollPercentage));
+};
+
+onMounted(() => {
+  if (keyboardRef.value) {
+    keyboardRef.value.addEventListener("scroll", updateScrollHandlePosition);
+    updateScrollHandlePosition();
+  }
+});
+
+onUnmounted(() => {
+  if (keyboardRef.value) {
+    keyboardRef.value.removeEventListener("scroll", updateScrollHandlePosition);
+  }
+});
+
 const handleDragStart = (e: TouchEvent) => {
   if (!keyboardRef.value) return;
+
+  // Check if touch started on scroll handle
+  const target = e.target as HTMLElement;
+  if (!target.closest(".scroll-handle")) return;
+
   isDragging.value = true;
-  startX = e.touches[0].pageX - keyboardRef.value.offsetLeft;
+  startX = e.touches[0].pageX;
   scrollLeft = keyboardRef.value.scrollLeft;
 };
 
 const handleDrag = (e: TouchEvent) => {
   if (!isDragging.value || !keyboardRef.value) return;
   e.preventDefault();
-  const x = e.touches[0].pageX - keyboardRef.value.offsetLeft;
-  const walk = (x - startX) * 2; // Scroll faster
-  keyboardRef.value.scrollLeft = scrollLeft - walk;
+  const x = e.touches[0].pageX;
+  const walk = (x - startX) * 2; // Scroll in same direction as drag
+  keyboardRef.value.scrollLeft = scrollLeft + walk;
+  updateScrollHandlePosition();
 };
 
 const handleDragEnd = () => {
@@ -217,6 +253,7 @@ const handleDragEnd = () => {
   max-width: 1400px;
   margin: 0 auto;
   cursor: grab;
+  overflow-x: scroll;
 }
 
 .piano-keyboard.is-dragging {
@@ -227,31 +264,54 @@ const handleDragEnd = () => {
 /* Scroll handle for mobile */
 .scroll-handle {
   display: none;
-  position: absolute;
-  bottom: -16px;
+  position: fixed;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background: rgba(217, 119, 87, 0.1);
-  border-radius: 2px;
-  transition: opacity 0.2s;
+  width: 80%;
+  max-width: 300px;
+  height: 28px;
+  background: rgba(217, 119, 87, 0.08);
+  border-radius: 16px;
+  z-index: 10;
+  cursor: grab;
+  touch-action: none;
+}
+
+.scroll-handle.is-dragging {
+  cursor: grabbing;
 }
 
 .scroll-handle-grip {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 32px;
-  height: 4px;
-  background: #d97757;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 16px;
+  background: linear-gradient(135deg, #f97316 0%, #d97757 100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(217, 119, 87, 0.3);
+  transition: width 0.2s, box-shadow 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-handle-grip::before {
+  content: "";
+  width: 20px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 2px;
-  transition: width 0.2s;
+  box-shadow: 0 5px 0 rgba(255, 255, 255, 0.4),
+    0 10px 0 rgba(255, 255, 255, 0.4);
 }
 
 .scroll-handle.is-dragging .scroll-handle-grip {
-  width: 48px;
+  width: 70px;
+  box-shadow: 0 4px 12px rgba(217, 119, 87, 0.5);
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
 }
 
 .white-key,
@@ -299,12 +359,13 @@ const handleDragEnd = () => {
     width: 100%;
     max-width: none;
     margin: 0 auto;
-    padding: 0 8px;
+    padding: 0 30vw; /* Add padding on both sides for scrolling */
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     margin-bottom: 24px; /* Space for scroll handle */
+    justify-content: flex-start; /* Allow natural scrolling */
   }
 
   /* Hide default scrollbar */
@@ -314,7 +375,9 @@ const handleDragEnd = () => {
 
   /* Show custom scroll handle on mobile */
   .scroll-handle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .white-key {
