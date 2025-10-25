@@ -1,6 +1,17 @@
 <template>
   <div class="space-y-2 piano-container">
-    <div class="piano-keyboard" :style="{ '--white-count': whiteCount }">
+    <div
+      class="piano-keyboard"
+      ref="keyboardRef"
+      :style="{ '--white-count': whiteCount }"
+      @touchstart="handleDragStart"
+      @touchmove="handleDrag"
+      @touchend="handleDragEnd"
+    >
+      <!-- Scroll handle visible on mobile -->
+      <div class="scroll-handle" :class="{ 'is-dragging': isDragging }">
+        <div class="scroll-handle-grip"></div>
+      </div>
       <div
         v-for="key in pianoKeys"
         :key="key.note + key.octave"
@@ -159,6 +170,32 @@ const handleMouseUp = (key: PianoKey) => {
 
 // Number of white keys (used for responsive sizing)
 const whiteCount = pianoKeys.filter((k) => k.type === "white").length;
+
+// Scroll handle state and refs
+import { ref } from "vue";
+const keyboardRef = ref<HTMLDivElement | null>(null);
+const isDragging = ref(false);
+let startX = 0;
+let scrollLeft = 0;
+
+const handleDragStart = (e: TouchEvent) => {
+  if (!keyboardRef.value) return;
+  isDragging.value = true;
+  startX = e.touches[0].pageX - keyboardRef.value.offsetLeft;
+  scrollLeft = keyboardRef.value.scrollLeft;
+};
+
+const handleDrag = (e: TouchEvent) => {
+  if (!isDragging.value || !keyboardRef.value) return;
+  e.preventDefault();
+  const x = e.touches[0].pageX - keyboardRef.value.offsetLeft;
+  const walk = (x - startX) * 2; // Scroll faster
+  keyboardRef.value.scrollLeft = scrollLeft - walk;
+};
+
+const handleDragEnd = () => {
+  isDragging.value = false;
+};
 </script>
 
 <style scoped>
@@ -179,6 +216,42 @@ const whiteCount = pianoKeys.filter((k) => k.type === "white").length;
   height: 200px;
   max-width: 1400px;
   margin: 0 auto;
+  cursor: grab;
+}
+
+.piano-keyboard.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* Scroll handle for mobile */
+.scroll-handle {
+  display: none;
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: rgba(217, 119, 87, 0.1);
+  border-radius: 2px;
+  transition: opacity 0.2s;
+}
+
+.scroll-handle-grip {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 4px;
+  background: #d97757;
+  border-radius: 2px;
+  transition: width 0.2s;
+}
+
+.scroll-handle.is-dragging .scroll-handle-grip {
+  width: 48px;
 }
 
 .white-key,
@@ -229,6 +302,19 @@ const whiteCount = pianoKeys.filter((k) => k.type === "white").length;
     padding: 0 8px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    margin-bottom: 24px; /* Space for scroll handle */
+  }
+
+  /* Hide default scrollbar */
+  .piano-keyboard::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Show custom scroll handle on mobile */
+  .scroll-handle {
+    display: block;
   }
 
   .white-key {

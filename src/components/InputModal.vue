@@ -5,12 +5,12 @@
     @click="handleCancel"
   >
     <div
-      class="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-700 max-w-md w-full mx-4 p-6"
+      class="w-full max-w-md p-6 mx-4 border shadow-2xl bg-zinc-900 rounded-2xl border-zinc-700"
       @click.stop
     >
       <!-- Title -->
-      <h2 class="text-xl font-bold text-white mb-2">{{ title }}</h2>
-      <p v-if="message" class="text-zinc-400 text-sm mb-4">{{ message }}</p>
+      <h2 class="mb-2 text-xl font-bold text-white">{{ title }}</h2>
+      <p v-if="message" class="mb-4 text-sm text-zinc-400">{{ message }}</p>
 
       <!-- Input -->
       <input
@@ -24,7 +24,7 @@
       />
 
       <!-- Actions -->
-      <div class="flex gap-3 justify-end">
+      <div class="flex justify-end gap-3">
         <button
           @click="handleCancel"
           :disabled="loading"
@@ -39,7 +39,7 @@
         >
           <svg
             v-if="loading"
-            class="animate-spin h-4 w-4"
+            class="w-4 h-4 animate-spin"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

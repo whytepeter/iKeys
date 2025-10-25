@@ -3,9 +3,9 @@ const CACHE_NAME = "ikeys-v2"; // Increment version to invalidate old cache
 const CACHE_TIMESTAMP = new Date().getTime(); // Add timestamp for cache busting
 const urlsToCache = [
   "/",
-  "/piano.svg", 
+  "/piano.svg",
   "/manifest.json",
-  `/?v=${CACHE_TIMESTAMP}` // Add timestamped version of root
+  `/?v=${CACHE_TIMESTAMP}`, // Add timestamped version of root
 ];
 
 // Install event - cache resources

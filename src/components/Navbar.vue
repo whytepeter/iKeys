@@ -2,9 +2,14 @@
   <header
     class="border-b sticky h-[4.5rem] top-0 left-0 w-full border-zinc-800 bg-zinc-900/80 backdrop-blur-sm z-50"
   >
-    <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+    <div
+      class="flex items-center justify-between px-2 py-2 mx-auto md:px-6 max-w-7xl"
+    >
       <!-- Logo -->
-      <div class="flex items-center gap-3">
+      <div
+        :class="[currentSong ? 'hidden md:flex' : 'flex']"
+        class="items-center gap-3"
+      >
         <div class="text-3xl">🎹</div>
         <div>
           <h1
@@ -19,7 +24,7 @@
       <!-- Playback Controls (shown when song is active) -->
       <div
         v-if="currentSong"
-        class="flex items-center gap-4 px-4 py-2 rounded-xl"
+        class="flex items-center gap-2 px-4 py-2 md:gap-4 rounded-xl"
       >
         <!-- Transport Controls -->
         <div class="flex items-center gap-2">
@@ -80,16 +85,17 @@
         </div>
 
         <!-- Divider -->
-        <div class="h-8 w-px bg-zinc-700"></div>
+        <div class="w-px h-8 bg-zinc-700"></div>
 
         <!-- Play Mode Selector -->
         <div class="relative">
           <button
+            :class="[currentSong ? 'px-1 py-1.5' : 'px-3 py-2']"
             @click.stop="$emit('toggle-play-mode-menu')"
-            class="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#D97757]/20 border border-[#D97757]/40 hover:bg-[#D97757]/30 transition-colors"
+            class="flex items-center gap-2 rounded-lg bg-[#D97757]/20 border border-[#D97757]/40 hover:bg-[#D97757]/30 transition-colors"
             title="Change play mode"
           >
-            <span class="text-xs text-white font-medium">{{
+            <span class="text-xs font-medium text-white truncate">{{
               playModeLabel
             }}</span>
             <svg
@@ -107,7 +113,7 @@
           <div
             v-if="showPlayModeMenu"
             @click.stop
-            class="absolute top-full mt-2 right-0 w-48 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-50 py-2"
+            class="absolute right-0 z-50 w-48 py-2 mt-2 border shadow-xl top-full bg-zinc-800 rounded-xl border-zinc-700"
           >
             <button
               v-for="mode in playModeOptions"
@@ -140,12 +146,12 @@
         </div>
 
         <!-- Divider -->
-        <div class="h-8 w-px bg-zinc-700"></div>
+        <div class="w-px h-8 bg-zinc-700"></div>
 
         <!-- Close Button -->
         <button
           @click="$emit('close-song')"
-          class="text-zinc-400 hover:text-red-500 transition-colors"
+          class="transition-colors text-zinc-400 hover:text-red-500"
           title="Close Song"
         >
           <svg
@@ -164,7 +170,8 @@
       <div class="relative">
         <button
           @click.stop="$emit('toggle-user-menu')"
-          class="flex items-center gap-3 px-3 py-2 rounded-xl bg-zinc-800/50 border border-zinc-700 hover:bg-zinc-800 transition-colors"
+          :class="[currentSong ? 'p-1 gap-1' : 'px-3 py-2 gap-3']"
+          class="flex items-center transition-colors border rounded-xl bg-zinc-800/50 border-zinc-700 hover:bg-zinc-800"
           title="User profile"
         >
           <div
@@ -187,7 +194,7 @@
         <div
           v-if="showUserMenu"
           @click.stop
-          class="absolute top-full mt-2 right-0 w-64 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-50 py-2"
+          class="absolute right-0 z-50 w-64 py-2 mt-2 border shadow-xl top-full bg-zinc-800 rounded-xl border-zinc-700"
         >
           <div
             v-if="isUserAuthenticated"
@@ -199,11 +206,11 @@
               >
                 {{ userInitial }}
               </div>
-              <div class="flex flex-col min-w-0 flex-1">
+              <div class="flex flex-col flex-1 min-w-0">
                 <span class="text-sm font-semibold text-white truncate">{{
                   userName || "User"
                 }}</span>
-                <p class="text-xs text-zinc-400 truncate">
+                <p class="text-xs truncate text-zinc-400">
                   {{ userEmail || "user@ikeys.app" }}
                 </p>
               </div>
@@ -213,7 +220,7 @@
           <div v-else class="px-4 py-3 border-b border-zinc-700">
             <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center text-zinc-400 font-semibold"
+                class="flex items-center justify-center w-10 h-10 font-semibold rounded-full bg-zinc-700 text-zinc-400"
               >
                 G
               </div>
