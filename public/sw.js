@@ -1,6 +1,12 @@
 // Basic Service Worker for PWA functionality
-const CACHE_NAME = "ikeys-v1";
-const urlsToCache = ["/", "/piano.svg", "/manifest.json"];
+const CACHE_NAME = "ikeys-v2"; // Increment version to invalidate old cache
+const CACHE_TIMESTAMP = new Date().getTime(); // Add timestamp for cache busting
+const urlsToCache = [
+  "/",
+  "/piano.svg", 
+  "/manifest.json",
+  `/?v=${CACHE_TIMESTAMP}` // Add timestamped version of root
+];
 
 // Install event - cache resources
 self.addEventListener("install", (event) => {
@@ -10,14 +16,16 @@ self.addEventListener("install", (event) => {
       return cache.addAll(urlsToCache);
     })
   );
+  // Immediately claim clients to ensure new service worker takes over
+  self.skipWaiting();
 });
 
 // Fetch event - serve from cache when offline
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      // Return cached version or fetch from network
-      return response || fetch(event.request);
+      // Always try network first, fall back to cache
+      return fetch(event.request).catch(() => response);
     })
   );
 });
