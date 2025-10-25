@@ -1,6 +1,6 @@
 <template>
-  <div class="piano-container space-y-2">
-    <div class="piano-keyboard">
+  <div class="space-y-2 piano-container">
+    <div class="piano-keyboard" :style="{ '--white-count': whiteCount }">
       <div
         v-for="key in pianoKeys"
         :key="key.note + key.octave"
@@ -156,6 +156,9 @@ const handleMouseUp = (key: PianoKey) => {
   const noteName = `${key.note}${key.octave}`;
   emit("keyUp", noteName);
 };
+
+// Number of white keys (used for responsive sizing)
+const whiteCount = pianoKeys.filter((k) => k.type === "white").length;
 </script>
 
 <style scoped>
@@ -168,6 +171,7 @@ const handleMouseUp = (key: PianoKey) => {
 }
 
 .piano-keyboard {
+  /* Desktop / large screens: keep original layout and sizing */
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -212,6 +216,38 @@ const handleMouseUp = (key: PianoKey) => {
   margin-right: -16px;
   z-index: 2;
   color: white;
+}
+
+/* Responsive styles for small screens: make keys scale and allow horizontal scroll */
+@media (max-width: 1024px) {
+  .piano-keyboard {
+    /* responsive height: adapt to viewport but keep reasonable min/max */
+    height: clamp(140px, 20vh, 220px);
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .white-key {
+    /* size white keys proportionally to container and number of white keys */
+    flex: 0 0 calc(100% / var(--white-count));
+    min-width: 36px;
+    max-width: 80px;
+    height: 100%;
+  }
+
+  .black-key {
+    /* black keys are smaller and overlap white keys */
+    flex: 0 0 calc((100% / var(--white-count)) * 0.64);
+    min-width: 22px;
+    max-width: 56px;
+    height: 65%;
+    margin-left: calc((100% / var(--white-count)) * -0.32);
+    margin-right: calc((100% / var(--white-count)) * -0.32);
+  }
 }
 
 /* Pressed by user */

@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col h-screen overflow-y-auto bg-zinc-950">
-    <!-- Mobile Blocker -->
-    <MobileBlocker />
+    <!-- Mobile: removed MobileBlocker to allow mobile/responsive usage -->
 
     <!-- Navbar -->
     <Navbar
@@ -32,7 +31,7 @@
     <main class="flex flex-col flex-1 overflow-hidden">
       <!-- Main Content Area: Falling Chords, Song Library, Settings, OR Chord Dictionary -->
       <div
-        class="flex gap-4 px-4 max-w-[1600px] mx-auto w-full h-[calc(100dvh-330px)]"
+        class="flex flex-col md:flex-row gap-4 px-4 max-w-[1600px] mx-auto w-full h-[calc(100dvh-330px)]"
       >
         <!-- Song Library (when active) -->
         <div v-if="showSongLibrary" class="flex-1 min-w-0 overflow-auto">
@@ -112,7 +111,7 @@
             !showSettings &&
             !showChordDictionary
           "
-          class="flex-shrink-0 w-72"
+          class="flex-shrink-0 w-full md:w-72"
         >
           <ChordInfoPanel
             :current-chord="currentChord"
@@ -282,7 +281,6 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
-import MobileBlocker from "./components/MobileBlocker.vue";
 import Navbar from "./components/Navbar.vue";
 import PianoKeyboard from "./components/PianoKeyboard.vue";
 import FallingChords from "./components/FallingChords.vue";
