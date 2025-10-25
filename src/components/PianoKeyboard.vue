@@ -178,7 +178,7 @@ const handleMouseUp = (key: PianoKey) => {
 const whiteCount = pianoKeys.filter((k) => k.type === "white").length;
 
 // Scroll handle state and refs
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 const keyboardRef = ref<HTMLDivElement | null>(null);
 const isDragging = ref(false);
 const scrollHandlePosition = ref(50); // percentage position
